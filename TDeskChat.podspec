@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = 'TDeskChat'
-  spec.version      = '1.1.0'
+  spec.version      = '1.1.1'
   spec.platform     = :ios
   spec.ios.deployment_target = '9.0'
   spec.license      = { :type => 'Proprietary',
