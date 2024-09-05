@@ -113,12 +113,12 @@
     _titleLabel.textColor = TIMCommonDynamicColor(@"form_title_color", @"#000000");
     [_toolView addSubview:_titleLabel];
 
-    _relayButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_relayButton setTitle:TIMCommonLocalizableString(Forward) forState:UIControlStateNormal];
-    _relayButton.titleLabel.font = [UIFont systemFontOfSize:14.0];
-    [_relayButton setTitleColor:TIMCommonDynamicColor(@"form_title_color", @"#000000") forState:UIControlStateNormal];
-    [_relayButton addTarget:self action:@selector(onRelay:) forControlEvents:UIControlEventTouchUpInside];
-    [_menuView addSubview:_relayButton];
+//    _relayButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [_relayButton setTitle:TIMCommonLocalizableString(Forward) forState:UIControlStateNormal];
+//    _relayButton.titleLabel.font = [UIFont systemFontOfSize:14.0];
+//    [_relayButton setTitleColor:TIMCommonDynamicColor(@"form_title_color", @"#000000") forState:UIControlStateNormal];
+//    [_relayButton addTarget:self action:@selector(onRelay:) forControlEvents:UIControlEventTouchUpInside];
+//    [_menuView addSubview:_relayButton];
 
     _deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_deleteButton setTitle:TIMCommonLocalizableString(Delete) forState:UIControlStateNormal];

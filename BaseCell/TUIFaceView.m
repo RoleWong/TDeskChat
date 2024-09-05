@@ -32,7 +32,7 @@
 }
 
 - (void)setupViews {
-    self.backgroundColor = TUIChatDynamicColor(@"chat_input_controller_bg_color", @"#EBF0F6");
+    self.backgroundColor = [UIColor clearColor];
 
     _faceFlowLayout = [[TUICollectionRTLFitFlowLayout alloc] init];
     _faceFlowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;

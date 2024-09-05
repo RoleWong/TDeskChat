@@ -1031,9 +1031,9 @@ ReceiveReadMsgWithGroupID:(NSString *)groupID
     
     CGFloat topMarginiByCustomView = 0;
     
-    if (_delegate && [_delegate respondsToSelector:@selector(getTopMarginByCustomView)]) {
-        topMarginiByCustomView = [_delegate getTopMarginByCustomView];
-    }
+//    if (_delegate && [_delegate respondsToSelector:@selector(getTopMarginByCustomView)]) {
+//        topMarginiByCustomView = [_delegate getTopMarginByCustomView];
+//    }
     
     [menu setArrawPosition:CGPointMake(frame.origin.x + frame.size.width * 0.5, frame.origin.y - 5 - topMarginiByCustomView)
               adjustHeight:frame.size.height + 5];
@@ -1072,9 +1072,9 @@ ReceiveReadMsgWithGroupID:(NSString *)groupID
             [menu addAction:recallAction];
         }
     }
-    if ([self canForward:data] && imMsg.status == V2TIM_MSG_STATUS_SEND_SUCC && !imMsg.hasRiskContent) {
-        [menu addAction:forwardAction];
-    }
+//    if ([self canForward:data] && imMsg.status == V2TIM_MSG_STATUS_SEND_SUCC && !imMsg.hasRiskContent) {
+//        [menu addAction:forwardAction];
+//    }
     if (imMsg.status == V2TIM_MSG_STATUS_SEND_SUCC && [TUIChatConfig defaultConfig].enablePopMenuReplyAction) {
         [menu addAction:quoteAction];
     }
@@ -1099,7 +1099,7 @@ ReceiveReadMsgWithGroupID:(NSString *)groupID
     TUIMessageCellData *data = cell.messageData;
     V2TIMMessage *imMsg = data.innerMessage;
 
-    [menu addAction:multiAction];
+//    [menu addAction:multiAction];
 
     if (imMsg.status == V2TIM_MSG_STATUS_SEND_SUCC && [TUIChatConfig defaultConfig].enablePopMenuReplyAction) {
         [menu addAction:quoteAction];
@@ -1108,12 +1108,12 @@ ReceiveReadMsgWithGroupID:(NSString *)groupID
         [menu addAction:referenceAction];
     }
 
-    [menu addAction:deleteAction];
+//    [menu addAction:deleteAction];
 
-    if (imMsg && [imMsg isSelf] && [[NSDate date] timeIntervalSinceDate:imMsg.timestamp] < TUIChatConfig.defaultConfig.timeIntervalForMessageRecall &&
-        (imMsg.status == V2TIM_MSG_STATUS_SEND_SUCC)) {
-        [menu addAction:recallAction];
-    }
+//    if (imMsg && [imMsg isSelf] && [[NSDate date] timeIntervalSinceDate:imMsg.timestamp] < TUIChatConfig.defaultConfig.timeIntervalForMessageRecall &&
+//        (imMsg.status == V2TIM_MSG_STATUS_SEND_SUCC)) {
+//        [menu addAction:recallAction];
+//    }
 }
 - (void)addExtensionActionToCell:(TUIMessageCell *)cell ofMenu:(TUIChatPopMenu *)menu {
     // extra

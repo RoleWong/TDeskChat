@@ -99,6 +99,11 @@
  */
 @property(nonatomic, assign) BOOL needScrollToBottom;
 
+
+@property (nonatomic, assign) BOOL isUIInitialized;
+
+@property CGFloat kCustomerServiceNavBarHeight;
+
 - (void)sendMessage:(V2TIMMessage *)message;
 
 - (void)sendMessage:(V2TIMMessage *)message placeHolderCellData:(TUIMessageCellData *)placeHolderCellData;

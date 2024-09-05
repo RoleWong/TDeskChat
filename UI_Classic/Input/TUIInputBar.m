@@ -53,35 +53,61 @@
 
 #pragma mark - UI
 - (void)setupViews {
-    self.backgroundColor = TUIChatDynamicColor(@"chat_input_controller_bg_color", @"#EBF0F6");
+    self.backgroundColor = [UIColor clearColor];
 
     _lineView = [[UIView alloc] init];
-    _lineView.backgroundColor = TIMCommonDynamicColor(@"separator_color", @"#FFFFFF");
+    _lineView.backgroundColor = [UIColor clearColor];
     [self addSubview:_lineView];
+    
+    CGFloat padding = 10;  // Adjust the padding for the inner space
 
+    // Configure micButton
     _micButton = [[UIButton alloc] init];
     [_micButton addTarget:self action:@selector(onMicButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [_micButton setImage:TUIChatBundleThemeImage(@"chat_ToolViewInputVoice_img", @"ToolViewInputVoice") forState:UIControlStateNormal];
     [_micButton setImage:TUIChatBundleThemeImage(@"chat_ToolViewInputVoiceHL_img", @"ToolViewInputVoiceHL") forState:UIControlStateHighlighted];
+    _micButton.backgroundColor = [UIColor whiteColor];
+    _micButton.layer.cornerRadius = 10; // Rounded corners
+    _micButton.layer.masksToBounds = YES;
+    _micButton.contentEdgeInsets = UIEdgeInsetsMake(padding, padding, padding, padding); // Adjust padding to match design
+    _micButton.tintColor = [UIColor blueColor];  // Ensure the image is blue if using system icons
     [self addSubview:_micButton];
 
+    // Configure faceButton
     _faceButton = [[UIButton alloc] init];
     [_faceButton addTarget:self action:@selector(onFaceEmojiButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [_faceButton setImage:TUIChatBundleThemeImage(@"chat_ToolViewEmotion_img", @"ToolViewEmotion") forState:UIControlStateNormal];
     [_faceButton setImage:TUIChatBundleThemeImage(@"chat_ToolViewEmotionHL_img", @"ToolViewEmotionHL") forState:UIControlStateHighlighted];
+    _faceButton.backgroundColor = [UIColor whiteColor];
+    _faceButton.layer.cornerRadius = 10;
+    _faceButton.layer.masksToBounds = YES;
+    _faceButton.contentEdgeInsets = UIEdgeInsetsMake(padding, padding, padding, padding); // Adjust padding to match design
+    _faceButton.tintColor = [UIColor blueColor];
     [self addSubview:_faceButton];
 
+    // Configure keyboardButton
     _keyboardButton = [[UIButton alloc] init];
     [_keyboardButton addTarget:self action:@selector(onKeyboardButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [_keyboardButton setImage:TUIChatBundleThemeImage(@"chat_ToolViewKeyboard_img", @"ToolViewKeyboard") forState:UIControlStateNormal];
     [_keyboardButton setImage:TUIChatBundleThemeImage(@"chat_ToolViewKeyboardHL_img", @"ToolViewKeyboardHL") forState:UIControlStateHighlighted];
+    _keyboardButton.backgroundColor = [UIColor whiteColor];
+    _keyboardButton.layer.cornerRadius = 10;
+    _keyboardButton.layer.masksToBounds = YES;
+    _keyboardButton.contentEdgeInsets = UIEdgeInsetsMake(padding, padding, padding, padding); // Adjust padding to match design
+    _keyboardButton.tintColor = [UIColor blueColor];
     _keyboardButton.hidden = YES;
     [self addSubview:_keyboardButton];
 
+    // Configure moreButton
     _moreButton = [[UIButton alloc] init];
     [_moreButton addTarget:self action:@selector(onMoreButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [_moreButton setImage:TUIChatBundleThemeImage(@"chat_TypeSelectorBtn_Black_img", @"TypeSelectorBtn_Black") forState:UIControlStateNormal];
     [_moreButton setImage:TUIChatBundleThemeImage(@"chat_TypeSelectorBtnHL_Black_img", @"TypeSelectorBtnHL_Black") forState:UIControlStateHighlighted];
+    _moreButton.backgroundColor = [UIColor whiteColor];
+    _moreButton.layer.cornerRadius = 10;
+    _moreButton.layer.masksToBounds = YES;
+    _moreButton.contentEdgeInsets = UIEdgeInsetsMake(padding, padding, padding, padding); // Adjust padding to match design
+    _moreButton.tintColor = [UIColor blueColor];
     [self addSubview:_moreButton];
 
     _recordButton = [[UIButton alloc] init];
@@ -102,6 +128,7 @@
     _inputTextView.backgroundColor = TUIChatDynamicColor(@"chat_input_bg_color", @"#FFFFFF");
     _inputTextView.textColor = TUIChatDynamicColor(@"chat_input_text_color", @"#000000");
     _inputTextView.textAlignment = isRTL()?NSTextAlignmentRight: NSTextAlignmentLeft;
+
     [_inputTextView setReturnKeyType:UIReturnKeySend];
     [self addSubview:_inputTextView];
 
@@ -154,7 +181,7 @@
         make.centerY.mas_equalTo(self);
     }];
     [_faceButton mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.trailing.mas_equalTo(_moreButton.mas_leading).mas_offset(- TTextView_Margin);
+        make.trailing.mas_equalTo(_moreButton.mas_leading).mas_offset(- 10);
         make.size.mas_equalTo(buttonSize);
         make.centerY.mas_equalTo(self);
     }];

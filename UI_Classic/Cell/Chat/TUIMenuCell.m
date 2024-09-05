@@ -36,7 +36,7 @@
     if (data.isSelected) {
         self.backgroundColor = TUIChatDynamicColor(@"chat_face_menu_select_color", @"#FFFFFF");
     } else {
-        self.backgroundColor = TUIChatDynamicColor(@"chat_input_controller_bg_color", @"#EBF0F6");
+        self.backgroundColor = [UIColor clearColor];
     }
     // update layout
     CGSize size = self.frame.size;

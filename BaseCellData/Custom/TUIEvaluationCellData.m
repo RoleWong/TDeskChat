@@ -15,6 +15,7 @@
     if (param == nil) {
         return nil;
     }
+    
     TUIEvaluationCellData *cellData = [[TUIEvaluationCellData alloc] initWithDirection:message.isSelf ? MsgDirectionOutgoing : MsgDirectionIncoming];
     cellData.innerMessage = message;
     cellData.desc = message.customElem.desc;

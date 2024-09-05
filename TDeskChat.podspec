@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = 'TDeskChat'
-  spec.version      = '1.1.1'
+  spec.version      = '2.1.0'
   spec.platform     = :ios
   spec.ios.deployment_target = '9.0'
   spec.license      = { :type => 'Proprietary',
@@ -16,8 +16,8 @@ Pod::Spec.new do |spec|
   
 #  spec.vendored_frameworks = 'ReactiveObjCForTDesk.framework'
   
-  spec.dependency 'TDeskCore'
-  spec.dependency 'TDeskCommon'
+  spec.dependency 'TDeskCore', '~> 2.1.0'
+  spec.dependency 'TDeskCommon', '~> 2.1.0'
   spec.dependency 'SDWebImage'
   spec.dependency 'ReactiveObjCForTDesk'
   

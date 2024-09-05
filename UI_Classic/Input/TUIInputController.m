@@ -72,7 +72,7 @@
 }
 
 - (void)setupViews {
-    self.view.backgroundColor = TUIChatDynamicColor(@"chat_input_controller_bg_color", @"#EBF0F6");
+    self.view.backgroundColor = [UIColor clearColor];
     _status = Input_Status_Input;
 
     _inputBar = [[TUIInputBar alloc] initWithFrame:CGRectZero];

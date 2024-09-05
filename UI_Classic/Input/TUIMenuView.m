@@ -35,7 +35,7 @@
 }
 
 - (void)setupViews {
-    self.backgroundColor = TUIChatDynamicColor(@"chat_input_controller_bg_color", @"#EBF0F6");
+    self.backgroundColor = [UIColor clearColor];
 
     _menuFlowLayout = [[TUICollectionRTLFitFlowLayout alloc] init];
     _menuFlowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
@@ -53,7 +53,7 @@
     _menuCollectionView.showsVerticalScrollIndicator = NO;
     _menuCollectionView.backgroundColor = self.backgroundColor;
     _menuCollectionView.alwaysBounceHorizontal = YES;
-    _menuCollectionView.backgroundColor = TUIChatDynamicColor(@"chat_input_controller_bg_color", @"#EBF0F6");
+    _menuCollectionView.backgroundColor = [UIColor clearColor];
     [self addSubview:_menuCollectionView];
 }
 

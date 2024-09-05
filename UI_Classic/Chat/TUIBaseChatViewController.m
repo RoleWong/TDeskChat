@@ -39,11 +39,13 @@
 #import "TUITextMessageCellData.h"
 #import "TUIVideoMessageCellData.h"
 #import "TUIVoiceMessageCellData.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 static UIView *gCustomTopView;
 static UIView *gTopExentsionView;
 static UIView *gGroupPinTopView;
 static CGRect gCustomTopViewRect;
+
 @interface TUIBaseChatViewController () <TUIBaseMessageControllerDelegate,
                                          TUIInputControllerDelegate,
                                          UIImagePickerControllerDelegate,
@@ -75,6 +77,7 @@ static CGRect gCustomTopViewRect;
 
 @implementation TUIBaseChatViewController
 
+
 #pragma mark - Life Cycle
 - (instancetype)init {
     self = [super init];
@@ -94,28 +97,46 @@ static CGRect gCustomTopViewRect;
     self.mainTitle = title;
 }
 
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    
+    if(!self.isUIInitialized) {
+        
+        CGFloat safeAreaTop = self.view.safeAreaInsets.top;
+        _kCustomerServiceNavBarHeight = safeAreaTop + 48;
+        
+        [self setupCustomerServiceNavigator];
+        [self setupMessageController];
+        [self setupInputController];
+        [self setupBottomContainerView];
+        
+        
+        // reset then setup bottom container and its margin
+        NSDictionary *userInfo = @{TUIKitNotification_onMessageVCBottomMarginChanged_Margin: @(0)};
+        [[NSNotificationCenter defaultCenter] postNotificationName:TUIKitNotification_onMessageVCBottomMarginChanged object:nil userInfo:userInfo];
+        
+        self.isUIInitialized = YES;
+        
+    }
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     [self setupTopViews];
+    [self.navigationController setNavigationBarHidden:YES animated:NO];
     
     // data provider
     self.dataProvider = [[TUIChatDataProvider alloc] init];
     self.dataProvider.delegate = self;
 
     // setupUI
+    self.isUIInitialized = NO;
     self.firstAppear = YES;
-    self.view.backgroundColor = TIMCommonDynamicColor(@"controller_bg_color", @"#FFFFFF");
     self.edgesForExtendedLayout = UIRectEdgeNone;
     [self configBackgroundView];
-    [self setupNavigator];
-    [self setupMessageController];
-    [self setupInputController];
-    
-    // reset then setup bottom container and its margin
-    NSDictionary *userInfo = @{TUIKitNotification_onMessageVCBottomMarginChanged_Margin: @(0)};
-    [[NSNotificationCenter defaultCenter] postNotificationName:TUIKitNotification_onMessageVCBottomMarginChanged object:nil userInfo:userInfo];
-    [self setupBottomContainerView];
+
 
     // Notify
     [self configNotify];
@@ -234,14 +255,71 @@ static CGRect gCustomTopViewRect;
     }
 }
 
+
+// 修改的 setupCustomerServiceNavigator
+- (void)setupCustomerServiceNavigator {
+    CGFloat navBarHeight = _kCustomerServiceNavBarHeight;
+    UIView *customNavBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, navBarHeight)];
+    customNavBar.backgroundColor = [UIColor clearColor];
+    
+    CGFloat safeAreaTopInset = self.view.safeAreaInsets.top;
+
+    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(15, safeAreaTopInset + 4, 30, 30)];
+    [backButton setImage:TIMCommonDynamicImage(@"nav_back_img", [UIImage imageNamed:TIMCommonImagePath(@"nav_back")]) forState:UIControlStateNormal];
+    [backButton addTarget:self action:@selector(onBackButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIImageView *avatarImageView = [[UIImageView alloc] initWithFrame:CGRectMake(50, safeAreaTopInset + 4, 30, 30)];
+    avatarImageView.layer.cornerRadius = 15;
+    avatarImageView.clipsToBounds = YES;
+    
+    [[RACObserve(_conversationData, faceUrl) distinctUntilChanged] subscribeNext:^(NSString *faceUrl) {
+        if (faceUrl) {
+            [avatarImageView sd_setImageWithURL:[NSURL URLWithString:faceUrl]
+                               placeholderImage:[UIImage imageNamed:@"placeholder_avatar"]];
+        } else {
+            avatarImageView.image = [UIImage imageNamed:@"placeholder_avatar"];
+        }
+    }];
+
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(90, safeAreaTopInset + 4, 250, 30)];
+    titleLabel.text = @"Hi, 我是智能客服";
+    titleLabel.font = [UIFont systemFontOfSize:16 weight:UIFontWeightMedium];
+    titleLabel.textColor = [UIColor blackColor];
+
+    [customNavBar addSubview:backButton];
+    [customNavBar addSubview:avatarImageView];
+    [customNavBar addSubview:titleLabel];
+
+    [self.view addSubview:customNavBar];
+}
+
+
+
+- (void)onBackButtonPressed {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)setupNavigator {
     TUINavigationController *naviController = (TUINavigationController *)self.navigationController;
     if ([naviController isKindOfClass:TUINavigationController.class]) {
         naviController.uiNaviDelegate = self;
+        
+        [naviController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+        [naviController.navigationBar setShadowImage:[UIImage new]];
+        naviController.navigationBar.translucent = YES;
+
         UIImage *backimg = TIMCommonDynamicImage(@"nav_back_img", [UIImage imageNamed:TIMCommonImagePath(@"nav_back")]);
         backimg = [backimg rtl_imageFlippedForRightToLeftLayoutDirection];
-        naviController.navigationItemBackArrowImage =  backimg;
+        naviController.navigationItemBackArrowImage = backimg;
     }
+    
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+    self.navigationController.navigationBar.translucent = YES;
+    self.view.backgroundColor = [UIColor clearColor];
+    self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
+
+    
     _titleView = [[TUINaviBarIndicatorView alloc] init];
     self.navigationItem.titleView = _titleView;
     self.navigationItem.title = @"";
@@ -391,16 +469,20 @@ static CGRect gCustomTopViewRect;
     NSString *conversationID = [self getConversationID];
     NSString *imgUrl = [self getBackgroundImageUrlByConversationID:conversationID];
 
-    if (TUIChatConfig.defaultConfig.backgroudImage) {
-        self.backgroudView.backgroundColor = UIColor.clearColor;
-        self.backgroudView.image = TUIChatConfig.defaultConfig.backgroudImage;
-    } else if (IS_NOT_EMPTY_NSSTRING(imgUrl)) {
-        [self.backgroudView sd_setImageWithURL:[NSURL URLWithString:imgUrl] placeholderImage:nil];
-    }
+    self.backgroudView.backgroundColor = [UIColor clearColor];
+    self.backgroudView.image = TUIChatBundleThemeImage(@"chat_customer_bg_img", @"more_file");
+//    if (TUIChatConfig.defaultConfig.backgroudImage) {
+//        self.backgroudView.backgroundColor = UIColor.clearColor;
+//        self.backgroudView.image = TUIChatConfig.defaultConfig.backgroudImage;
+//    } else if (IS_NOT_EMPTY_NSSTRING(imgUrl)) {
+//        [self.backgroudView sd_setImageWithURL:[NSURL URLWithString:imgUrl] placeholderImage:nil];
+//    }
     CGFloat textViewHeight = TUIChatConfig.defaultConfig.enableMainPageInputBar? TTextView_Height:0;
 
+//    self.backgroudView.frame =
+//        CGRectMake(0, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height - textViewHeight - Bottom_SafeHeight);
     self.backgroudView.frame =
-        CGRectMake(0, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height - textViewHeight - Bottom_SafeHeight);
+        CGRectMake(0, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
 
     [self.view insertSubview:self.backgroudView atIndex:0];
 }
@@ -589,7 +671,7 @@ static CGRect gCustomTopViewRect;
     CGFloat gTopExtsionH = gTopExentsionView && gTopExentsionView.superview ? gTopExentsionView.mm_h : 0;
     CGFloat gGroupPinTopViewH = gGroupPinTopView && gGroupPinTopView.superview ? gGroupPinTopView.mm_h : 0;
 
-    CGFloat height = gCutomTopViewH + gTopExtsionH + gGroupPinTopViewH;
+    CGFloat height = gCutomTopViewH + gTopExtsionH + gGroupPinTopViewH + _kCustomerServiceNavBarHeight;
     return height;
 }
 
@@ -1395,6 +1477,9 @@ static CGRect gCustomTopViewRect;
         if ([conv.conversationID isEqualToString:self.conversationData.conversationID]) {
             if (!self.conversationData.otherSideTyping) {
                 self.conversationData.title = conv.showName;
+            }
+            if (conv.faceUrl) {
+                self.conversationData.faceUrl = conv.faceUrl;
             }
             break;
         }
