@@ -231,14 +231,14 @@
         NSLog(@"TUICallKit audio recording service does not exist");
         return NO;
     }
-    NSString *signature = [TUIAIDenoiseSignatureManager sharedInstance].signature;
-    if (signature.length == 0) {
-        NSLog(@"denoise signature is empty");
-        return NO;
-    }
+//    NSString *signature = [TUIAIDenoiseSignatureManager sharedInstance].signature;
+//    if (signature.length == 0) {
+//        NSLog(@"denoise signature is empty");
+//        return NO;
+//    }
 
     NSMutableDictionary *audioRecordParam = [[NSMutableDictionary alloc] init];
-    [audioRecordParam setValue:signature forKey:TUICore_TUIAudioMessageRecordService_StartRecordAudioMessageMethod_SignatureKey];
+//    [audioRecordParam setValue:signature forKey:TUICore_TUIAudioMessageRecordService_StartRecordAudioMessageMethod_SignatureKey];
     [audioRecordParam setValue:@([TUILogin getSdkAppID]) forKey:TUICore_TUIAudioMessageRecordService_StartRecordAudioMessageMethod_SdkappidKey];
     [audioRecordParam setValue:self.recordedFilePath forKey:TUICore_TUIAudioMessageRecordService_StartRecordAudioMessageMethod_PathKey];
 

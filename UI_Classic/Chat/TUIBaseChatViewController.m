@@ -83,7 +83,7 @@ static CGRect gCustomTopViewRect;
     self = [super init];
     if (self) {
         [TUIBaseChatViewController createCachePath];
-        [[TUIAIDenoiseSignatureManager sharedInstance] updateSignature];
+//        [[TUIAIDenoiseSignatureManager sharedInstance] updateSignature];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(reloadTopViewsAndMessagePage)
                                                      name:TUICore_TUIChatExtension_ChatViewTopArea_ChangedNotification
@@ -282,7 +282,20 @@ static CGRect gCustomTopViewRect;
     }];
 
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(90, safeAreaTopInset + 4, 250, 30)];
-    titleLabel.text = @"Hi, 我是智能客服";
+    [[RACObserve(_conversationData, title) distinctUntilChanged] subscribeNext:^(NSString *title) {
+        titleLabel.text = title;
+    }];
+    
+    [[RACObserve(_conversationData, otherSideTyping) distinctUntilChanged] subscribeNext:^(id otherSideTyping) {
+      BOOL otherSideTypingFlag = [otherSideTyping boolValue];
+      if (!otherSideTypingFlag) {
+          titleLabel.text = _conversationData.title;
+      }
+      else {
+          NSString *typingText = [NSString stringWithFormat:@"%@...", TIMCommonLocalizableString(TUIKitTyping)];
+          titleLabel.text = typingText;
+      }
+    }];
     titleLabel.font = [UIFont systemFontOfSize:16 weight:UIFontWeightMedium];
     titleLabel.textColor = [UIColor blackColor];
 
@@ -1476,7 +1489,7 @@ static CGRect gCustomTopViewRect;
     for (V2TIMConversation *conv in conversationList) {
         if ([conv.conversationID isEqualToString:self.conversationData.conversationID]) {
             if (!self.conversationData.otherSideTyping) {
-                self.conversationData.title = conv.showName;
+                self.conversationData.title = [NSString stringWithFormat:@"Hi, 我是%@", conv.showName];
             }
             if (conv.faceUrl) {
                 self.conversationData.faceUrl = conv.faceUrl;

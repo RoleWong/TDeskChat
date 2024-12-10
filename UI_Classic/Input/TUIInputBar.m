@@ -120,6 +120,7 @@
     [_recordButton setTitle:TIMCommonLocalizableString(TUIKitInputHoldToTalk) forState:UIControlStateNormal];
     [_recordButton setTitleColor:TUIChatDynamicColor(@"chat_input_text_color", @"#000000") forState:UIControlStateNormal];
     _recordButton.hidden = YES;
+    _recordButton.backgroundColor = TUIChatDynamicColor(@"chat_input_bg_color", @"#FFFFFF");
     [self addSubview:_recordButton];
 
     _inputTextView = [[TUIResponderTextView alloc] init];
@@ -140,18 +141,19 @@
 }
 
 - (void)applyBorderTheme {
+    CGColorRef transparentColor = CGColorCreateGenericRGB(0.0, 0.0, 0.0, 0.0);
     if (_recordButton) {
         [_recordButton.layer setMasksToBounds:YES];
         [_recordButton.layer setCornerRadius:4.0f];
         [_recordButton.layer setBorderWidth:1.0f];
-        [_recordButton.layer setBorderColor:TIMCommonDynamicColor(@"separator_color", @"#DBDBDB").CGColor];
+        [_recordButton.layer setBorderColor: transparentColor];
     }
 
     if (_inputTextView) {
         [_inputTextView.layer setMasksToBounds:YES];
         [_inputTextView.layer setCornerRadius:4.0f];
         [_inputTextView.layer setBorderWidth:0.5f];
-        [_inputTextView.layer setBorderColor:TIMCommonDynamicColor(@"separator_color", @"#DBDBDB").CGColor];
+        [_inputTextView.layer setBorderColor:transparentColor];
     }
 }
 
@@ -240,6 +242,7 @@
 #pragma mark - Event response
 - (void)onMicButtonClicked:(UIButton *)sender {
     _recordButton.hidden = NO;
+    _recordButton.backgroundColor = TUIChatDynamicColor(@"chat_input_bg_color", @"#FFFFFF");
     _inputTextView.hidden = YES;
     _micButton.hidden = YES;
     _keyboardButton.hidden = NO;
@@ -291,7 +294,7 @@
 }
 
 - (void)onRecordButtonTouchUpInside:(UIButton *)sender {
-    self.recordButton.backgroundColor = [UIColor clearColor];
+    self.recordButton.backgroundColor = TUIChatDynamicColor(@"chat_input_bg_color", @"#FFFFFF");
     [self.recordButton setTitle:TIMCommonLocalizableString(TUIKitInputHoldToTalk) forState:UIControlStateNormal];
 
     NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:self.recordStartTime];
@@ -335,18 +338,20 @@
 - (void)onRecordButtonTouchCancel:(UIButton *)sender {
     [self.recordView removeFromSuperview];
     self.recordView = nil;
-    self.recordButton.backgroundColor = [UIColor clearColor];
+    self.recordButton.backgroundColor = TUIChatDynamicColor(@"chat_input_bg_color", @"#FFFFFF");
     [self.recordButton setTitle:TIMCommonLocalizableString(TUIKitInputHoldToTalk) forState:UIControlStateNormal];
     [self.recorder cancel];
 }
 
 - (void)onRecordButtonTouchDragExit:(UIButton *)sender {
     [self.recordView setStatus:Record_Status_Cancel];
+    _recordButton.backgroundColor = TUIChatDynamicColor(@"chat_input_bg_color", @"#FFFFFF");
     [_recordButton setTitle:TIMCommonLocalizableString(TUIKitInputReleaseToCancel) forState:UIControlStateNormal];
 }
 
 - (void)onRecordButtonTouchDragEnter:(UIButton *)sender {
     [self.recordView setStatus:Record_Status_Recording];
+    _recordButton.backgroundColor = TUIChatDynamicColor(@"chat_input_bg_color", @"#FFFFFF");
     [_recordButton setTitle:TIMCommonLocalizableString(TUIKitInputReleaseToSend) forState:UIControlStateNormal];
 }
 

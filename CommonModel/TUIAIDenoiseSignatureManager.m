@@ -34,23 +34,23 @@ static NSString *const kExpiredTimeKey = @"expired_time";
     if (currentTime < self.expiredTime) {
         return;
     }
-    [[V2TIMManager sharedInstance] callExperimentalAPI:kAPIKey
-        param:nil
-        succ:^(NSObject *result) {
-          if (result == nil || ![result isKindOfClass:NSDictionary.class]) {
-              return;
-          }
-          NSDictionary *dict = (NSDictionary *)result;
-          if (dict[kSignatureKey] != nil && [dict[kSignatureKey] isKindOfClass:NSString.class]) {
-              self.signature = dict[kSignatureKey];
-          }
-          if (dict[kExpiredTimeKey] != nil && [dict[kExpiredTimeKey] isKindOfClass:NSNumber.class]) {
-              self.expiredTime = [dict[kExpiredTimeKey] doubleValue];
-          }
-        }
-        fail:^(int code, NSString *desc) {
-          NSLog(@"getAIDenoiseSignature failed, code: %d, desc: %@", code, desc);
-        }];
+//    [[V2TIMManager sharedInstance] callExperimentalAPI:kAPIKey
+//        param:nil
+//        succ:^(NSObject *result) {
+//          if (result == nil || ![result isKindOfClass:NSDictionary.class]) {
+//              return;
+//          }
+//          NSDictionary *dict = (NSDictionary *)result;
+//          if (dict[kSignatureKey] != nil && [dict[kSignatureKey] isKindOfClass:NSString.class]) {
+//              self.signature = dict[kSignatureKey];
+//          }
+//          if (dict[kExpiredTimeKey] != nil && [dict[kExpiredTimeKey] isKindOfClass:NSNumber.class]) {
+//              self.expiredTime = [dict[kExpiredTimeKey] doubleValue];
+//          }
+//        }
+//        fail:^(int code, NSString *desc) {
+//          NSLog(@"getAIDenoiseSignature failed, code: %d, desc: %@", code, desc);
+//        }];
 }
 
 - (NSString *)signature {

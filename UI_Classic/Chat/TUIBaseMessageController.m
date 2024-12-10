@@ -1065,7 +1065,7 @@ ReceiveReadMsgWithGroupID:(NSString *)groupID
         [menu addAction:copyAction];
     }
     [menu addAction:deleteAction];
-    [menu addAction:multiAction];
+//    [menu addAction:multiAction];
     if (imMsg) {
         if ([imMsg isSelf] && [[NSDate date] timeIntervalSinceDate:imMsg.timestamp] < TUIChatConfig.defaultConfig.timeIntervalForMessageRecall &&
             (imMsg.status == V2TIM_MSG_STATUS_SEND_SUCC)) {
@@ -1163,7 +1163,7 @@ ReceiveReadMsgWithGroupID:(NSString *)groupID
       if (isSelectAll) {
           [menu addAction:copyAction];
           [menu addAction:deleteAction];
-          [menu addAction:multiAction];
+//          [menu addAction:multiAction];
           if ([self canForward:data]) {
               [menu addAction:forwardAction];
           }
@@ -1773,10 +1773,12 @@ ReceiveReadMsgWithGroupID:(NSString *)groupID
         [fileData downloadFile];
         return;
     }
+    
+    TUIFileViewController *fileVC = [[TUIFileViewController alloc] init];
+    fileVC.data = [cell fileData];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:fileVC];
+    [self presentViewController:nav animated:YES completion:nil];
 
-    TUIFileViewController *file = [[TUIFileViewController alloc] init];
-    file.data = [cell fileData];
-    [self.navigationController pushViewController:file animated:YES];
 }
 
 - (void)showRelayMessage:(TUIMergeMessageCell *)cell {

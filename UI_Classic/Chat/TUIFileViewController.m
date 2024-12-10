@@ -18,7 +18,6 @@
 @interface TUIFileViewController () <UIDocumentInteractionControllerDelegate>
 @property(nonatomic, strong) UIImageView *image;
 @property(nonatomic, strong) UILabel *name;
-@property(nonatomic, strong) UILabel *progress;
 @property(nonatomic, strong) UIButton *button;
 @property(nonatomic, strong) UIDocumentInteractionController *document;
 @end
@@ -101,6 +100,7 @@
 
 - (void)onBack:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (UIView *)documentInteractionControllerViewForPreview:(UIDocumentInteractionController *)controller {
