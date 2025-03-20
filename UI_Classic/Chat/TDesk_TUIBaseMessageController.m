@@ -79,11 +79,18 @@
 #pragma mark - Life Cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     [self setupViews];
     [self registerEvents];
     self.isActive = YES;
     [TDeskTool addUnsupportNotificationInVC:self];
     [TDeskMessageProgressManager.shareManager addDelegate:self];
+    
+    NSDictionary *param = @{TUICore_TUIChatNotify_ChatVC_ViewDidLoadSubKey_UserID: self.conversationData.userID ? : @""};
+    [TDeskCore notifyEvent:TUICore_TDeskNotify
+                  subKey:TUICore_TDeskNotify_ChatVC_ViewDidLoadSubKey
+                  object:nil
+                   param:param];
 }
 
 - (void)dealloc {

@@ -41,6 +41,7 @@
                   subKey:TUICore_TUIChatNotify_ChatVC_ViewDidLoadSubKey
                   object:nil
                    param:param];
+    
 }
 
 #pragma mark - Override Methods
