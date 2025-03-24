@@ -512,6 +512,7 @@ static CGRect gCustomTopViewRect;
     self.responseKeyboard = NO;
     [self openMultiChooseBoard:NO];
     [self.messageController enableMultiSelectedMode:NO];
+    self.navigationController.navigationBarHidden = NO;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:TUIChatSendMessageNotification object:nil];
 }
 
