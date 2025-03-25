@@ -281,7 +281,7 @@
                                                    TUICore_TUIContactObjectFactory_UserProfileController_PendencyData : cell.pendencyData,
                                                    TUICore_TUIContactObjectFactory_UserProfileController_ActionType : @(3)
                                                };
-                                               [self.navigationController pushViewController:TUICore_TUIContactObjectFactory_UserProfileController_Classic
+                                               [self.navigationController pushViewControllerForTDesk:TUICore_TUIContactObjectFactory_UserProfileController_Classic
                                                                                        param:param
                                                                                    forResult:nil];
                                              }
@@ -359,7 +359,7 @@
         param[TUICore_TUIGroupObjectFactory_SelectGroupMemberVC_Name] = TIMCommonLocalizableString(TUIKitAtSelectMemberTitle);
         param[TUICore_TUIGroupObjectFactory_SelectGroupMemberVC_OptionalStyle] = @(1);
         [self.navigationController
-            pushViewController:TUICore_TUIGroupObjectFactory_SelectGroupMemberVC_Classic
+            pushViewControllerForTDesk:TUICore_TUIGroupObjectFactory_SelectGroupMemberVC_Classic
                          param:param
                      forResult:^(NSDictionary *_Nonnull param) {
                        NSArray<TDeskUserModel *> *modelList = [param tui_objectForKey:TUICore_TUIGroupObjectFactory_SelectGroupMemberVC_ResultUserList

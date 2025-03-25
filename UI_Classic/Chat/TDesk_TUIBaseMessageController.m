@@ -46,7 +46,7 @@
                                         TUIJoinGroupMessageCellDelegate,
                                         TDeskMessageProgressManagerDelegate,
                                         TDeskMessageDataProviderDataSource,
-                                        TUINotificationProtocol,
+                                        TDeskNotificationProtocol,
                                         TDeskPopActionProtocol>
 
 @property(nonatomic, strong) TDeskMessageDataProvider *messageDataProvider;
@@ -522,7 +522,7 @@
     }];
 }
 
-#pragma mark - TUINotificationProtocol
+#pragma mark - TDeskNotificationProtocol
 - (void)onNotifyEvent:(NSString *)key subKey:(NSString *)subKey object:(id)anObject param:(NSDictionary *)param {
     if ([key isEqualToString:TUICore_TUIPluginNotify] && [subKey isEqualToString:TUICore_TUIPluginNotify_PluginViewSizeChangedSubKey]) {
         V2TIMMessage *message = param[TUICore_TUIPluginNotify_PluginViewSizeChangedSubKey_Message];
@@ -1125,10 +1125,10 @@ ReceiveReadMsgWithGroupID:(NSString *)groupID
 }
 - (void)addExtensionActionToCell:(TDeskMessageCell *)cell ofMenu:(TDeskChatPopMenu *)menu {
     // extra
-    NSArray<TUIExtensionInfo *> *infoArray =
+    NSArray<TDeskExtensionInfo *> *infoArray =
         [TDeskCore getExtensionList:TUICore_TUIChatExtension_PopMenuActionItem_ClassicExtensionID
                             param:@{TUICore_TUIChatExtension_PopMenuActionItem_TargetVC : self, TUICore_TUIChatExtension_PopMenuActionItem_ClickCell : cell}];
-    for (TUIExtensionInfo *info in infoArray) {
+    for (TDeskExtensionInfo *info in infoArray) {
         if (info.text && info.icon && info.onClicked) {
             TDeskChatPopMenuAction *extension = [[TDeskChatPopMenuAction alloc] initWithTitle:info.text
                                                                                     image:info.icon

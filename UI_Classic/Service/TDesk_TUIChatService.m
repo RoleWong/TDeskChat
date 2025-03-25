@@ -11,7 +11,7 @@
 #import "TDesk_TUIMessageCellConfig.h"
 #import "TDesk_TUIBaseMessageController.h"
 
-@interface TDeskChatService () <TUINotificationProtocol, TUIExtensionProtocol>
+@interface TDeskChatService () <TDeskNotificationProtocol, TDeskExtensionProtocol>
 
 @end
 

@@ -399,7 +399,7 @@
     extensionParam[TUICore_TUIChatExtension_InputViewMoreItem_FilterGroupNote]  = @(!isNeedGroupNote);
     extensionParam[TUICore_TUIChatExtension_InputViewMoreItem_ActionVC] = actionController;
     NSArray *extensionList = [TDeskCore getExtensionList:TUICore_TUIChatExtension_InputViewMoreItem_ClassicExtensionID param:extensionParam];
-    for (TUIExtensionInfo *info in extensionList) {
+    for (TDeskExtensionInfo *info in extensionList) {
         NSAssert(info.icon && info.text && info.onClicked, @"extension for input view is invalid, check icon/text/onclick");
         if (info.icon && info.text && info.onClicked) {
             TDeskInputMoreCellData *data = [[TDeskInputMoreCellData alloc] init];
@@ -442,7 +442,7 @@
     }
     param[TUICore_TUIChatExtension_InputViewMoreItem_ActionVC] = actionController;
     NSArray *extensionList = [TDeskCore getExtensionList:TUICore_TUIChatExtension_InputViewMoreItem_MinimalistExtensionID param:param];
-    for (TUIExtensionInfo *info in extensionList) {
+    for (TDeskExtensionInfo *info in extensionList) {
         if (info.icon && info.text && info.onClicked) {
             TDeskCustomActionSheetItem *item = [[TDeskCustomActionSheetItem alloc] initWithTitle:info.text
                                                                                     leftMark:info.icon

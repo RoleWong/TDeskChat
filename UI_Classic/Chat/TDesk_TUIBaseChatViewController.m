@@ -53,7 +53,7 @@ static CGRect gCustomTopViewRect;
                                          UINavigationControllerDelegate,
                                          TDeskMessageMultiChooseViewDelegate,
                                          TDeskChatBaseDataProviderDelegate,
-                                         TUINotificationProtocol,
+                                         TDeskNotificationProtocol,
                                          TUIJoinGroupMessageCellDelegate,
                                          V2TIMConversationListener,
                                          TUINavigationControllerDelegate,
@@ -371,10 +371,10 @@ static CGRect gCustomTopViewRect;
     param[TUICore_TUIChatExtension_NavigationMoreItem_ItemSize] = NSStringFromCGSize(itemSize);
     param[TUICore_TUIChatExtension_NavigationMoreItem_FilterVideoCall] = @(!TDeskChatConfig.defaultConfig.enableVideoCall);
     param[TUICore_TUIChatExtension_NavigationMoreItem_FilterAudioCall] = @(!TDeskChatConfig.defaultConfig.enableAudioCall);
-    NSArray<TUIExtensionInfo *> *extensionList = [TDeskCore getExtensionList:TUICore_TUIChatExtension_NavigationMoreItem_ClassicExtensionID param:param];
-    TUIExtensionInfo *maxWeightInfo = [TUIExtensionInfo new];
+    NSArray<TDeskExtensionInfo *> *extensionList = [TDeskCore getExtensionList:TUICore_TUIChatExtension_NavigationMoreItem_ClassicExtensionID param:param];
+    TDeskExtensionInfo *maxWeightInfo = [TDeskExtensionInfo new];
     maxWeightInfo.weight = INT_MIN;
-    for (TUIExtensionInfo *info in extensionList) {
+    for (TDeskExtensionInfo *info in extensionList) {
         if (maxWeightInfo.weight < info.weight) {
             maxWeightInfo = info;
         }
@@ -676,8 +676,8 @@ static CGRect gCustomTopViewRect;
 
     //  conversationData
     NSDictionary *param = @{TUICore_TUIChatExtension_GetChatConversationModelParams_UserID: self.conversationData.userID ? : @""};
-    NSArray<TUIExtensionInfo *> *extensionList = [TDeskCore getExtensionList:TUICore_TUIChatExtension_GetChatConversationModelParams param:param];
-    TUIExtensionInfo *extention = extensionList.firstObject;
+    NSArray<TDeskExtensionInfo *> *extensionList = [TDeskCore getExtensionList:TUICore_TUIChatExtension_GetChatConversationModelParams param:param];
+    TDeskExtensionInfo *extention = extensionList.firstObject;
     if (extention) {
         _conversationData.msgNeedReadReceipt = [extention.data[TUICore_TUIChatExtension_GetChatConversationModelParams_MsgNeedReadReceipt] boolValue];
         _conversationData.enableVideoCall = [extention.data[TUICore_TUIChatExtension_GetChatConversationModelParams_EnableVideoCall] boolValue];
@@ -754,8 +754,8 @@ static CGRect gCustomTopViewRect;
 - (void)rightBarButtonClick:(UIButton *)button {
     [self.inputController reset];
 
-    TUIExtensionInfo *info = button.tui_extValueObj;
-    if (info == nil || ![info isKindOfClass:TUIExtensionInfo.class] || info.onClicked == nil) {
+    TDeskExtensionInfo *info = button.tui_extValueObj;
+    if (info == nil || ![info isKindOfClass:TDeskExtensionInfo.class] || info.onClicked == nil) {
         return;
     }
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
@@ -1004,11 +1004,11 @@ static CGRect gCustomTopViewRect;
         param[TUICore_TUIChatExtension_ClickAvatar_PushVC] = self.navigationController;
     }
     
-    NSArray<TUIExtensionInfo *> *extensionList = [TDeskCore getExtensionList:TUICore_TUIChatExtension_ClickAvatar_ClassicExtensionID param:param];
+    NSArray<TDeskExtensionInfo *> *extensionList = [TDeskCore getExtensionList:TUICore_TUIChatExtension_ClickAvatar_ClassicExtensionID param:param];
     if (extensionList.count > 0) {
-        TUIExtensionInfo *maxWeightInfo = [TUIExtensionInfo new];
+        TDeskExtensionInfo *maxWeightInfo = [TDeskExtensionInfo new];
         maxWeightInfo.weight = INT_MIN;
-        for (TUIExtensionInfo *info in extensionList) {
+        for (TDeskExtensionInfo *info in extensionList) {
             if (maxWeightInfo.weight < info.weight) {
                 maxWeightInfo = info;
             }
@@ -1253,7 +1253,7 @@ static CGRect gCustomTopViewRect;
     __weak typeof(self) weakSelf = self;
     UINavigationController *nav = [[UINavigationController alloc] init];
     nav.modalPresentationStyle = UIModalPresentationFullScreen;
-    [self presentViewController:TUICore_TUIConversationObjectFactory_ConversationSelectVC_Classic
+    [self presentViewControllerForTDesk:TUICore_TUIConversationObjectFactory_ConversationSelectVC_Classic
                           param:nil
                        embbedIn:nav
                       forResult:^(NSDictionary *_Nonnull param) {

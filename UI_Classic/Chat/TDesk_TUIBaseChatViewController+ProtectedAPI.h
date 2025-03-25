@@ -12,7 +12,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TDeskBaseChatViewController () <TDeskInputControllerDelegate, TUINotificationProtocol>
+@interface TDeskBaseChatViewController () <TDeskInputControllerDelegate, TDeskNotificationProtocol>
 - (NSString *)forwardTitleWithMyName:(NSString *)nameStr;
 @end
 

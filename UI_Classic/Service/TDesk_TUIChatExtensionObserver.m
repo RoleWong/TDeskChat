@@ -11,7 +11,7 @@
 #import <TDeskCore/TDesk_TUICore.h>
 #import "TDesk_TUIC2CChatViewController.h"
 
-@interface TDeskChatExtensionObserver () <TUIExtensionProtocol>
+@interface TDeskChatExtensionObserver () <TDeskExtensionProtocol>
 
 @end
 
@@ -34,8 +34,8 @@
     [TDeskCore registerExtension:TUICore_TUIContactExtension_FriendProfileActionMenu_ClassicExtensionID object:TDeskChatExtensionObserver.shareInstance];
 }
 
-#pragma mark - TUIExtensionProtocol
-- (NSArray<TUIExtensionInfo *> *)onGetExtension:(NSString *)extensionID param:(NSDictionary *)param {
+#pragma mark - TDeskExtensionProtocol
+- (NSArray<TDeskExtensionInfo *> *)onGetExtension:(NSString *)extensionID param:(NSDictionary *)param {
     if (![extensionID isKindOfClass:NSString.class]) {
         return nil;
     }
@@ -47,8 +47,8 @@
     }
 }
 
-- (NSArray<TUIExtensionInfo *> *)getFriendProfileActionMenuExtensionForClassicContact:(NSDictionary *)param {
-    TUIExtensionInfo *info = [[TUIExtensionInfo alloc] init];
+- (NSArray<TDeskExtensionInfo *> *)getFriendProfileActionMenuExtensionForClassicContact:(NSDictionary *)param {
+    TDeskExtensionInfo *info = [[TDeskExtensionInfo alloc] init];
     info.weight = 300;
     info.text = TIMCommonLocalizableString(ProfileSendMessages);
     info.onClicked = ^(NSDictionary *_Nonnull actionParam) {

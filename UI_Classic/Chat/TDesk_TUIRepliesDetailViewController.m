@@ -43,7 +43,7 @@
                                               UITableViewDataSource,
                                               TDeskMessageBaseDataProviderDataSource,
                                               TDeskMessageCellDelegate,
-                                              TUINotificationProtocol,
+                                              TDeskNotificationProtocol,
                                               V2TIMAdvancedMsgListener>
 
 @property(nonatomic, strong) TDeskMessageCellData *cellData;
@@ -680,7 +680,7 @@
         }];
 }
 
-#pragma mark - TUINotificationProtocol
+#pragma mark - TDeskNotificationProtocol
 - (void)onNotifyEvent:(NSString *)key subKey:(NSString *)subKey object:(id)anObject param:(NSDictionary *)param {
     if ([key isEqualToString:TUICore_TUIPluginNotify] &&
         [subKey isEqualToString:TUICore_TUIPluginNotify_DidChangePluginViewSubKey]) {

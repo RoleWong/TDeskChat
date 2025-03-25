@@ -15,7 +15,7 @@
 #import <TDeskCore/TDesk_TUILogin.h>
 #import "TDesk_TUIAIDenoiseSignatureManager.h"
 
-@interface TDeskAudioRecorder () <AVAudioRecorderDelegate, TUINotificationProtocol>
+@interface TDeskAudioRecorder () <AVAudioRecorderDelegate, TDeskNotificationProtocol>
 
 @property(nonatomic, strong) AVAudioRecorder *recorder;
 @property(nonatomic, strong) NSTimer *recordTimer;
@@ -281,7 +281,7 @@
     NSLog(@"stop TUICallKit recording");
 }
 
-#pragma mark - TUINotificationProtocol
+#pragma mark - TDeskNotificationProtocol
 - (void)onNotifyEvent:(NSString *)key subKey:(NSString *)subKey object:(nullable id)anObject param:(NSDictionary *)param {
     if ([key isEqualToString:TUICore_RecordAudioMessageNotify]) {
         if (param == nil) {

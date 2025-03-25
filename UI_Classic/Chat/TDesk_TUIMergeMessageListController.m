@@ -35,7 +35,7 @@
 
 #define STR(x) @ #x
 
-@interface TDeskMergeMessageListController () <TDeskMessageCellDelegate, TDeskMessageBaseDataProviderDataSource,TUINotificationProtocol>
+@interface TDeskMergeMessageListController () <TDeskMessageCellDelegate, TDeskMessageBaseDataProviderDataSource,TDeskNotificationProtocol>
 @property(nonatomic, strong) NSArray<V2TIMMessage *> *imMsgs;
 @property(nonatomic, strong) NSMutableArray<TDeskMessageCellData *> *uiMsgs;
 @property(nonatomic, strong) NSMutableDictionary *stylesCache;
@@ -523,7 +523,7 @@
     }
 }
 
-#pragma mark - TUINotificationProtocol
+#pragma mark - TDeskNotificationProtocol
 - (void)onNotifyEvent:(NSString *)key subKey:(NSString *)subKey object:(id)anObject param:(NSDictionary *)param {
     if ([key isEqualToString:TUICore_TUIPluginNotify] && [subKey isEqualToString:TUICore_TUIPluginNotify_DidChangePluginViewSubKey]) {
         TDeskMessageCellData *data = param[TUICore_TUIPluginNotify_DidChangePluginViewSubKey_Data];

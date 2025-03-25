@@ -1,5 +1,5 @@
 //
-//  TUIDeslObjectFactory.h
+//  TDeskDeslObjectFactory.h
 //  TUIChat
 //
 //  Created by wyl on 2023/3/20.
@@ -12,8 +12,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TUIDeslObjectFactory : NSObject
-+ (TUIDeslObjectFactory *)shareInstance;
+@interface TDeskDeslObjectFactory : NSObject
++ (TDeskDeslObjectFactory *)shareInstance;
 @end
 
 NS_ASSUME_NONNULL_END
