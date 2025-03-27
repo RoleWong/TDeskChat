@@ -46,6 +46,8 @@
  */
 @interface TDeskBaseChatViewController : UIViewController
 
+@property (nonatomic, assign) BOOL originalNavigationBarHidden;
+
 @property(nonatomic, strong) TDeskChatConversationModel *conversationData;
 
 /**

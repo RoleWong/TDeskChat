@@ -81,7 +81,6 @@
     [super viewDidLoad];
     
     [self setupViews];
-    [self registerEvents];
     self.isActive = YES;
     [TDeskTool addUnsupportNotificationInVC:self];
     [TDeskMessageProgressManager.shareManager addDelegate:self];
@@ -103,6 +102,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     self.isInVC = YES;
     [super viewWillAppear:animated];
+    [self registerEvents];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -121,6 +121,8 @@
     if (_currentVoiceMsg) {
         [_currentVoiceMsg stopVoiceMessage];
     }
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [TDeskCore unRegisterEventByObject:self];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:TUIChatSendMessageNotification object:nil];
 }
 

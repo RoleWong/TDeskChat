@@ -125,6 +125,7 @@ static CGRect gCustomTopViewRect;
     [super viewDidLoad];
     
     [self setupTopViews];
+    self.originalNavigationBarHidden = self.navigationController.navigationBarHidden;
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     
     // data provider
@@ -145,6 +146,7 @@ static CGRect gCustomTopViewRect;
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self configTopViewsViewWillAppear];
+    [self.navigationController setNavigationBarHidden:YES animated:NO];
 }
 
 - (void)configTopViewsViewWillAppear {
@@ -205,10 +207,6 @@ static CGRect gCustomTopViewRect;
                                                    self.view.mm_h - textViewHeight - Bottom_SafeHeight - topMarginByCustomView);
         [self.messageController scrollToBottom:YES];
     }
-}
-
-- (void)dealloc {
-    [TDeskCore unRegisterEventByObject:self];
 }
 
 - (void)appWillResignActive:(NSNotification *)notification {
@@ -300,7 +298,9 @@ static CGRect gCustomTopViewRect;
 }
 
 
-
+- (void)dealloc {
+    [TDeskCore unRegisterEventByObject:self];
+}
 - (void)onBackButtonPressed {
     if (self.navigationController && self.navigationController.viewControllers.count > 1) {
         [self.navigationController popViewControllerAnimated:YES];
@@ -512,10 +512,8 @@ static CGRect gCustomTopViewRect;
     self.responseKeyboard = NO;
     [self openMultiChooseBoard:NO];
     [self.messageController enableMultiSelectedMode:NO];
-    self.navigationController.navigationBarHidden = NO;
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:TUIChatSendMessageNotification object:nil];
+    [self.navigationController setNavigationBarHidden:self.originalNavigationBarHidden animated:NO];
 }
-
 
 #pragma mark - Extension
 - (void)notifyBttomContainerReady {
