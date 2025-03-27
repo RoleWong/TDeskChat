@@ -42,6 +42,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface TDeskBaseMessageController : UITableViewController
 
+@property (nonatomic, assign) BOOL eventsDidRegisterd;
+
 + (void)asyncGetDisplayString:(NSArray<V2TIMMessage *> *)messageList callback:(void(^)(NSDictionary<NSString *, NSString *> *))callback;
 + (nullable NSString *)getDisplayString:(V2TIMMessage *)message;
 
