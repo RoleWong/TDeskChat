@@ -38,17 +38,17 @@
         [self.container addSubview:self.securityStrikeView];
         
         [self.container addSubview:self.fileContainer];
-        self.fileContainer.backgroundColor = TUIChatDynamicColor(@"chat_file_message_bg_color", @"#FFFFFF");
+        self.fileContainer.backgroundColor = TDeskChatDynamicColor(@"chat_file_message_bg_color", @"#FFFFFF");
         [self.fileContainer addSubview:self.progressView];
 
         _fileName = [[UILabel alloc] init];
         _fileName.font = [UIFont boldSystemFontOfSize:15];
-        _fileName.textColor = TUIChatDynamicColor(@"chat_file_message_title_color", @"#000000");
+        _fileName.textColor = TDeskChatDynamicColor(@"chat_file_message_title_color", @"#000000");
         [self.fileContainer addSubview:_fileName];
 
         _length = [[UILabel alloc] init];
         _length.font = [UIFont systemFontOfSize:12];
-        _length.textColor = TUIChatDynamicColor(@"chat_file_message_subtitle_color", @"#888888");
+        _length.textColor = TDeskChatDynamicColor(@"chat_file_message_subtitle_color", @"#888888");
         [self.fileContainer addSubview:_length];
 
         _image = [[UIImageView alloc] init];
@@ -199,7 +199,7 @@
         }
     } else {
         if (!self.fileData.isLocalExist && !self.fileData.isDownloading) {
-            str = [NSString stringWithFormat:@"%@ %@", str, TIMCommonLocalizableString(TUIKitNotDownload)];
+            str = [NSString stringWithFormat:@"%@ %@", str, TDeskIMCommonLocalizableString(TUIKitNotDownload)];
         }
     }
 
@@ -338,7 +338,7 @@
 - (UIView *)fileContainer {
     if (_fileContainer == nil) {
         _fileContainer = [[UIView alloc] init];
-        _fileContainer.backgroundColor = TUIChatDynamicColor(@"chat_file_message_bg_color", @"#FFFFFF");
+        _fileContainer.backgroundColor = TDeskChatDynamicColor(@"chat_file_message_bg_color", @"#FFFFFF");
     }
     return _fileContainer;
 }
@@ -395,8 +395,8 @@
 }
 
 - (void)prepareReactTagUI:(UIView *)containerView {
-    NSDictionary *param = @{TUICore_TUIChatExtension_ChatMessageReactPreview_Delegate: self};
-    [TDeskCore raiseExtension:TUICore_TUIChatExtension_ChatMessageReactPreview_ClassicExtensionID parentView:containerView param:param];
+    NSDictionary *param = @{TDeskCore_TUIChatExtension_ChatMessageReactPreview_Delegate: self};
+    [TDeskCore raiseExtension:TDeskCore_TUIChatExtension_ChatMessageReactPreview_ClassicExtensionID parentView:containerView param:param];
 }
 
 #pragma mark - TDeskMessageCellProtocol
@@ -413,7 +413,7 @@
     if (hasRiskContent) {
         CGFloat bubbleTopMargin = 12;
         CGFloat bubbleBottomMargin = 12;
-        size.width = MAX(size.width, 261);// width must more than  TIMCommonLocalizableString(TUIKitMessageTypeSecurityStrike)
+        size.width = MAX(size.width, 261);// width must more than  TDeskIMCommonLocalizableString(TUIKitMessageTypeSecurityStrike)
         size.height += bubbleTopMargin;
         size.height += kTUISecurityStrikeViewTopLineMargin;
         size.height += kTUISecurityStrikeViewTopLineToBottom;

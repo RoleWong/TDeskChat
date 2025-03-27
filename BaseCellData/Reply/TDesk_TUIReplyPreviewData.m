@@ -14,19 +14,19 @@
 + (NSString *)displayAbstract:(NSInteger)type abstract:(NSString *)abstract withFileName:(BOOL)withFilename isRisk:(BOOL)isRisk {
     NSString *text = abstract;
     if (type == V2TIM_ELEM_TYPE_IMAGE) {
-        text = isRisk? TIMCommonLocalizableString(TUIkitMessageTypeRiskImage):TIMCommonLocalizableString(TUIkitMessageTypeImage);
+        text = isRisk? TDeskIMCommonLocalizableString(TUIkitMessageTypeRiskImage):TDeskIMCommonLocalizableString(TUIkitMessageTypeImage);
     } else if (type == V2TIM_ELEM_TYPE_VIDEO) {
-        text = isRisk? TIMCommonLocalizableString(TUIkitMessageTypeRiskVideo):TIMCommonLocalizableString(TUIkitMessageTypeVideo);
+        text = isRisk? TDeskIMCommonLocalizableString(TUIkitMessageTypeRiskVideo):TDeskIMCommonLocalizableString(TUIkitMessageTypeVideo);
     } else if (type == V2TIM_ELEM_TYPE_SOUND) {
-        text = isRisk? TIMCommonLocalizableString(TUIkitMessageTypeRiskVoice):TIMCommonLocalizableString(TUIKitMessageTypeVoice);
+        text = isRisk? TDeskIMCommonLocalizableString(TUIkitMessageTypeRiskVoice):TDeskIMCommonLocalizableString(TUIKitMessageTypeVoice);
     } else if (type == V2TIM_ELEM_TYPE_FACE) {
-        text = TIMCommonLocalizableString(TUIKitMessageTypeAnimateEmoji);
+        text = TDeskIMCommonLocalizableString(TUIKitMessageTypeAnimateEmoji);
     } else if (type == V2TIM_ELEM_TYPE_FILE) {
         if (withFilename) {
-            text = [NSString stringWithFormat:@"%@%@", TIMCommonLocalizableString(TUIkitMessageTypeFile), abstract];
+            text = [NSString stringWithFormat:@"%@%@", TDeskIMCommonLocalizableString(TUIkitMessageTypeFile), abstract];
             ;
         } else {
-            text = TIMCommonLocalizableString(TUIkitMessageTypeFile);
+            text = TDeskIMCommonLocalizableString(TUIkitMessageTypeFile);
         }
     }
     return text;

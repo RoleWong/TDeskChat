@@ -332,7 +332,7 @@
       dispatch_async(dispatch_get_main_queue(), ^{
         @strongify(self);
         if (duration < self.videoMinimumDuration) {
-            [self showErrorStr:TIMCommonLocalizableString(TUIKitMoreVideoCaptureDurationTip)];
+            [self showErrorStr:TDeskIMCommonLocalizableString(TUIKitMoreVideoCaptureDurationTip)];
         } else if (error) {
             [self showErrorStr:error.localizedDescription];
         } else {

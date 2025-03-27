@@ -43,7 +43,7 @@
 #import "TDesk_TUIMessageCellConfig.h"
 
 @interface TDeskBaseMessageController () <TDeskMessageCellDelegate,
-                                        TUIJoinGroupMessageCellDelegate,
+                                        TDeskJoinGroupMessageCellDelegate,
                                         TDeskMessageProgressManagerDelegate,
                                         TDeskMessageDataProviderDataSource,
                                         TDeskNotificationProtocol,
@@ -86,9 +86,9 @@
     [TDeskTool addUnsupportNotificationInVC:self];
     [TDeskMessageProgressManager.shareManager addDelegate:self];
     
-    NSDictionary *param = @{TUICore_TUIChatNotify_ChatVC_ViewDidLoadSubKey_UserID: self.conversationData.userID ? : @""};
-    [TDeskCore notifyEvent:TUICore_TDeskNotify
-                  subKey:TUICore_TDeskNotify_ChatVC_ViewDidLoadSubKey
+    NSDictionary *param = @{TDeskCore_TUIChatNotify_ChatVC_ViewDidLoadSubKey_UserID: self.conversationData.userID ? : @""};
+    [TDeskCore notifyEvent:TDeskCore_TDeskNotify
+                  subKey:TDeskCore_TDeskNotify_ChatVC_ViewDidLoadSubKey
                   object:nil
                    param:param];
 }
@@ -143,7 +143,7 @@
     
     self.tableView.scrollsToTop = NO;
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    self.tableView.backgroundColor = TUIChatDynamicColor(@"chat_controller_bg_color", @"#FFFFFF");
+    self.tableView.backgroundColor = TDeskChatDynamicColor(@"chat_controller_bg_color", @"#FFFFFF");
     self.indicatorView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, TMessageController_Header_Height)];
     self.indicatorView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
     self.tableView.tableHeaderView = self.indicatorView;
@@ -154,14 +154,14 @@
 }
 
 - (void)registerEvents {
-    [TDeskCore registerEvent:TUICore_TUIPluginNotify
-                    subKey:TUICore_TUIPluginNotify_PluginViewSizeChangedSubKey
+    [TDeskCore registerEvent:TDeskCore_TUIPluginNotify
+                    subKey:TDeskCore_TUIPluginNotify_PluginViewSizeChangedSubKey
                     object:self];
-    [TDeskCore registerEvent:TUICore_TUIPluginNotify
-                    subKey:TUICore_TUIPluginNotify_WillForwardTextSubKey
+    [TDeskCore registerEvent:TDeskCore_TUIPluginNotify
+                    subKey:TDeskCore_TUIPluginNotify_WillForwardTextSubKey
                     object:self];
-    [TDeskCore registerEvent:TUICore_TUIPluginNotify
-                    subKey:TUICore_TUIPluginNotify_DidChangePluginViewSubKey
+    [TDeskCore registerEvent:TDeskCore_TUIPluginNotify
+                    subKey:TDeskCore_TUIPluginNotify_DidChangePluginViewSubKey
                     object:self];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -360,11 +360,11 @@
         [self setUIMessageStatus:cellData status:Msg_Status_Succ];
 
         NSDictionary *param = @{
-            TUICore_TUIChatNotify_SendMessageSubKey_Code : @0,
-            TUICore_TUIChatNotify_SendMessageSubKey_Desc : @"",
-            TUICore_TUIChatNotify_SendMessageSubKey_Message : cellData.innerMessage
+            TDeskCore_TUIChatNotify_SendMessageSubKey_Code : @0,
+            TDeskCore_TUIChatNotify_SendMessageSubKey_Desc : @"",
+            TDeskCore_TUIChatNotify_SendMessageSubKey_Message : cellData.innerMessage
         };
-        [TDeskCore notifyEvent:TUICore_TUIChatNotify subKey:TUICore_TUIChatNotify_SendMessageSubKey object:self param:param];
+        [TDeskCore notifyEvent:TDeskCore_TUIChatNotify subKey:TDeskCore_TUIChatNotify_SendMessageSubKey object:self param:param];
     }
                               FailBlock:^(int code, NSString *desc) {
         @strongify(self);
@@ -372,9 +372,9 @@
         [self setUIMessageStatus:cellData status:Msg_Status_Fail];
         [self makeSendErrorHud:code desc:desc];
         
-        NSDictionary *param = @{TUICore_TUIChatNotify_SendMessageSubKey_Code : @(code),
-                                TUICore_TUIChatNotify_SendMessageSubKey_Desc : desc};
-        [TDeskCore notifyEvent:TUICore_TUIChatNotify subKey:TUICore_TUIChatNotify_SendMessageSubKey object:self param:param];
+        NSDictionary *param = @{TDeskCore_TUIChatNotify_SendMessageSubKey_Code : @(code),
+                                TDeskCore_TUIChatNotify_SendMessageSubKey_Desc : desc};
+        [TDeskCore notifyEvent:TDeskCore_TUIChatNotify subKey:TDeskCore_TUIChatNotify_SendMessageSubKey object:self param:param];
     }];
 }
 
@@ -421,13 +421,13 @@
     
     NSString *errorMsg = @"";
     if (self.isMsgNeedReadReceipt && code == ERR_SDK_INTERFACE_NOT_SUPPORT) {
-        errorMsg = [NSString stringWithFormat:@"%@%@", TUIKitLocalizableString(TUIKitErrorUnsupportIntefaceMessageRead),
-                                         TUIKitLocalizableString(TUIKitErrorUnsupporInterfaceSuffix)];
+        errorMsg = [NSString stringWithFormat:@"%@%@", TDeskKitLocalizableString(TUIKitErrorUnsupportIntefaceMessageRead),
+                                         TDeskKitLocalizableString(TUIKitErrorUnsupporInterfaceSuffix)];
     } else {
         errorMsg = [TDeskTool convertIMError:code msg:desc];
     }
     UIAlertController *ac = [UIAlertController alertControllerWithTitle:errorMsg message:nil preferredStyle:UIAlertControllerStyleAlert];
-    [ac tuitheme_addAction:[UIAlertAction actionWithTitle:TIMCommonLocalizableString(Confirm) style:UIAlertActionStyleDefault handler:nil]];
+    [ac tuitheme_addAction:[UIAlertAction actionWithTitle:TDeskIMCommonLocalizableString(Confirm) style:UIAlertActionStyleDefault handler:nil]];
     [self presentViewController:ac animated:YES completion:nil];
 }
 
@@ -492,7 +492,7 @@
     if (userInfo == nil) {
         return;
     }
-    V2TIMMessage *message = [userInfo objectForKey:TUICore_TUIChatService_SendMessageMethod_MsgKey];
+    V2TIMMessage *message = [userInfo objectForKey:TDeskCore_TUIChatService_SendMessageMethod_MsgKey];
     if (message == nil) {
         return;
     }
@@ -504,7 +504,7 @@
     if (userInfo == nil) {
         return;
     }
-    V2TIMMessage *message = [userInfo objectForKey:TUICore_TUIChatService_SendMessageMethodWithoutUpdateUI_MsgKey];
+    V2TIMMessage *message = [userInfo objectForKey:TDeskCore_TUIChatService_SendMessageMethodWithoutUpdateUI_MsgKey];
     if (message == nil) {
         return;
     }
@@ -524,8 +524,8 @@
 
 #pragma mark - TDeskNotificationProtocol
 - (void)onNotifyEvent:(NSString *)key subKey:(NSString *)subKey object:(id)anObject param:(NSDictionary *)param {
-    if ([key isEqualToString:TUICore_TUIPluginNotify] && [subKey isEqualToString:TUICore_TUIPluginNotify_PluginViewSizeChangedSubKey]) {
-        V2TIMMessage *message = param[TUICore_TUIPluginNotify_PluginViewSizeChangedSubKey_Message];
+    if ([key isEqualToString:TDeskCore_TUIPluginNotify] && [subKey isEqualToString:TDeskCore_TUIPluginNotify_PluginViewSizeChangedSubKey]) {
+        V2TIMMessage *message = param[TDeskCore_TUIPluginNotify_PluginViewSizeChangedSubKey_Message];
         for (TDeskMessageCellData *data in self.messageDataProvider.uiMsgs) {
             if (data.innerMessage == message) {
                 [self.messageCellConfig removeHeightCacheOfMessageCellData:data];
@@ -537,11 +537,11 @@
                 break;
             }
         }
-    } else if ([key isEqualToString: TUICore_TUIPluginNotify] && [subKey isEqualToString:TUICore_TUIPluginNotify_DidChangePluginViewSubKey]) {
+    } else if ([key isEqualToString: TDeskCore_TUIPluginNotify] && [subKey isEqualToString:TDeskCore_TUIPluginNotify_DidChangePluginViewSubKey]) {
         // Plugin View is Shown or content changed.
-        TDeskMessageCellData *data = param[TUICore_TUIPluginNotify_DidChangePluginViewSubKey_Data];
+        TDeskMessageCellData *data = param[TDeskCore_TUIPluginNotify_DidChangePluginViewSubKey_Data];
         BOOL isAllowScroll2Bottom = YES;
-        if ([param[TUICore_TUIPluginNotify_DidChangePluginViewSubKey_isAllowScroll2Bottom] isEqualToString:@"0"] ) {
+        if ([param[TDeskCore_TUIPluginNotify_DidChangePluginViewSubKey_isAllowScroll2Bottom] isEqualToString:@"0"] ) {
             isAllowScroll2Bottom = NO ;
             TDeskMessageCellData *lasData = [self.messageDataProvider.uiMsgs lastObject];
             if ([lasData.msgID isEqualToString:data.msgID] ) {
@@ -550,9 +550,9 @@
         }
         [self.messageCellConfig removeHeightCacheOfMessageCellData:data];
         [self reloadAndScrollToBottomOfMessage:data.innerMessage.msgID needScroll:isAllowScroll2Bottom];
-    } else if ([key isEqualToString:TUICore_TUIPluginNotify] && [subKey isEqualToString:TUICore_TUIPluginNotify_WillForwardTextSubKey]) {
+    } else if ([key isEqualToString:TDeskCore_TUIPluginNotify] && [subKey isEqualToString:TDeskCore_TUIPluginNotify_WillForwardTextSubKey]) {
         // Text will be forwarded.
-        NSString *text = param[TUICore_TUIPluginNotify_WillForwardTextSubKey_Text];
+        NSString *text = param[TDeskCore_TUIPluginNotify_WillForwardTextSubKey_Text];
         if (self.delegate && [self.delegate respondsToSelector:@selector(messageController:onForwardText:)]) {
             [self.delegate messageController:self onForwardText:text];
         }
@@ -642,8 +642,8 @@
              * Determine whether the current unread needs to be changed to read by the callback timestamp
              */
             time_t msgTime = [cell.messageData.innerMessage.timestamp timeIntervalSince1970];
-            if (msgTime <= timestamp && ![cell.readReceiptLabel.text isEqualToString:TIMCommonLocalizableString(Read)]) {
-                cell.readReceiptLabel.text = TIMCommonLocalizableString(Read);
+            if (msgTime <= timestamp && ![cell.readReceiptLabel.text isEqualToString:TDeskIMCommonLocalizableString(Read)]) {
+                cell.readReceiptLabel.text = TDeskIMCommonLocalizableString(Read);
             }
         }
     }
@@ -858,8 +858,8 @@ ReceiveReadMsgWithGroupID:(NSString *)groupID
                 cellData.showUnreadPoint = NO;
             }
         }
-        [TDeskCore notifyEvent:TUICore_TUIChatNotify
-                              subKey:TUICore_TUIChatNotify_MessageDisplayedSubKey
+        [TDeskCore notifyEvent:TDeskCore_TUIChatNotify
+                              subKey:TDeskCore_TUIChatNotify_MessageDisplayedSubKey
                               object:cellData
                                param:nil];
     }
@@ -935,10 +935,10 @@ ReceiveReadMsgWithGroupID:(NSString *)groupID
     if ([TDeskMessageCellConfig isPluginCustomMessageCellData:cell.messageData]) {
         NSMutableDictionary *param = [NSMutableDictionary dictionary];
         if (cell) {
-            param[TUICore_TUIPluginNotify_PluginCustomCellClick_Cell] = cell;
+            param[TDeskCore_TUIPluginNotify_PluginCustomCellClick_Cell] = cell;
         }
         if (self.navigationController) {
-            param[TUICore_TUIPluginNotify_PluginCustomCellClick_PushVC] = self.navigationController;
+            param[TDeskCore_TUIPluginNotify_PluginCustomCellClick_PushVC] = self.navigationController;
         }
         if (cell.pluginMsgSelectCallback) {
             cell.pluginMsgSelectCallback(param);
@@ -1126,8 +1126,8 @@ ReceiveReadMsgWithGroupID:(NSString *)groupID
 - (void)addExtensionActionToCell:(TDeskMessageCell *)cell ofMenu:(TDeskChatPopMenu *)menu {
     // extra
     NSArray<TDeskExtensionInfo *> *infoArray =
-        [TDeskCore getExtensionList:TUICore_TUIChatExtension_PopMenuActionItem_ClassicExtensionID
-                            param:@{TUICore_TUIChatExtension_PopMenuActionItem_TargetVC : self, TUICore_TUIChatExtension_PopMenuActionItem_ClickCell : cell}];
+        [TDeskCore getExtensionList:TDeskCore_TUIChatExtension_PopMenuActionItem_ClassicExtensionID
+                            param:@{TDeskCore_TUIChatExtension_PopMenuActionItem_TargetVC : self, TDeskCore_TUIChatExtension_PopMenuActionItem_ClickCell : cell}];
     for (TDeskExtensionInfo *info in infoArray) {
         if (info.text && info.icon && info.onClicked) {
             TDeskChatPopMenuAction *extension = [[TDeskChatPopMenuAction alloc] initWithTitle:info.text
@@ -1219,7 +1219,7 @@ ReceiveReadMsgWithGroupID:(NSString *)groupID
     TDeskChatPopMenuAction *copyAction = nil;
     @weakify(self);
     @weakify(cell);
-    copyAction = [[TDeskChatPopMenuAction alloc] initWithTitle:TIMCommonLocalizableString(Copy)
+    copyAction = [[TDeskChatPopMenuAction alloc] initWithTitle:TDeskIMCommonLocalizableString(Copy)
                                                        image:TUIChatBundleThemeImage(@"chat_icon_copy_img", @"icon_copy")
                                                       weight:10000
                                                     callback:^{
@@ -1231,7 +1231,7 @@ ReceiveReadMsgWithGroupID:(NSString *)groupID
 }
 - (TDeskChatPopMenuAction *)setupDeleteAction:(TDeskMessageCell *)cell {
     @weakify(self);
-    TDeskChatPopMenuAction *deleteAction = [[TDeskChatPopMenuAction alloc] initWithTitle:TIMCommonLocalizableString(Delete)
+    TDeskChatPopMenuAction *deleteAction = [[TDeskChatPopMenuAction alloc] initWithTitle:TDeskIMCommonLocalizableString(Delete)
                                                                                image:TUIChatBundleThemeImage(@"chat_icon_delete_img", @"icon_delete")
                                                                               weight:3000
                                                                             callback:^{
@@ -1246,7 +1246,7 @@ ReceiveReadMsgWithGroupID:(NSString *)groupID
     TDeskMessageCellData *data = cell.messageData;
     V2TIMMessage *imMsg = data.innerMessage;
     @weakify(self);
-    recallAction = [[TDeskChatPopMenuAction alloc] initWithTitle:TIMCommonLocalizableString(Revoke)
+    recallAction = [[TDeskChatPopMenuAction alloc] initWithTitle:TDeskIMCommonLocalizableString(Revoke)
                                                          image:TUIChatBundleThemeImage(@"chat_icon_recall_img", @"icon_recall")
                                                         weight:4000
                                                       callback:^{
@@ -1259,7 +1259,7 @@ ReceiveReadMsgWithGroupID:(NSString *)groupID
 - (TDeskChatPopMenuAction *)setupMulitSelectAction:(TDeskMessageCell *)cell {
     @weakify(self);
     TDeskChatPopMenuAction *multiAction = nil;
-    multiAction = [[TDeskChatPopMenuAction alloc] initWithTitle:TIMCommonLocalizableString(Multiple)
+    multiAction = [[TDeskChatPopMenuAction alloc] initWithTitle:TDeskIMCommonLocalizableString(Multiple)
                                                         image:TUIChatBundleThemeImage(@"chat_icon_multi_img", @"icon_multi")
                                                        weight:8000
                                                      callback:^{
@@ -1273,7 +1273,7 @@ ReceiveReadMsgWithGroupID:(NSString *)groupID
 - (TDeskChatPopMenuAction *)setupForwardAction:(TDeskMessageCell *)cell {
     @weakify(self);
     TDeskChatPopMenuAction *forwardAction = nil;
-    forwardAction = [[TDeskChatPopMenuAction alloc] initWithTitle:TIMCommonLocalizableString(Forward)
+    forwardAction = [[TDeskChatPopMenuAction alloc] initWithTitle:TDeskIMCommonLocalizableString(Forward)
                                                           image:TUIChatBundleThemeImage(@"chat_icon_forward_img", @"icon_forward")
                                                          weight:9000
                                                        callback:^{
@@ -1286,7 +1286,7 @@ ReceiveReadMsgWithGroupID:(NSString *)groupID
 - (TDeskChatPopMenuAction *)setupQuoteAction:(TDeskMessageCell *)cell {
     @weakify(self);
     TDeskChatPopMenuAction *quoteAction = nil;
-    quoteAction = [[TDeskChatPopMenuAction alloc] initWithTitle:TIMCommonLocalizableString(Reply)
+    quoteAction = [[TDeskChatPopMenuAction alloc] initWithTitle:TDeskIMCommonLocalizableString(Reply)
                                                         image:TUIChatBundleThemeImage(@"chat_icon_reply_img", @"icon_reply")
                                                        weight:5000
                                                      callback:^{
@@ -1299,7 +1299,7 @@ ReceiveReadMsgWithGroupID:(NSString *)groupID
 - (TDeskChatPopMenuAction *)setupReferenceAction:(TDeskMessageCell *)cell {
     @weakify(self);
     TDeskChatPopMenuAction *referenceAction = nil;
-    referenceAction = [[TDeskChatPopMenuAction alloc] initWithTitle:TIMCommonLocalizableString(TUIKitReference)
+    referenceAction = [[TDeskChatPopMenuAction alloc] initWithTitle:TDeskIMCommonLocalizableString(TUIKitReference)
                                                             image:TUIChatBundleThemeImage(@"chat_icon_reference_img", @"icon_reference")
                                                            weight:7000
                                                          callback:^{
@@ -1317,11 +1317,11 @@ ReceiveReadMsgWithGroupID:(NSString *)groupID
     NSString *title = @"";
     UIImage *img = nil;
     if (originStyle == TUIVoiceAudioPlaybackStyleLoudspeaker) {
-        title = TIMCommonLocalizableString(TUIKitAudioPlaybackStyleHandset);
+        title = TDeskIMCommonLocalizableString(TUIKitAudioPlaybackStyleHandset);
         img   = TUIChatBundleThemeImage(@"chat_icon_audio_handset_img", @"icon_handset");
     }
     else {
-        title = TIMCommonLocalizableString(TUIKitAudioPlaybackStyleLoudspeaker);
+        title = TDeskIMCommonLocalizableString(TUIKitAudioPlaybackStyleLoudspeaker);
         img   = TUIChatBundleThemeImage(@"chat_icon_audio_loudspeaker_img", @"icon_loudspeaker");
     }
     
@@ -1331,14 +1331,14 @@ ReceiveReadMsgWithGroupID:(NSString *)groupID
                                                          callback:^{
         if (originStyle == TUIVoiceAudioPlaybackStyleLoudspeaker) {
             //Change To Handset
-            weakAction.title = TIMCommonLocalizableString(TUIKitAudioPlaybackStyleLoudspeaker);
+            weakAction.title = TDeskIMCommonLocalizableString(TUIKitAudioPlaybackStyleLoudspeaker);
             [TDeskTool hideToast];
-            [TDeskTool makeToast:TIMCommonLocalizableString(TUIKitAudioPlaybackStyleChange2Handset) duration:2];
+            [TDeskTool makeToast:TDeskIMCommonLocalizableString(TUIKitAudioPlaybackStyleChange2Handset) duration:2];
         }
         else {
-            weakAction.title = TIMCommonLocalizableString(TUIKitAudioPlaybackStyleHandset);
+            weakAction.title = TDeskIMCommonLocalizableString(TUIKitAudioPlaybackStyleHandset);
             [TDeskTool hideToast];
-            [TDeskTool makeToast:TIMCommonLocalizableString(TUIKitAudioPlaybackStyleChange2Loudspeaker) duration:2];
+            [TDeskTool makeToast:TDeskIMCommonLocalizableString(TUIKitAudioPlaybackStyleChange2Loudspeaker) duration:2];
         }
         [TDeskVoiceMessageCellData changeAudioPlaybackStyle];
 
@@ -1352,7 +1352,7 @@ ReceiveReadMsgWithGroupID:(NSString *)groupID
     UIImage* img =
     isPinned ? TUIChatBundleThemeImage(@"chat_icon_group_unpin_img", @"icon_unpin") : TUIChatBundleThemeImage(@"chat_icon_group_pin_img", @"icon_pin");
     groupPinAction = [[TDeskChatPopMenuAction alloc] initWithTitle:isPinned?
-                      TIMCommonLocalizableString(TUIKitGroupMessageUnPin) : TIMCommonLocalizableString(TUIKitGroupMessagePin)
+                      TDeskIMCommonLocalizableString(TUIKitGroupMessageUnPin) : TDeskIMCommonLocalizableString(TUIKitGroupMessagePin)
                                                             image:img
                                                            weight:2900
                                                          callback:^{
@@ -1386,15 +1386,15 @@ ReceiveReadMsgWithGroupID:(NSString *)groupID
     }
     _reSendUIMsg = cell.messageData;
     __weak typeof(self) weakSelf = self;
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:TIMCommonLocalizableString(TUIKitTipsConfirmResendMessage)
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:TDeskIMCommonLocalizableString(TUIKitTipsConfirmResendMessage)
                                                                    message:nil
                                                             preferredStyle:UIAlertControllerStyleAlert];
-    [alert tuitheme_addAction:[UIAlertAction actionWithTitle:TIMCommonLocalizableString(Re_send)
+    [alert tuitheme_addAction:[UIAlertAction actionWithTitle:TDeskIMCommonLocalizableString(Re_send)
                                                        style:UIAlertActionStyleDefault
                                                      handler:^(UIAlertAction *_Nonnull action) {
                                                        [weakSelf sendUIMessage:weakSelf.reSendUIMsg];
                                                      }]];
-    [alert tuitheme_addAction:[UIAlertAction actionWithTitle:TIMCommonLocalizableString(Cancel)
+    [alert tuitheme_addAction:[UIAlertAction actionWithTitle:TDeskIMCommonLocalizableString(Cancel)
                                                        style:UIAlertActionStyleCancel
                                                      handler:^(UIAlertAction *_Nonnull action){
 
@@ -1490,9 +1490,9 @@ ReceiveReadMsgWithGroupID:(NSString *)groupID
 - (void)onDelete:(id)sender {
     @weakify(self);
     UIAlertController *vc = [UIAlertController alertControllerWithTitle:nil
-                                                                message:TIMCommonLocalizableString(ConfirmDeleteMessage)
+                                                                message:TDeskIMCommonLocalizableString(ConfirmDeleteMessage)
                                                          preferredStyle:UIAlertControllerStyleActionSheet];
-    [vc tuitheme_addAction:[UIAlertAction actionWithTitle:TIMCommonLocalizableString(Delete)
+    [vc tuitheme_addAction:[UIAlertAction actionWithTitle:TDeskIMCommonLocalizableString(Delete)
                                                     style:UIAlertActionStyleDestructive
                                                   handler:^(UIAlertAction *_Nonnull action) {
                                                     @strongify(self);
@@ -1503,7 +1503,7 @@ ReceiveReadMsgWithGroupID:(NSString *)groupID
                                                                                    NSAssert(NO, desc);
                                                                                  }];
                                                   }]];
-    [vc tuitheme_addAction:[UIAlertAction actionWithTitle:TIMCommonLocalizableString(Cancel) style:UIAlertActionStyleCancel handler:nil]];
+    [vc tuitheme_addAction:[UIAlertAction actionWithTitle:TDeskIMCommonLocalizableString(Cancel) style:UIAlertActionStyleCancel handler:nil]];
     [self presentViewController:vc animated:YES completion:nil];
 }
 
@@ -1531,7 +1531,7 @@ ReceiveReadMsgWithGroupID:(NSString *)groupID
     if (content.length > 0) {
         UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
         pasteboard.string = content;
-        [TDeskTool makeToast:TIMCommonLocalizableString(Copied)];
+        [TDeskTool makeToast:TDeskIMCommonLocalizableString(Copied)];
     }
 }
 
@@ -1599,14 +1599,14 @@ ReceiveReadMsgWithGroupID:(NSString *)groupID
 
     } fail:^(int code, NSString *desc) {
         if (code == 10070) {
-            [TDeskTool makeToast:TIMCommonLocalizableString(TUIKitGroupMessagePinOverLimit)];
+            [TDeskTool makeToast:TDeskIMCommonLocalizableString(TUIKitGroupMessagePinOverLimit)];
         }
         else if (code == 10004) {
             if (pinOrUnpin) {
-                [TDeskTool makeToast:TIMCommonLocalizableString(TUIKitGroupMessagePinRepeatedly)];
+                [TDeskTool makeToast:TDeskIMCommonLocalizableString(TUIKitGroupMessagePinRepeatedly)];
             }
             else {
-                [TDeskTool makeToast:TIMCommonLocalizableString(TUIKitGroupMessageUnPinRepeatedly)];
+                [TDeskTool makeToast:TDeskIMCommonLocalizableString(TUIKitGroupMessageUnPinRepeatedly)];
             }
         }
     }];
@@ -1638,12 +1638,12 @@ ReceiveReadMsgWithGroupID:(NSString *)groupID
     [self.tableView reloadData];
 }
 
-- (NSArray<TDeskMessageCellData *> *)multiSelectedResult:(TUIMultiResultOption)option {
+- (NSArray<TDeskMessageCellData *> *)multiSelectedResult:(TDeskMultiResultOption)option {
     NSMutableArray *arrayM = [NSMutableArray array];
     if (!self.showCheckBox) {
         return [NSArray arrayWithArray:arrayM];
     }
-    BOOL filterUnsupported = option & TUIMultiResultOptionFiterUnsupportRelay;
+    BOOL filterUnsupported = option & TDeskMultiResultOptionFiterUnsupportRelay;
     for (TDeskMessageCellData *data in self.messageDataProvider.uiMsgs) {
         if (data.selected) {
             if (filterUnsupported && ![self supportRelay:data]) {

@@ -21,7 +21,7 @@
 
     self.tableView.tableFooterView = [UIView new];
 
-    self.title = TIMCommonLocalizableString(TUIKitGroupApplicant);
+    self.title = TDeskIMCommonLocalizableString(TUIKitGroupApplicant);
 }
 
 - (void)dealloc {

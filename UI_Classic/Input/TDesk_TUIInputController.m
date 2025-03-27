@@ -473,8 +473,8 @@
     _status = Input_Status_Input;
     [_inputBar.inputTextView resignFirstResponder];
     
-    [TDeskCore notifyEvent:TUICore_TUIChatNotify
-                  subKey:TUICore_TUIChatNotify_KeyboardWillHideSubKey
+    [TDeskCore notifyEvent:TDeskCore_TUIChatNotify
+                  subKey:TDeskCore_TUIChatNotify_KeyboardWillHideSubKey
                   object:nil
                    param:nil];
     

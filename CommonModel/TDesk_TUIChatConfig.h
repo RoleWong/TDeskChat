@@ -100,7 +100,7 @@ NS_ASSUME_NONNULL_BEGIN
  * This class is used to register event listeners for Chat from external sources, to listen for various events in Chat and respond accordingly,
  * such as listening for avatar click events, long-press message events, etc.
  * You need to set a delegate for the implementation method: TDeskChatConfig.defaultConfig.eventConfig.chatEventListener = "YourDelegateViewController".
- * YourDelegateViewController needs to conform to the <TUIChatEventListener> protocol and implement the protocol method.
+ * YourDelegateViewController needs to conform to the <TDeskChatEventListener> protocol and implement the protocol method.
  * Taking - (BOOL)onUserIconClicked:messageCellData: as an example, returning NO indicates an insertion behavior, 
  * which is not intercepted and will be further processed by the Chat module.
  * Taking - (BOOL)onUserIconClicked:messageCellData: as an example, returning YES indicates an override behavior, 
@@ -115,7 +115,7 @@ NS_ASSUME_NONNULL_END
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol TUIChatEventListener <NSObject>
+@protocol TDeskChatEventListener <NSObject>
 
 /**
  * This callback is triggered when a user avatar in the chat list interface is clicked. Returning YES indicates that this event has been intercepted,
@@ -142,7 +142,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface TDeskChatEventConfig : NSObject
-@property (nonatomic,weak)id <TUIChatEventListener>chatEventListener;
+@property (nonatomic,weak)id <TDeskChatEventListener>chatEventListener;
 @end
 
 // Regiser custom message category

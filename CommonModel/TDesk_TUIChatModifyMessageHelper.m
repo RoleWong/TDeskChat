@@ -16,7 +16,7 @@
 
 #define TIMES_CONTROL 3
 
-@interface TUIChatModifyMessageObj : NSObject
+@interface TDeskChatModifyMessageObj : NSObject
 
 @property(nonatomic, assign) NSInteger time;
 
@@ -30,7 +30,7 @@
 
 @end
 
-@implementation TUIChatModifyMessageObj
+@implementation TDeskChatModifyMessageObj
 - (instancetype)init {
     if (self = [super init]) {
         self.time = 0;
@@ -125,9 +125,9 @@
 }
 @end
 
-@interface ModifyCustomOperation : NSOperation
+@interface DeskModifyCustomOperation : NSOperation
 
-@property(nonatomic, strong) TUIChatModifyMessageObj *obj;
+@property(nonatomic, strong) TDeskChatModifyMessageObj *obj;
 
 @property(nonatomic, copy) void (^SuccessBlock)(void);
 
@@ -139,7 +139,7 @@
 
 @end
 
-@implementation ModifyCustomOperation
+@implementation DeskModifyCustomOperation
 
 - (void)dealloc {
     NSLog(@"operation-------dealloc");
@@ -211,7 +211,7 @@
 
 @interface TDeskChatModifyMessageHelper () <V2TIMAdvancedMsgListener>
 
-@property(nonatomic, strong) NSMutableDictionary<NSString *, TUIChatModifyMessageObj *> *modifyMessageHelperMap;
+@property(nonatomic, strong) NSMutableDictionary<NSString *, TDeskChatModifyMessageObj *> *modifyMessageHelperMap;
 
 @property(nonatomic, strong) NSOperationQueue *queue;
 
@@ -248,8 +248,8 @@
 
 - (void)onRecvMessageModified:(V2TIMMessage *)msg {
     NSString *msgID = msg.msgID;
-    TUIChatModifyMessageObj *obj = self.modifyMessageHelperMap[msgID];
-    if (obj && [obj isKindOfClass:[TUIChatModifyMessageObj class]]) {
+    TDeskChatModifyMessageObj *obj = self.modifyMessageHelperMap[msgID];
+    if (obj && [obj isKindOfClass:[TDeskChatModifyMessageObj class]]) {
         // update;
         obj.msg = msg;
     }
@@ -279,7 +279,7 @@
         return;
     }
 
-    TUIChatModifyMessageObj *obj = [[TUIChatModifyMessageObj alloc] init];
+    TDeskChatModifyMessageObj *obj = [[TDeskChatModifyMessageObj alloc] init];
     obj.msgID = msgID;
     obj.msg = msg;
     obj.time = time;
@@ -295,7 +295,7 @@
 
     __weak typeof(self) weakSelf = self;
 
-    ModifyCustomOperation *modifyop = [[ModifyCustomOperation alloc] init];
+    DeskModifyCustomOperation *modifyop = [[DeskModifyCustomOperation alloc] init];
     modifyop.obj = obj;
     modifyop.SuccessBlock = ^{
       __strong typeof(weakSelf) strongSelf = weakSelf;
@@ -308,14 +308,14 @@
           int delay;
           delay = [self getRandomNumber:RETRY_MIN_TIME to:RETRY_MAX_TIME];
 
-          TUIChatModifyMessageObj *obj = strongSelf.modifyMessageHelperMap[msgID];
+          TDeskChatModifyMessageObj *obj = strongSelf.modifyMessageHelperMap[msgID];
           // update
           obj.msg = msg;
           obj.time = obj.time + 1;
 
           dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_MSEC)), dispatch_get_main_queue(), ^{
-            TUIChatModifyMessageObj *obj = strongSelf.modifyMessageHelperMap[msgID];
-            if (obj && [obj isKindOfClass:[TUIChatModifyMessageObj class]]) {
+            TDeskChatModifyMessageObj *obj = strongSelf.modifyMessageHelperMap[msgID];
+            if (obj && [obj isKindOfClass:[TDeskChatModifyMessageObj class]]) {
                 [strongSelf modifyMessage:obj.msg
                                reactEmoji:nil
                      simpleCurrentContent:obj.simpleCurrentContent

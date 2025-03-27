@@ -63,7 +63,7 @@
     self.faceData = data;
     UIImage *image = [[TDeskImageCache sharedInstance] getFaceFromCache:data.path];
     if (!image) {
-        image = [UIImage imageWithContentsOfFile:TUIChatFaceImagePath(@"ic_unknown_image")];
+        image = [UIImage imageWithContentsOfFile:TDeskChatFaceImagePath(@"ic_unknown_image")];
     }
     _face.image = image;
     
@@ -82,7 +82,7 @@
     TDeskFaceMessageCellData *faceCellData = (TDeskFaceMessageCellData *)data;
     UIImage *image = [[TDeskImageCache sharedInstance] getFaceFromCache:faceCellData.path];
     if (!image) {
-        image = [UIImage imageWithContentsOfFile:TUIChatFaceImagePath(@"ic_unknown_image")];
+        image = [UIImage imageWithContentsOfFile:TDeskChatFaceImagePath(@"ic_unknown_image")];
     }
     CGFloat imageHeight = image.size.height;
     CGFloat imageWidth = image.size.width;

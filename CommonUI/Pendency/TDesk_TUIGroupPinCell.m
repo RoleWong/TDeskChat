@@ -102,7 +102,7 @@
 
 }
 - (void)setupView {
-    self.backgroundColor = TUIChatDynamicColor(@"chat_pop_group_pin_back_color", @"#F9F9F9");
+    self.backgroundColor = TDeskChatDynamicColor(@"chat_pop_group_pin_back_color", @"#F9F9F9");
     [self addSubview:self.leftIcon];
     [self addSubview:self.titleLabel];
     [self addSubview:self.content];
@@ -121,14 +121,14 @@
 - (UIImageView *)leftIcon {
     if (!_leftIcon) {
         _leftIcon = [[UIImageView alloc] init];
-        _leftIcon.backgroundColor = TUIChatDynamicColor(@"chat_pop_group_pin_left_color", @"#D9D9D9");
+        _leftIcon.backgroundColor = TDeskChatDynamicColor(@"chat_pop_group_pin_left_color", @"#D9D9D9");
     }
     return _leftIcon;
 }
 - (UILabel *)titleLabel {
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] init];
-        _titleLabel.textColor = TUIChatDynamicColor(@"chat_pop_group_pin_title_color", @"#141516");
+        _titleLabel.textColor = TDeskChatDynamicColor(@"chat_pop_group_pin_title_color", @"#141516");
         _titleLabel.font = [UIFont systemFontOfSize:16.0];
     }
     return _titleLabel;
@@ -136,7 +136,7 @@
 - (UILabel *)content {
     if (!_content) {
         _content = [[UILabel alloc] init];
-        _content.textColor = [TUIChatDynamicColor(@"chat_pop_group_pin_subtitle_color", @"#000000")
+        _content.textColor = [TDeskChatDynamicColor(@"chat_pop_group_pin_subtitle_color", @"#000000")
                               colorWithAlphaComponent:0.6];
         _content.font = [UIFont systemFontOfSize:14.0];
     }
@@ -216,7 +216,7 @@
 }
     
 - (void)showMultiAnimation {
-    self.multiAnimationView.backgroundColor = TUIChatDynamicColor(@"chat_pop_group_pin_back_color", @"#F9F9F9");
+    self.multiAnimationView.backgroundColor = TDeskChatDynamicColor(@"chat_pop_group_pin_back_color", @"#F9F9F9");
     _multiAnimationView.alpha = 1;
     _bottomLine.alpha = 0;
 }
@@ -250,7 +250,7 @@
 - (UIView *)separatorView {
     if (!_separatorView) {
         _separatorView = [[UIView alloc] init];
-        _separatorView.backgroundColor = TUIChatDynamicColor(@"chat_pop_group_pin_line_color", @"#DDDDDD");
+        _separatorView.backgroundColor = TDeskChatDynamicColor(@"chat_pop_group_pin_line_color", @"#DDDDDD");
     }
     return _separatorView;
 }

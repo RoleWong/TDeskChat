@@ -6,7 +6,7 @@
 #import <TDeskCore/TDesk_TUITool.h>
 #import "TDesk_TUICircleLodingView.h"
 
-@interface TUIImageCollectionCellScrollView : UIScrollView <UIScrollViewDelegate>
+@interface TDeskImageCollectionCellScrollView : UIScrollView <UIScrollViewDelegate>
 @property(nonatomic, strong) UIView *containerView;
 @property(assign, nonatomic) CGFloat imageNormalWidth;
 @property(assign, nonatomic) CGFloat imageNormalHeight;
@@ -14,7 +14,7 @@
 
 @end
 
-@implementation TUIImageCollectionCellScrollView
+@implementation TDeskImageCollectionCellScrollView
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
@@ -103,7 +103,7 @@
 @end
 
 @interface TDeskImageCollectionCell ()
-@property(nonatomic, strong) TUIImageCollectionCellScrollView *scrollView;
+@property(nonatomic, strong) TDeskImageCollectionCellScrollView *scrollView;
 @property(nonatomic, strong) TDeskImageMessageCellData *imgCellData;
 @property(nonatomic, strong) UIButton *mainDownloadBtn;
 @property(nonatomic, strong) TDeskCircleLodingView *animateCircleView;
@@ -121,7 +121,7 @@
 }
 
 - (void)setupViews {
-    self.scrollView = [[TUIImageCollectionCellScrollView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
+    self.scrollView = [[TDeskImageCollectionCellScrollView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
     [self addSubview:self.scrollView];
 
     self.imageView = [[UIImageView alloc] init];
@@ -135,7 +135,7 @@
 
     self.mainDownloadBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     self.mainDownloadBtn.contentMode = UIViewContentModeScaleToFill;
-    [self.mainDownloadBtn setTitle:TIMCommonLocalizableString(TUIKitImageViewOrigin) forState:UIControlStateNormal];
+    [self.mainDownloadBtn setTitle:TDeskIMCommonLocalizableString(TUIKitImageViewOrigin) forState:UIControlStateNormal];
     self.mainDownloadBtn.backgroundColor = [UIColor grayColor];
     [self.mainDownloadBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
     self.mainDownloadBtn.layer.borderColor = [UIColor whiteColor].CGColor;
@@ -188,9 +188,9 @@
         completionHandler:^(BOOL success, NSError *_Nullable error) {
           dispatch_async(dispatch_get_main_queue(), ^{
             if (success) {
-                [TDeskTool makeToast:TIMCommonLocalizableString(TUIKitPictureSavedSuccess)];
+                [TDeskTool makeToast:TDeskIMCommonLocalizableString(TUIKitPictureSavedSuccess)];
             } else {
-                [TDeskTool makeToast:TIMCommonLocalizableString(TUIKitPictureSavedFailed)];
+                [TDeskTool makeToast:TDeskIMCommonLocalizableString(TUIKitPictureSavedFailed)];
             }
           });
         }];
@@ -283,7 +283,7 @@
               self.animateCircleView.progress = 0;
               self.mainDownloadBtn.hidden = YES;
               self.animateCircleView.hidden = YES;
-              [self.mainDownloadBtn setTitle:TIMCommonLocalizableString(TUIKitImageViewOrigin) forState:UIControlStateNormal];
+              [self.mainDownloadBtn setTitle:TDeskIMCommonLocalizableString(TUIKitImageViewOrigin) forState:UIControlStateNormal];
             });
           });
       } else if (progress > 1 && progress < 100) {
@@ -344,7 +344,7 @@
     [self.mainDownloadBtn sizeToFit];
     self.mainDownloadBtn.mm_width(self.mainDownloadBtn.mm_w + 10).mm_height(self.mainDownloadBtn.mm_h).mm__centerX(self.mm_w / 2).mm_bottom(48);
     self.mainDownloadBtn.layer.cornerRadius = (self.mainDownloadBtn.mm_h * 0.5);
-    self.animateCircleView.tui_mm_center();
+    self.animateCircleView.tdesk_mm_center();
     self.downloadBtn.mm_width(31).mm_height(31).mm_right(16).mm_bottom(48);
     self.scrollView.mm_width(self.mm_w).mm_height(self.mm_h).mm__centerX(self.mm_w / 2).mm__centerY(self.mm_h / 2);
     self.scrollView.imageNormalWidth =  self.imageView.image.size.width;
@@ -392,10 +392,10 @@
 
 - (void)showRiskAlert {
     UIAlertController *ac = [UIAlertController alertControllerWithTitle:nil
-                                                                message:TIMCommonLocalizableString(TUIKitPictureCheckRisk)
+                                                                message:TDeskIMCommonLocalizableString(TUIKitPictureCheckRisk)
                                                          preferredStyle:UIAlertControllerStyleAlert];
     __weak typeof(self) weakSelf = self;
-    [ac tuitheme_addAction:[UIAlertAction actionWithTitle:TIMCommonLocalizableString(TUIKitVideoCheckRiskCancel)
+    [ac tuitheme_addAction:[UIAlertAction actionWithTitle:TDeskIMCommonLocalizableString(TUIKitVideoCheckRiskCancel)
                                                     style:UIAlertActionStyleCancel
                                                   handler:^(UIAlertAction *_Nonnull action) {
                                                     __strong typeof(weakSelf) strongSelf = weakSelf;

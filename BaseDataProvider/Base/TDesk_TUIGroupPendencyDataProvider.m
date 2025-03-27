@@ -31,7 +31,7 @@
     _numPerPage = 100;
     _dataList = @[];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPendencyChanged:) name:TUIGroupPendencyCellData_onPendencyChanged object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPendencyChanged:) name:TDeskGroupPendencyCellData_onPendencyChanged object:nil];
 
     return self;
 }

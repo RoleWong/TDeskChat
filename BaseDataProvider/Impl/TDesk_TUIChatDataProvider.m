@@ -20,11 +20,11 @@
 #define Input_SendBtn_Key @"Input_SendBtn_Key"
 #define Input_SendBtn_Title @"Input_SendBtn_Title"
 #define Input_SendBtn_ImageName @"Input_SendBtn_ImageName"
-@interface TUISplitEmojiData : NSObject
+@interface TDeskSplitEmojiData : NSObject
 @property (nonatomic, assign) NSInteger start;
 @property (nonatomic, assign) NSInteger end;
 @end
-@implementation TUISplitEmojiData
+@implementation TDeskSplitEmojiData
 @end
 @interface TDeskChatDataProvider ()
 @property(nonatomic, strong) TDeskInputMoreCellData *welcomeInputMoreMenu;
@@ -40,7 +40,7 @@
 
 - (instancetype)init {
     if (self = [super init]) {
-        [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(onChangeLanguage) name:TUIChangeLanguageNotification object:nil];
+        [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(onChangeLanguage) name:TDeskChangeLanguageNotification object:nil];
     }
     return self;
 }
@@ -55,13 +55,13 @@
         __weak typeof(self) weakSelf = self;
         _welcomeInputMoreMenu = [[TDeskInputMoreCellData alloc] init];
         _welcomeInputMoreMenu.priority = 0;
-        _welcomeInputMoreMenu.title = TIMCommonLocalizableString(TUIKitMoreLink);
+        _welcomeInputMoreMenu.title = TDeskIMCommonLocalizableString(TUIKitMoreLink);
         _welcomeInputMoreMenu.image = TUIChatBundleThemeImage(@"chat_more_link_img", @"chat_more_link_img");
         _welcomeInputMoreMenu.onClicked = ^(NSDictionary *actionParam) {
-          NSString *text = TIMCommonLocalizableString(TUIKitWelcome);
+          NSString *text = TDeskIMCommonLocalizableString(TUIKitWelcome);
           NSString *link = TUITencentCloudHomePageEN;
           NSString *language = [TDeskGlobalization tk_localizableLanguageKey];
-          if ([language tui_containsString:@"zh-"]) {
+          if ([language tdesk_containsString:@"zh-"]) {
               link = TUITencentCloudHomePageCN;
           }
           NSError *error = nil;
@@ -97,7 +97,7 @@
     __weak typeof(self) weakSelf = self;
     TDeskInputMoreCellData *albumData = [[TDeskInputMoreCellData alloc] init];
     albumData.priority = 1000;
-    albumData.title = TIMCommonLocalizableString(TUIKitMorePhoto);
+    albumData.title = TDeskIMCommonLocalizableString(TUIKitMorePhoto);
     albumData.image = TUIChatBundleThemeImage(@"chat_more_picture_img", @"more_picture");
     albumData.onClicked = ^(NSDictionary *actionParam) {
       if ([weakSelf.delegate respondsToSelector:@selector(onSelectPhotoMoreCellData)]) {
@@ -107,7 +107,7 @@
 
     TDeskInputMoreCellData *takePictureData = [[TDeskInputMoreCellData alloc] init];
     takePictureData.priority = 900;
-    takePictureData.title = TIMCommonLocalizableString(TUIKitMoreCamera);
+    takePictureData.title = TDeskIMCommonLocalizableString(TUIKitMoreCamera);
     takePictureData.image = TUIChatBundleThemeImage(@"chat_more_camera_img", @"more_camera");
     takePictureData.onClicked = ^(NSDictionary *actionParam) {
       if ([weakSelf.delegate respondsToSelector:@selector(onTakePictureMoreCellData)]) {
@@ -117,7 +117,7 @@
 
     TDeskInputMoreCellData *videoData = [[TDeskInputMoreCellData alloc] init];
     videoData.priority = 800;
-    videoData.title = TIMCommonLocalizableString(TUIKitMoreVideo);
+    videoData.title = TDeskIMCommonLocalizableString(TUIKitMoreVideo);
     videoData.image = TUIChatBundleThemeImage(@"chat_more_video_img", @"more_video");
     videoData.onClicked = ^(NSDictionary *actionParam) {
       if ([weakSelf.delegate respondsToSelector:@selector(onTakeVideoMoreCellData)]) {
@@ -127,7 +127,7 @@
 
     TDeskInputMoreCellData *fileData = [[TDeskInputMoreCellData alloc] init];
     fileData.priority = 700;
-    fileData.title = TIMCommonLocalizableString(TUIKitMoreFile);
+    fileData.title = TDeskIMCommonLocalizableString(TUIKitMoreFile);
     fileData.image = TUIChatBundleThemeImage(@"chat_more_file_img", @"more_file");
     fileData.onClicked = ^(NSDictionary *actionParam) {
       if ([weakSelf.delegate respondsToSelector:@selector(onSelectFileMoreCellData)]) {
@@ -165,14 +165,14 @@
         if (TDeskChatConfig.defaultConfig.enableWelcomeCustomMessage) {
             __weak typeof(self) weakSelf = self;
             TDeskCustomActionSheetItem *link =
-                [[TDeskCustomActionSheetItem alloc] initWithTitle:TIMCommonLocalizableString(TUIKitMoreLink)
+                [[TDeskCustomActionSheetItem alloc] initWithTitle:TDeskIMCommonLocalizableString(TUIKitMoreLink)
                                                        leftMark:[UIImage imageNamed:TUIChatImagePath_Minimalist(@"icon_more_custom")]
                                               withActionHandler:^(UIAlertAction *_Nonnull action) {
                                                 link.priority = 100;
-                                                NSString *text = TIMCommonLocalizableString(TUIKitWelcome);
+                                                NSString *text = TDeskIMCommonLocalizableString(TUIKitWelcome);
                                                 NSString *link = TUITencentCloudHomePageEN;
                                                 NSString *language = [TDeskGlobalization tk_localizableLanguageKey];
-                                                if ([language tui_containsString:@"zh-"]) {
+                                                if ([language tdesk_containsString:@"zh-"]) {
                                                     link = TUITencentCloudHomePageCN;
                                                 }
                                                 NSError *error = nil;
@@ -198,7 +198,7 @@
     if (_builtInInputMoreActionItemList == nil) {
         __weak typeof(self) weakSelf = self;
         TDeskCustomActionSheetItem *photo =
-            [[TDeskCustomActionSheetItem alloc] initWithTitle:TIMCommonLocalizableString(TUIKitMorePhoto)
+            [[TDeskCustomActionSheetItem alloc] initWithTitle:TDeskIMCommonLocalizableString(TUIKitMorePhoto)
                                                    leftMark:[UIImage imageNamed:TUIChatImagePath_Minimalist(@"icon_more_photo")]
                                           withActionHandler:^(UIAlertAction *_Nonnull action) {
                                             if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(onSelectPhotoMoreCellData)]) {
@@ -208,7 +208,7 @@
         photo.priority = 1000;
 
         TDeskCustomActionSheetItem *camera =
-            [[TDeskCustomActionSheetItem alloc] initWithTitle:TIMCommonLocalizableString(TUIKitMoreCamera)
+            [[TDeskCustomActionSheetItem alloc] initWithTitle:TDeskIMCommonLocalizableString(TUIKitMoreCamera)
                                                    leftMark:[UIImage imageNamed:TUIChatImagePath_Minimalist(@"icon_more_camera")]
                                           withActionHandler:^(UIAlertAction *_Nonnull action) {
                                             if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(onTakePictureMoreCellData)]) {
@@ -218,7 +218,7 @@
         camera.priority = 900;
 
         TDeskCustomActionSheetItem *video =
-            [[TDeskCustomActionSheetItem alloc] initWithTitle:TIMCommonLocalizableString(TUIKitMoreVideo)
+            [[TDeskCustomActionSheetItem alloc] initWithTitle:TDeskIMCommonLocalizableString(TUIKitMoreVideo)
                                                    leftMark:[UIImage imageNamed:TUIChatImagePath_Minimalist(@"icon_more_video")]
                                           withActionHandler:^(UIAlertAction *_Nonnull action) {
                                             if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(onTakeVideoMoreCellData)]) {
@@ -228,7 +228,7 @@
         video.priority = 800;
 
         TDeskCustomActionSheetItem *file =
-            [[TDeskCustomActionSheetItem alloc] initWithTitle:TIMCommonLocalizableString(TUIKitMoreFile)
+            [[TDeskCustomActionSheetItem alloc] initWithTitle:TDeskIMCommonLocalizableString(TUIKitMoreFile)
                                                    leftMark:[UIImage imageNamed:TUIChatImagePath_Minimalist(@"icon_more_document")]
                                           withActionHandler:^(UIAlertAction *_Nonnull action) {
                                             if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(onSelectFileMoreCellData)]) {
@@ -317,7 +317,7 @@
     NSString *regex = @"\\[(\\S+?)\\]";
     NSRegularExpression *regexExp = [NSRegularExpression regularExpressionWithPattern:regex options:0 error:nil];
     NSArray<NSTextCheckingResult *> *matches = [regexExp matchesInString:text options:0 range:NSMakeRange(0, text.length)];
-    NSMutableArray<TUISplitEmojiData *> *emojiDataList = [NSMutableArray array];
+    NSMutableArray<TDeskSplitEmojiData *> *emojiDataList = [NSMutableArray array];
     NSInteger lastMentionIndex = -1;
     for (NSTextCheckingResult *match in matches) {
         NSString *emojiKey = [text substringWithRange:match.range];
@@ -334,14 +334,14 @@
         if (![self.class isFaceStrKey:emojiKey]) {
             continue;
         }
-        TUISplitEmojiData *emojiData = [[TUISplitEmojiData alloc] init];
+        TDeskSplitEmojiData *emojiData = [[TDeskSplitEmojiData alloc] init];
         emojiData.start = start;
         emojiData.end = end;
         [emojiDataList addObject:emojiData];
     }
     NSMutableArray<NSString *> *stringList = [NSMutableArray array];
     NSInteger offset = 0;
-    for (TUISplitEmojiData *emojiData in emojiDataList) {
+    for (TDeskSplitEmojiData *emojiData in emojiDataList) {
         NSInteger start = emojiData.start - offset;
         NSInteger end = emojiData.end - offset;
         NSString *startStr = [text substringToIndex:start];
@@ -388,17 +388,17 @@
     // Extension menus
     NSMutableDictionary *extensionParam = [NSMutableDictionary dictionary];
     if (userID.length > 0) {
-        extensionParam[TUICore_TUIChatExtension_InputViewMoreItem_UserID] = userID;
+        extensionParam[TDeskCore_TUIChatExtension_InputViewMoreItem_UserID] = userID;
     } else if (groupID.length > 0) {
-        extensionParam[TUICore_TUIChatExtension_InputViewMoreItem_GroupID] = groupID;
+        extensionParam[TDeskCore_TUIChatExtension_InputViewMoreItem_GroupID] = groupID;
     }
-    extensionParam[TUICore_TUIChatExtension_InputViewMoreItem_FilterVideoCall] = @(!isNeedVideoCall);
-    extensionParam[TUICore_TUIChatExtension_InputViewMoreItem_FilterAudioCall] = @(!isNeedAudioCall);
-    extensionParam[TUICore_TUIChatExtension_InputViewMoreItem_FilterRoom]  = @(!isNeedRoom);
-    extensionParam[TUICore_TUIChatExtension_InputViewMoreItem_FilterPoll]  = @(!isNeedPoll);
-    extensionParam[TUICore_TUIChatExtension_InputViewMoreItem_FilterGroupNote]  = @(!isNeedGroupNote);
-    extensionParam[TUICore_TUIChatExtension_InputViewMoreItem_ActionVC] = actionController;
-    NSArray *extensionList = [TDeskCore getExtensionList:TUICore_TUIChatExtension_InputViewMoreItem_ClassicExtensionID param:extensionParam];
+    extensionParam[TDeskCore_TUIChatExtension_InputViewMoreItem_FilterVideoCall] = @(!isNeedVideoCall);
+    extensionParam[TDeskCore_TUIChatExtension_InputViewMoreItem_FilterAudioCall] = @(!isNeedAudioCall);
+    extensionParam[TDeskCore_TUIChatExtension_InputViewMoreItem_FilterRoom]  = @(!isNeedRoom);
+    extensionParam[TDeskCore_TUIChatExtension_InputViewMoreItem_FilterPoll]  = @(!isNeedPoll);
+    extensionParam[TDeskCore_TUIChatExtension_InputViewMoreItem_FilterGroupNote]  = @(!isNeedGroupNote);
+    extensionParam[TDeskCore_TUIChatExtension_InputViewMoreItem_ActionVC] = actionController;
+    NSArray *extensionList = [TDeskCore getExtensionList:TDeskCore_TUIChatExtension_InputViewMoreItem_ClassicExtensionID param:extensionParam];
     for (TDeskExtensionInfo *info in extensionList) {
         NSAssert(info.icon && info.text && info.onClicked, @"extension for input view is invalid, check icon/text/onclick");
         if (info.icon && info.text && info.onClicked) {
@@ -431,17 +431,17 @@
     NSMutableArray<TDeskCustomActionSheetItem *> *items = [NSMutableArray array];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     if (userID.length > 0) {
-        param[TUICore_TUIChatExtension_InputViewMoreItem_UserID] = userID;
+        param[TDeskCore_TUIChatExtension_InputViewMoreItem_UserID] = userID;
     } else if (groupID.length > 0) {
-        param[TUICore_TUIChatExtension_InputViewMoreItem_GroupID] = groupID;
+        param[TDeskCore_TUIChatExtension_InputViewMoreItem_GroupID] = groupID;
     }
-    param[TUICore_TUIChatExtension_InputViewMoreItem_FilterVideoCall] = @(!TDeskChatConfig.defaultConfig.enableVideoCall);
-    param[TUICore_TUIChatExtension_InputViewMoreItem_FilterAudioCall] = @(!TDeskChatConfig.defaultConfig.enableAudioCall);
+    param[TDeskCore_TUIChatExtension_InputViewMoreItem_FilterVideoCall] = @(!TDeskChatConfig.defaultConfig.enableVideoCall);
+    param[TDeskCore_TUIChatExtension_InputViewMoreItem_FilterAudioCall] = @(!TDeskChatConfig.defaultConfig.enableAudioCall);
     if (pushVC) {
-        param[TUICore_TUIChatExtension_InputViewMoreItem_PushVC] = pushVC;
+        param[TDeskCore_TUIChatExtension_InputViewMoreItem_PushVC] = pushVC;
     }
-    param[TUICore_TUIChatExtension_InputViewMoreItem_ActionVC] = actionController;
-    NSArray *extensionList = [TDeskCore getExtensionList:TUICore_TUIChatExtension_InputViewMoreItem_MinimalistExtensionID param:param];
+    param[TDeskCore_TUIChatExtension_InputViewMoreItem_ActionVC] = actionController;
+    NSArray *extensionList = [TDeskCore getExtensionList:TDeskCore_TUIChatExtension_InputViewMoreItem_MinimalistExtensionID param:param];
     for (TDeskExtensionInfo *info in extensionList) {
         if (info.icon && info.text && info.onClicked) {
             TDeskCustomActionSheetItem *item = [[TDeskCustomActionSheetItem alloc] initWithTitle:info.text

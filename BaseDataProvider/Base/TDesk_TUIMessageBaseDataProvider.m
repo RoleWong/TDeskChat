@@ -462,7 +462,7 @@
         return;
     }
     // fetch react
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"TUIKitFetchReactNotification" object:uiMsgs];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"TDeskKitFetchReactNotification" object:uiMsgs];
 }
 
 - (void)requestForAdditionalUserInfo:(NSArray<TDeskMessageCellData *> *)uiMsgs callback:(void (^)(void))callback {
@@ -1175,7 +1175,7 @@ static const int kOfflinePushVersion = 1;
         }
         fail:^(int code, NSString *desc) {
           if (code == ERR_SDK_INTERFACE_NOT_SUPPORT) {
-              [TDeskTool postUnsupportNotificationOfService:TUIKitLocalizableString(TUIKitErrorUnsupportIntefaceMessageRead)];
+              [TDeskTool postUnsupportNotificationOfService:TDeskKitLocalizableString(TUIKitErrorUnsupportIntefaceMessageRead)];
           }
           fail(code, desc);
         }];
@@ -1244,7 +1244,7 @@ static const int kOfflinePushVersion = 1;
         }
         fail:^(int code, NSString *desc) {
           if (code == ERR_SDK_INTERFACE_NOT_SUPPORT) {
-              [TDeskTool postUnsupportNotificationOfService:TUIKitLocalizableString(TUIKitErrorUnsupportIntefaceMessageRead)];
+              [TDeskTool postUnsupportNotificationOfService:TDeskKitLocalizableString(TUIKitErrorUnsupportIntefaceMessageRead)];
           }
         }];
 }
@@ -1311,17 +1311,17 @@ static const int kOfflinePushVersion = 1;
     if (revokerInfo) {
         revoker = revokerInfo.userID;
     }
-    NSString *content = TIMCommonLocalizableString(TUIKitMessageTipsNormalRecallMessage);
+    NSString *content = TDeskIMCommonLocalizableString(TUIKitMessageTipsNormalRecallMessage);
     if ([revoker isEqualToString:messageSender]) {
         if (message.isSelf) {
-            content = TIMCommonLocalizableString(TUIKitMessageTipsYouRecallMessage);
+            content = TDeskIMCommonLocalizableString(TUIKitMessageTipsYouRecallMessage);
         } else {
             if (message.userID.length > 0) {
                 // c2c
-                content = TIMCommonLocalizableString(TUIKitMessageTipsOthersRecallMessage);
+                content = TDeskIMCommonLocalizableString(TUIKitMessageTipsOthersRecallMessage);
             } else if (message.groupID.length > 0) {
                 NSString *userName = [self.class getShowName:message];
-                content = [NSString stringWithFormat:TIMCommonLocalizableString(TUIKitMessageTipsRecallMessageFormat), userName];
+                content = [NSString stringWithFormat:TDeskIMCommonLocalizableString(TUIKitMessageTipsRecallMessageFormat), userName];
             } else {
                 // empty
             }
@@ -1331,7 +1331,7 @@ static const int kOfflinePushVersion = 1;
         if (revokerInfo) {
             userName = revokerInfo.showName;
         }
-        content = [NSString stringWithFormat:TIMCommonLocalizableString(TUIKitMessageTipsRecallMessageFormat), userName];
+        content = [NSString stringWithFormat:TDeskIMCommonLocalizableString(TUIKitMessageTipsRecallMessageFormat), userName];
     }
     return rtlString(content);
 }
@@ -1345,40 +1345,40 @@ static const int kOfflinePushVersion = 1;
         case V2TIM_GROUP_TIPS_TYPE_JOIN: {
             if (opUser.length > 0) {
                 if ((userList.count == 0) || (userList.count == 1 && [opUser isEqualToString:userList.firstObject])) {
-                    str = [NSString stringWithFormat:TIMCommonLocalizableString(TUIKitMessageTipsJoinGroupFormat), opUser];
+                    str = [NSString stringWithFormat:TDeskIMCommonLocalizableString(TUIKitMessageTipsJoinGroupFormat), opUser];
                 } else {
                     NSString *users = [userList componentsJoinedByString:@"、"];
-                    str = [NSString stringWithFormat:TIMCommonLocalizableString(TUIKitMessageTipsInviteJoinGroupFormat), opUser, users];
+                    str = [NSString stringWithFormat:TDeskIMCommonLocalizableString(TUIKitMessageTipsInviteJoinGroupFormat), opUser, users];
                 }
             }
         } break;
         case V2TIM_GROUP_TIPS_TYPE_INVITE: {
             if (userList.count > 0) {
                 NSString *users = [userList componentsJoinedByString:@"、"];
-                str = [NSString stringWithFormat:TIMCommonLocalizableString(TUIKitMessageTipsInviteJoinGroupFormat), opUser, users];
+                str = [NSString stringWithFormat:TDeskIMCommonLocalizableString(TUIKitMessageTipsInviteJoinGroupFormat), opUser, users];
             }
         } break;
         case V2TIM_GROUP_TIPS_TYPE_QUIT: {
             if (opUser.length > 0) {
-                str = [NSString stringWithFormat:TIMCommonLocalizableString(TUIKitMessageTipsLeaveGroupFormat), opUser];
+                str = [NSString stringWithFormat:TDeskIMCommonLocalizableString(TUIKitMessageTipsLeaveGroupFormat), opUser];
             }
         } break;
         case V2TIM_GROUP_TIPS_TYPE_KICKED: {
             if (userList.count > 0) {
                 NSString *users = [userList componentsJoinedByString:@"、"];
-                str = [NSString stringWithFormat:TIMCommonLocalizableString(TUIKitMessageTipsKickoffGroupFormat), opUser, users];
+                str = [NSString stringWithFormat:TDeskIMCommonLocalizableString(TUIKitMessageTipsKickoffGroupFormat), opUser, users];
             }
         } break;
         case V2TIM_GROUP_TIPS_TYPE_SET_ADMIN: {
             if (userList.count > 0) {
                 NSString *users = [userList componentsJoinedByString:@"、"];
-                str = [NSString stringWithFormat:TIMCommonLocalizableString(TUIKitMessageTipsSettAdminFormat), users];
+                str = [NSString stringWithFormat:TDeskIMCommonLocalizableString(TUIKitMessageTipsSettAdminFormat), users];
             }
         } break;
         case V2TIM_GROUP_TIPS_TYPE_CANCEL_ADMIN: {
             if (userList.count > 0) {
                 NSString *users = [userList componentsJoinedByString:@"、"];
-                str = [NSString stringWithFormat:TIMCommonLocalizableString(TUIKitMessageTipsCancelAdminFormat), users];
+                str = [NSString stringWithFormat:TDeskIMCommonLocalizableString(TUIKitMessageTipsCancelAdminFormat), users];
             }
         } break;
         case V2TIM_GROUP_TIPS_TYPE_GROUP_INFO_CHANGE: {
@@ -1394,22 +1394,22 @@ static const int kOfflinePushVersion = 1;
                     int32_t muteTime = [(V2TIMGroupMemberChangeInfo *)info muteTime];
                     NSString *myId = V2TIMManager.sharedInstance.getLoginUser;
                     NSString *showName = [self.class getUserName:tips with:userId];
-                    str = [NSString stringWithFormat:@"%@ %@", [userId isEqualToString:myId] ? TIMCommonLocalizableString(You) : showName,
-                                                     muteTime == 0 ? TIMCommonLocalizableString(TUIKitMessageTipsUnmute)
-                                                                   : TIMCommonLocalizableString(TUIKitMessageTipsMute)];
+                    str = [NSString stringWithFormat:@"%@ %@", [userId isEqualToString:myId] ? TDeskIMCommonLocalizableString(You) : showName,
+                                                     muteTime == 0 ? TDeskIMCommonLocalizableString(TUIKitMessageTipsUnmute)
+                                                                   : TDeskIMCommonLocalizableString(TUIKitMessageTipsMute)];
                     break;
                 }
             }
         } break;
         case V2TIM_GROUP_TIPS_TYPE_PINNED_MESSAGE_ADDED: {
             if (opUser.length > 0) {
-                str = [NSString stringWithFormat:TIMCommonLocalizableString(TUIKitMessageTipsGroupPinMessage), opUser];
+                str = [NSString stringWithFormat:TDeskIMCommonLocalizableString(TUIKitMessageTipsGroupPinMessage), opUser];
             }
         }
             break;
         case V2TIM_GROUP_TIPS_TYPE_PINNED_MESSAGE_DELETED: {
             if (opUser.length > 0) {
-                str = [NSString stringWithFormat:TIMCommonLocalizableString(TUIKitMessageTipsGroupUnPinMessage), opUser];
+                str = [NSString stringWithFormat:TDeskIMCommonLocalizableString(TUIKitMessageTipsGroupUnPinMessage), opUser];
             }
         }
             break;
@@ -1433,59 +1433,59 @@ static const int kOfflinePushVersion = 1;
     for (V2TIMGroupChangeInfo *info in tips.groupChangeInfoList) {
         switch (info.type) {
             case V2TIM_GROUP_INFO_CHANGE_TYPE_NAME: {
-                str = [NSString stringWithFormat:TIMCommonLocalizableString(TUIkitMessageTipsEditGroupNameFormat), str, info.value];
+                str = [NSString stringWithFormat:TDeskIMCommonLocalizableString(TUIkitMessageTipsEditGroupNameFormat), str, info.value];
             } break;
             case V2TIM_GROUP_INFO_CHANGE_TYPE_INTRODUCTION: {
-                str = [NSString stringWithFormat:TIMCommonLocalizableString(TUIKitMessageTipsEditGroupIntroFormat), str, info.value];
+                str = [NSString stringWithFormat:TDeskIMCommonLocalizableString(TUIKitMessageTipsEditGroupIntroFormat), str, info.value];
             } break;
             case V2TIM_GROUP_INFO_CHANGE_TYPE_NOTIFICATION: {
                 if (info.value.length) {
-                    str = [NSString stringWithFormat:TIMCommonLocalizableString(TUIKitMessageTipsEditGroupAnnounceFormat), str, info.value];
+                    str = [NSString stringWithFormat:TDeskIMCommonLocalizableString(TUIKitMessageTipsEditGroupAnnounceFormat), str, info.value];
                 } else {
-                    str = [NSString stringWithFormat:TIMCommonLocalizableString(TUIKitMessageTipsDeleteGroupAnnounceFormat), str];
+                    str = [NSString stringWithFormat:TDeskIMCommonLocalizableString(TUIKitMessageTipsDeleteGroupAnnounceFormat), str];
                 }
             } break;
             case V2TIM_GROUP_INFO_CHANGE_TYPE_FACE: {
-                str = [NSString stringWithFormat:TIMCommonLocalizableString(TUIKitMessageTipsEditGroupAvatarFormat), str];
+                str = [NSString stringWithFormat:TDeskIMCommonLocalizableString(TUIKitMessageTipsEditGroupAvatarFormat), str];
             } break;
             case V2TIM_GROUP_INFO_CHANGE_TYPE_OWNER: {
                 if (userList.count) {
-                    str = [NSString stringWithFormat:TIMCommonLocalizableString(TUIKitMessageTipsEditGroupOwnerFormat), str, userList.firstObject];
+                    str = [NSString stringWithFormat:TDeskIMCommonLocalizableString(TUIKitMessageTipsEditGroupOwnerFormat), str, userList.firstObject];
                 } else {
-                    str = [NSString stringWithFormat:TIMCommonLocalizableString(TUIKitMessageTipsEditGroupOwnerFormat), str, info.value];
+                    str = [NSString stringWithFormat:TDeskIMCommonLocalizableString(TUIKitMessageTipsEditGroupOwnerFormat), str, info.value];
                 }
 
             } break;
             case V2TIM_GROUP_INFO_CHANGE_TYPE_SHUT_UP_ALL: {
                 if (info.boolValue) {
-                    str = [NSString stringWithFormat:TIMCommonLocalizableString(TUIKitSetShutupAllFormat), opUser];
+                    str = [NSString stringWithFormat:TDeskIMCommonLocalizableString(TUIKitSetShutupAllFormat), opUser];
                 } else {
-                    str = [NSString stringWithFormat:TIMCommonLocalizableString(TUIKitCancelShutupAllFormat), opUser];
+                    str = [NSString stringWithFormat:TDeskIMCommonLocalizableString(TUIKitCancelShutupAllFormat), opUser];
                 }
             } break;
             case V2TIM_GROUP_INFO_CHANGE_TYPE_GROUP_ADD_OPT: {
                 uint32_t addOpt = info.intValue;
                 NSString *addOptDesc = @"unknown";
                 if (addOpt == V2TIM_GROUP_ADD_FORBID) {
-                    addOptDesc = TIMCommonLocalizableString(TUIKitGroupProfileJoinDisable);
+                    addOptDesc = TDeskIMCommonLocalizableString(TUIKitGroupProfileJoinDisable);
                 } else if (addOpt == V2TIM_GROUP_ADD_AUTH) {
-                    addOptDesc = TIMCommonLocalizableString(TUIKitGroupProfileAdminApprove);
+                    addOptDesc = TDeskIMCommonLocalizableString(TUIKitGroupProfileAdminApprove);
                 } else if (addOpt == V2TIM_GROUP_ADD_ANY) {
-                    addOptDesc = TIMCommonLocalizableString(TUIKitGroupProfileAutoApproval);
+                    addOptDesc = TDeskIMCommonLocalizableString(TUIKitGroupProfileAutoApproval);
                 }
-                str = [NSString stringWithFormat:TIMCommonLocalizableString(TUIKitMessageTipsEditGroupAddOptFormat), str, addOptDesc];
+                str = [NSString stringWithFormat:TDeskIMCommonLocalizableString(TUIKitMessageTipsEditGroupAddOptFormat), str, addOptDesc];
             } break;
             case V2TIM_GROUP_INFO_CHANGE_TYPE_GROUP_APPROVE_OPT: {
                 uint32_t addOpt = info.intValue;
                 NSString *addOptDesc = @"unknown";
                 if (addOpt == V2TIM_GROUP_ADD_FORBID) {
-                    addOptDesc = TIMCommonLocalizableString(TUIKitGroupProfileInviteDisable);
+                    addOptDesc = TDeskIMCommonLocalizableString(TUIKitGroupProfileInviteDisable);
                 } else if (addOpt == V2TIM_GROUP_ADD_AUTH) {
-                    addOptDesc = TIMCommonLocalizableString(TUIKitGroupProfileAdminApprove);
+                    addOptDesc = TDeskIMCommonLocalizableString(TUIKitGroupProfileAdminApprove);
                 } else if (addOpt == V2TIM_GROUP_ADD_ANY) {
-                    addOptDesc = TIMCommonLocalizableString(TUIKitGroupProfileAutoApproval);
+                    addOptDesc = TDeskIMCommonLocalizableString(TUIKitGroupProfileAutoApproval);
                 }
-                str = [NSString stringWithFormat:TIMCommonLocalizableString(TUIKitMessageTipsEditGroupInviteOptFormat), str, addOptDesc];
+                str = [NSString stringWithFormat:TDeskIMCommonLocalizableString(TUIKitMessageTipsEditGroupInviteOptFormat), str, addOptDesc];
             } break;
             default:
                 break;

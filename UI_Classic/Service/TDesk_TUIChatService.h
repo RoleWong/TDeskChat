@@ -21,14 +21,14 @@ NS_ASSUME_NONNULL_BEGIN
  * You can call the service through the [TDeskCore callService:..] method. The different service parameters are as follows:
  *
  *  > Getting display text information through V2TIMMessage object
- *    serviceName: TUICore_TUIChatService
- *    method ：TUICore_TUIChatService_GetDisplayStringMethod
- *    param: @{TUICore_TUIChatService_GetDisplayStringMethod_MsgKey:V2TIMMessage};
+ *    serviceName: TDeskCore_TUIChatService
+ *    method ：TDeskCore_TUIChatService_GetDisplayStringMethod
+ *    param: @{TDeskCore_TUIChatService_GetDisplayStringMethod_MsgKey:V2TIMMessage};
  *
  *  > Send Message
- *  serviceName: TUICore_TUIChatService
- *  method: TUICore_TUIChatService_SendMessageMethod
- *  param: @{TUICore_TUIChatService_SendMessageMethod_MsgKey:V2TIMMessage};
+ *  serviceName: TDeskCore_TUIChatService
+ *  method: TDeskCore_TUIChatService_SendMessageMethod
+ *  param: @{TDeskCore_TUIChatService_SendMessageMethod_MsgKey:V2TIMMessage};
  */
 
 @interface TDeskChatService : NSObject <TDeskServiceProtocol>

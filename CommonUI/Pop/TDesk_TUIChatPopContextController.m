@@ -256,14 +256,14 @@
                                    _originFrame.origin.y - kScale390(8 + 40),
                                    MAX(kTIMDefaultEmojiSize.width *8,kScale390(208)),
                                    kScale390(40));
-    NSDictionary *param = @{TUICore_TUIChatExtension_ChatPopMenuReactRecentView_Delegate : self};
-    [TDeskCore raiseExtension:TUICore_TUIChatExtension_ChatPopMenuReactRecentView_MinimalistExtensionID parentView:self.recentView param:param];
+    NSDictionary *param = @{TDeskCore_TUIChatExtension_ChatPopMenuReactRecentView_Delegate : self};
+    [TDeskCore raiseExtension:TDeskCore_TUIChatExtension_ChatPopMenuReactRecentView_MinimalistExtensionID parentView:self.recentView param:param];
 
 }
 
 - (void)configExtionView {
     _extionView = [[TDeskChatPopContextExtionView alloc] init];
-    _extionView.backgroundColor = [UIColor tui_colorWithHex:@"f9f9f9"];
+    _extionView.backgroundColor = [UIColor tdesk_colorWithHex:@"f9f9f9"];
     _extionView.layer.cornerRadius = kScale390(16);
     [self.view addSubview:_extionView];
 

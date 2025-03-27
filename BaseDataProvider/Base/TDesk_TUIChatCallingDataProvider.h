@@ -122,9 +122,9 @@ typedef NS_ENUM(NSInteger, TUICallMessageDirection) {
 /**
  * The style of voice-video-call message in TUIChat
  */
-typedef NS_ENUM(NSInteger, TUIChatCallingMessageAppearance) {
-    TUIChatCallingMessageAppearanceDetails = 0,
-    TUIChatCallingMessageAppearanceSimplify = 1,
+typedef NS_ENUM(NSInteger, TDeskChatCallingMessageAppearance) {
+    TDeskChatCallingMessageAppearanceDetails = 0,
+    TDeskChatCallingMessageAppearanceSimplify = 1,
 };
 
 @protocol TDeskChatCallingDataProtocol <NSObject>
@@ -132,7 +132,7 @@ typedef NS_ENUM(NSInteger, TUIChatCallingMessageAppearance) {
 /**
  * Seting styles of voice-video-call message in TUIChat
  */
-- (void)setCallingMessageStyle:(TUIChatCallingMessageAppearance)style;
+- (void)setCallingMessageStyle:(TDeskChatCallingMessageAppearance)style;
 
 /**
  * Redial based on the current voice-video-call message (generally used to redial after clicking the call history on the chat page)

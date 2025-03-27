@@ -31,7 +31,7 @@
 }
 
 + (void)registerFriendProfileActionMenuExtension {
-    [TDeskCore registerExtension:TUICore_TUIContactExtension_FriendProfileActionMenu_ClassicExtensionID object:TDeskChatExtensionObserver.shareInstance];
+    [TDeskCore registerExtension:TDeskCore_TUIContactExtension_FriendProfileActionMenu_ClassicExtensionID object:TDeskChatExtensionObserver.shareInstance];
 }
 
 #pragma mark - TDeskExtensionProtocol
@@ -40,7 +40,7 @@
         return nil;
     }
 
-    if ([extensionID isEqualToString:TUICore_TUIContactExtension_FriendProfileActionMenu_ClassicExtensionID]) {
+    if ([extensionID isEqualToString:TDeskCore_TUIContactExtension_FriendProfileActionMenu_ClassicExtensionID]) {
         return [self getFriendProfileActionMenuExtensionForClassicContact:param];
     } else {
         return nil;
@@ -50,10 +50,10 @@
 - (NSArray<TDeskExtensionInfo *> *)getFriendProfileActionMenuExtensionForClassicContact:(NSDictionary *)param {
     TDeskExtensionInfo *info = [[TDeskExtensionInfo alloc] init];
     info.weight = 300;
-    info.text = TIMCommonLocalizableString(ProfileSendMessages);
+    info.text = TDeskIMCommonLocalizableString(ProfileSendMessages);
     info.onClicked = ^(NSDictionary *_Nonnull actionParam) {
-      NSString *userID = [actionParam tui_objectForKey:TUICore_TUIContactExtension_FriendProfileActionMenu_UserID asClass:NSString.class];
-      UINavigationController *pushVC = [actionParam tui_objectForKey:TUICore_TUIContactExtension_FriendProfileActionMenu_PushVC
+      NSString *userID = [actionParam tdesk_objectForKey:TDeskCore_TUIContactExtension_FriendProfileActionMenu_UserID asClass:NSString.class];
+      UINavigationController *pushVC = [actionParam tdesk_objectForKey:TDeskCore_TUIContactExtension_FriendProfileActionMenu_PushVC
                                                              asClass:UINavigationController.class];
       if (userID.length > 0 && pushVC) {
           TDeskChatConversationModel *conversationModel = [[TDeskChatConversationModel alloc] init];

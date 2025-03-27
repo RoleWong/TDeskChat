@@ -52,7 +52,7 @@
 
 #pragma mark - Private
 - (void)setupViews {
-    self.backgroundColor = TUIChatDynamicColor(@"chat_controller_bg_color", @"#FFFFFF");
+    self.backgroundColor = TDeskChatDynamicColor(@"chat_controller_bg_color", @"#FFFFFF");
 
     self.titleLabel = [[UILabel alloc] init];
     self.titleLabel.text = self.title;
@@ -79,7 +79,7 @@
 }
 
 - (void)updateColorBySelected:(BOOL)selected {
-    UIColor *color = selected ? TUIChatDynamicColor(@"chat_message_read_status_tab_color", @"#147AFF")
+    UIColor *color = selected ? TDeskChatDynamicColor(@"chat_message_read_status_tab_color", @"#147AFF")
                               : TIMCommonDynamicColor(@"chat_message_read_status_tab_unselect_color", @"#444444");
     self.titleLabel.textColor = color;
     self.bottomLine.hidden = !selected;
@@ -235,7 +235,7 @@
 
 - (void)setupTitleView {
     UILabel *titleLabel = [[UILabel alloc] init];
-    titleLabel.text = TIMCommonLocalizableString(TUIKitMessageReadDetail);
+    titleLabel.text = TDeskIMCommonLocalizableString(TUIKitMessageReadDetail);
     titleLabel.font = [UIFont systemFontOfSize:18.0];
     titleLabel.textColor = TIMCommonDynamicColor(@"nav_title_text_color", @"#000000");
     [titleLabel sizeToFit];
@@ -251,7 +251,7 @@
     UILabel *nameLabel = [[UILabel alloc] init];
     nameLabel.text = self.cellData.senderName;
     nameLabel.font = [UIFont systemFontOfSize:12.0];
-    nameLabel.textColor = TUIChatDynamicColor(@"chat_message_read_name_date_text_color", @"#999999");
+    nameLabel.textColor = TDeskChatDynamicColor(@"chat_message_read_name_date_text_color", @"#999999");
     nameLabel.textAlignment = isRTL()?NSTextAlignmentRight:NSTextAlignmentLeft;
     [messageBackView addSubview:nameLabel];
     [nameLabel sizeToFit];
@@ -268,7 +268,7 @@
     dateLabel.text = dateString;
     dateLabel.font = [UIFont systemFontOfSize:12];
     dateLabel.textAlignment = isRTL()?NSTextAlignmentRight:NSTextAlignmentLeft;
-    dateLabel.textColor = TUIChatDynamicColor(@"chat_message_read_name_date_text_color", @"#999999");
+    dateLabel.textColor = TDeskChatDynamicColor(@"chat_message_read_name_date_text_color", @"#999999");
     [messageBackView addSubview:dateLabel];
     [dateLabel sizeToFit];
     [dateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -282,7 +282,7 @@
         UILabel *contentLabel = [[UILabel alloc] init];
         contentLabel.text = content;
         contentLabel.font = [UIFont systemFontOfSize:16];
-        contentLabel.textColor = TUIChatDynamicColor(@"chat_input_text_color", @"#111111");
+        contentLabel.textColor = TDeskChatDynamicColor(@"chat_input_text_color", @"#111111");
         contentLabel.lineBreakMode = NSLineBreakByTruncatingTail;
         contentLabel.textAlignment = isRTL()?NSTextAlignmentRight:NSTextAlignmentLeft;
         self.contentLabel = contentLabel;
@@ -346,7 +346,7 @@
 - (void)loadMembers {
     [self getReadMembersWithCompletion:^(int code, NSString *desc, NSArray *members, BOOL isFinished) {
       if (code != 0) {
-          [TDeskTool makeToast:TIMCommonLocalizableString(TUIKitMessageReadGetReadMembersFail)];
+          [TDeskTool makeToast:TDeskIMCommonLocalizableString(TUIKitMessageReadGetReadMembersFail)];
           NSLog(@"get read members failed, code: %d, desc: %@", code, desc);
           return;
       }
@@ -354,7 +354,7 @@
     }];
     [self getUnreadMembersWithCompletion:^(int code, NSString *desc, NSArray *members, BOOL isFinished) {
       if (code != 0) {
-          [TDeskTool makeToast:TIMCommonLocalizableString(TUIKitMessageReadGetUnreadMembersFail)];
+          [TDeskTool makeToast:TDeskIMCommonLocalizableString(TUIKitMessageReadGetUnreadMembersFail)];
           NSLog(@"get unread members failed, code: %d, desc: %@", code, desc);
           return;
       }
@@ -408,11 +408,11 @@
 
 - (void)getUserOrFriendProfileVCWithUserID:(NSString *)userID SuccBlock:(void (^)(UIViewController *vc))succ failBlock:(nullable V2TIMFail)fail {
     NSDictionary *param = @{
-        TUICore_TUIContactObjectFactory_GetUserOrFriendProfileVCMethod_UserIDKey: userID ? : @"",
-        TUICore_TUIContactObjectFactory_GetUserOrFriendProfileVCMethod_SuccKey: succ ? : ^(UIViewController *vc){},
-        TUICore_TUIContactObjectFactory_GetUserOrFriendProfileVCMethod_FailKey: fail ? : ^(int code, NSString * desc){}
+        TDeskCore_TUIContactObjectFactory_GetUserOrFriendProfileVCMethod_UserIDKey: userID ? : @"",
+        TDeskCore_TUIContactObjectFactory_GetUserOrFriendProfileVCMethod_SuccKey: succ ? : ^(UIViewController *vc){},
+        TDeskCore_TUIContactObjectFactory_GetUserOrFriendProfileVCMethod_FailKey: fail ? : ^(int code, NSString * desc){}
     };
-    [TDeskCore createObject:TUICore_TUIContactObjectFactory key:TUICore_TUIContactObjectFactory_GetUserOrFriendProfileVCMethod param:param];
+    [TDeskCore createObject:TDeskCore_TUIContactObjectFactory key:TDeskCore_TUIContactObjectFactory_GetUserOrFriendProfileVCMethod param:param];
 }
 
 #pragma mark - UITableViewDataSource & UITableViewDelegate
@@ -463,7 +463,7 @@
     } else {
         NSString *detail = nil;
         BOOL isPeerRead = self.cellData.messageReceipt.isPeerRead;
-        detail = isPeerRead ? TIMCommonLocalizableString(TUIKitMessageReadC2CRead) : TIMCommonLocalizableString(TUIKitMessageReadC2CUnReadDetail);
+        detail = isPeerRead ? TDeskIMCommonLocalizableString(TUIKitMessageReadC2CRead) : TDeskIMCommonLocalizableString(TUIKitMessageReadC2CUnReadDetail);
         data = [[TDeskMemberCellData alloc] initWithUserID:self.cellData.innerMessage.userID
                                                 nickName:nil
                                             friendRemark:self.c2cReceiverName
@@ -493,7 +493,7 @@
               [self refreshTableView];
 
               if (members != nil && members.count == 0) {
-                  [TDeskTool makeToast:TIMCommonLocalizableString(TUIKitMessageReadNoMoreData)];
+                  [TDeskTool makeToast:TDeskIMCommonLocalizableString(TUIKitMessageReadNoMoreData)];
                   [self.tableView setContentOffset:CGPointMake(0, scrollView.contentOffset.y - TMessageController_Header_Height) animated:YES];
               }
             }];
@@ -506,7 +506,7 @@
               [self refreshTableView];
 
               if (members != nil && members.count == 0) {
-                  [TDeskTool makeToast:TIMCommonLocalizableString(TUIKitMessageReadNoMoreData)];
+                  [TDeskTool makeToast:TDeskIMCommonLocalizableString(TUIKitMessageReadNoMoreData)];
                   [self.tableView setContentOffset:CGPointMake(0, scrollView.contentOffset.y - TMessageController_Header_Height) animated:YES];
               }
             }];
@@ -585,19 +585,19 @@
         @(TUIMessageReadViewTagRead) : @{
             @"tag" : @(TUIMessageReadViewTagRead),
             @"title" :
-                [NSString stringWithFormat:@"%ld %@", (long)self.cellData.messageReceipt.readCount, TIMCommonLocalizableString(TUIKitMessageReadPartRead)],
+                [NSString stringWithFormat:@"%ld %@", (long)self.cellData.messageReceipt.readCount, TDeskIMCommonLocalizableString(TUIKitMessageReadPartRead)],
             @"selected" : @(YES)
         },
         @(TUIMessageReadViewTagUnread) : @{
             @"tag" : @(TUIMessageReadViewTagUnread),
             @"title" :
-                [NSString stringWithFormat:@"%ld %@", (long)self.cellData.messageReceipt.unreadCount, TIMCommonLocalizableString(TUIKitMessageReadPartUnread)],
+                [NSString stringWithFormat:@"%ld %@", (long)self.cellData.messageReceipt.unreadCount, TDeskIMCommonLocalizableString(TUIKitMessageReadPartUnread)],
             @"selected" : @(NO)
         },
     }];
     if (self.showReadStatusDisable) {
         [readViews
-            setObject:@{@"tag" : @(TUIMessageReadViewTagReadDisable), @"title" : TIMCommonLocalizableString(TUIKitMessageReadPartDisable), @"selected" : @(NO)}
+            setObject:@{@"tag" : @(TUIMessageReadViewTagReadDisable), @"title" : TDeskIMCommonLocalizableString(TUIKitMessageReadPartDisable), @"selected" : @(NO)}
                forKey:@(TUIMessageReadViewTagReadDisable)];
     }
     return readViews;

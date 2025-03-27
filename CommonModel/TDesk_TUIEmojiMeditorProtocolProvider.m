@@ -1,5 +1,5 @@
 //
-//  TUIEmojiMeditorProtocolProvider.m
+//  TDeskEmojiMeditorProtocolProvider.m
 //  TUIEmojiPlugin
 //
 //  Created by wyl on 2023/11/14.
@@ -12,7 +12,7 @@
 #import <TDeskCommon/TDesk_TIMCommonModel.h>
 #import "TDesk_TUIEmojiConfig.h"
 
-@implementation TUIEmojiMeditorProtocolProvider
+@implementation TDeskEmojiMeditorProtocolProvider
 + (void)load {
     [TDeskCommonMediator.share registerService:@protocol(TDeskEmojiMeditorProtocol) class:self];
 }

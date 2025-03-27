@@ -27,7 +27,7 @@
 
 @implementation TDeskChatPopMenuAction
 
-- (instancetype)initWithTitle:(NSString *)title image:(UIImage *)image weight:(NSInteger)weight callback:(TUIChatPopMenuActionCallback)callback {
+- (instancetype)initWithTitle:(NSString *)title image:(UIImage *)image weight:(NSInteger)weight callback:(TDeskChatPopMenuActionCallback)callback {
     if (self = [super init]) {
         self.title = title;
         self.image = image;
@@ -295,7 +295,7 @@
      */
     self.arrowLayer = [[CAShapeLayer alloc] init];
     self.arrowLayer.path = [self arrawPath:CGPointMake(arrawX, arrawY) directionTop:top].CGPath;
-    self.arrowLayer.fillColor = TUIChatDynamicColor(@"chat_pop_menu_bg_color", @"#FFFFFF").CGColor;
+    self.arrowLayer.fillColor = TDeskChatDynamicColor(@"chat_pop_menu_bg_color", @"#FFFFFF").CGColor;
     if (top) {
         if (self.emojiContainerView) {
             [self.emojiContainerView.layer addSublayer:self.arrowLayer];
@@ -325,7 +325,7 @@
     [self addSubview:self.containerView];
 
     self.actionsView = [[TDeskChatPopActionsView alloc] init];
-    self.actionsView.backgroundColor = TUIChatDynamicColor(@"chat_pop_menu_bg_color", @"#FFFFFF");
+    self.actionsView.backgroundColor = TDeskChatDynamicColor(@"chat_pop_menu_bg_color", @"#FFFFFF");
     [self.containerView addSubview:self.actionsView];
 
     int i = 0;
@@ -362,8 +362,8 @@
     [self setupEmojiAdvanceView];
 }
 - (void)setupEmojiRecentView {
-    NSDictionary *param = @{TUICore_TUIChatExtension_ChatPopMenuReactRecentView_Delegate : self};
-    BOOL isRaiseEmojiExtensionSuccess = [TDeskCore raiseExtension:TUICore_TUIChatExtension_ChatPopMenuReactRecentView_ClassicExtensionID
+    NSDictionary *param = @{TDeskCore_TUIChatExtension_ChatPopMenuReactRecentView_Delegate : self};
+    BOOL isRaiseEmojiExtensionSuccess = [TDeskCore raiseExtension:TDeskCore_TUIChatExtension_ChatPopMenuReactRecentView_ClassicExtensionID
                                                      parentView:self.emojiContainerView
                                                           param:param];
     if (!isRaiseEmojiExtensionSuccess) {
@@ -371,8 +371,8 @@
     }
 }
 - (void)setupEmojiAdvanceView {
-    NSDictionary *param = @{TUICore_TUIChatExtension_ChatPopMenuReactRecentView_Delegate : self};
-    [TDeskCore raiseExtension:TUICore_TUIChatExtension_ChatPopMenuReactDetailView_ClassicExtensionID parentView:self.emojiContainerView param:param];
+    NSDictionary *param = @{TDeskCore_TUIChatExtension_ChatPopMenuReactRecentView_Delegate : self};
+    [TDeskCore raiseExtension:TDeskCore_TUIChatExtension_ChatPopMenuReactDetailView_ClassicExtensionID parentView:self.emojiContainerView param:param];
 }
 
 - (void)updateLayout {
@@ -420,7 +420,7 @@
 
 - (UIButton *)buttonWithAction:(TDeskChatPopMenuAction *)action tag:(NSInteger)tag {
     UIButton *actionButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [actionButton setTitleColor:TUIChatDynamicColor(@"chat_pop_menu_text_color", @"#444444")
+    [actionButton setTitleColor:TDeskChatDynamicColor(@"chat_pop_menu_text_color", @"#444444")
                        forState:UIControlStateNormal];
     actionButton.titleLabel.font = [UIFont systemFontOfSize:10.0];
     actionButton.titleLabel.numberOfLines = 2;
@@ -454,7 +454,7 @@
 }
 
 - (void)buttonHighlightedEnter:(UIButton *)sender {
-    sender.backgroundColor = TUIChatDynamicColor(@"", @"#006EFF19");
+    sender.backgroundColor = TDeskChatDynamicColor(@"", @"#006EFF19");
 }
 - (void)buttonHighlightedExit:(UIButton *)sender {
     sender.backgroundColor = [UIColor clearColor];
@@ -469,7 +469,7 @@
     [self hideByClickButton:button
                    callback:^() {
                      __strong typeof(weakSelf) strongSelf = weakSelf;
-                     TUIChatPopMenuActionCallback callback = [strongSelf.actionCallback objectForKey:@(button.tag)];
+                     TDeskChatPopMenuActionCallback callback = [strongSelf.actionCallback objectForKey:@(button.tag)];
                      if (callback) {
                          callback();
                      }
@@ -500,7 +500,7 @@
 // MARK: ThemeChanged
 - (void)applyBorderTheme {
     if (_arrowLayer) {
-        _arrowLayer.fillColor = TUIChatDynamicColor(@"chat_pop_menu_bg_color", @"#FFFFFF").CGColor;
+        _arrowLayer.fillColor = TDeskChatDynamicColor(@"chat_pop_menu_bg_color", @"#FFFFFF").CGColor;
     }
 }
 

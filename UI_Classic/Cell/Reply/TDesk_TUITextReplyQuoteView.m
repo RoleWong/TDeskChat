@@ -17,7 +17,7 @@
     if (self = [super initWithFrame:frame]) {
         _textLabel = [[UILabel alloc] init];
         _textLabel.font = [UIFont systemFontOfSize:10.0];
-        _textLabel.textColor = TUIChatDynamicColor(@"chat_reply_message_sender_text_color", @"888888");
+        _textLabel.textColor = TDeskChatDynamicColor(@"chat_reply_message_sender_text_color", @"888888");
         _textLabel.numberOfLines = 2;
         [self addSubview:_textLabel];
     }
@@ -48,8 +48,8 @@
                             !data.showRevokedOriginMessage;
     if (showRevokeStr) {
         NSString* revokeStr = data.supportForReply ?
-        TIMCommonLocalizableString(TUIKitRepliesOriginMessageRevoke) :
-        TIMCommonLocalizableString(TUIKitReferenceOriginMessageRevoke);
+        TDeskIMCommonLocalizableString(TUIKitRepliesOriginMessageRevoke) :
+        TDeskIMCommonLocalizableString(TUIKitReferenceOriginMessageRevoke);
         self.textLabel.attributedText = [revokeStr getFormatEmojiStringWithFont:self.textLabel.font emojiLocations:nil];
     }
     else {

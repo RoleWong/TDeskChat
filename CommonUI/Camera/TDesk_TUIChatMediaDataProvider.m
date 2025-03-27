@@ -25,7 +25,7 @@
                                         UINavigationControllerDelegate,
                                         UIImagePickerControllerDelegate,
                                         UIDocumentPickerDelegate,
-                                        TUICameraViewControllerDelegate>
+                                        TDeskCameraViewControllerDelegate>
 
 @end
 
@@ -183,7 +183,7 @@
       else {
           if (imageData.length > 10 * 1024 * 1024) {
               if ([self.listener respondsToSelector:@selector(onProvideFileError:)]) {
-                  [self.listener onProvideFileError:TIMCommonLocalizableString(TUIKitImageSizeCheckLimited)];
+                  [self.listener onProvideFileError:TDeskIMCommonLocalizableString(TUIKitImageSizeCheckLimited)];
               }
               return;
           }
@@ -264,7 +264,7 @@
                   }
                 }];
                 
-                [NSTimer tui_scheduledTimerWithTimeInterval:.1 repeats:YES block:^(NSTimer * _Nonnull timer) {
+                [NSTimer tdesk_scheduledTimerWithTimeInterval:.1 repeats:YES block:^(NSTimer * _Nonnull timer) {
                     if (exportSession.status == AVAssetExportSessionStatusExporting) {
                         NSLog(@"exportSession.progress:%f",exportSession.progress);
                         placeHolderCellData.videoTranscodingProgress = exportSession.progress;
@@ -357,7 +357,7 @@
               }
             }];
             
-            [NSTimer tui_scheduledTimerWithTimeInterval:.1 repeats:YES block:^(NSTimer * _Nonnull timer) {
+            [NSTimer tdesk_scheduledTimerWithTimeInterval:.1 repeats:YES block:^(NSTimer * _Nonnull timer) {
                 if (exportSession.status == AVAssetExportSessionStatusExporting) {
                     NSLog(@"exportSession.progress:%f",exportSession.progress);
                     placeHolderCellData.videoTranscodingProgress = exportSession.progress;
@@ -677,7 +677,7 @@
     ;
 }
 
-#pragma mark - TUICameraViewControllerDelegate
+#pragma mark - TDeskCameraViewControllerDelegate
 - (void)cameraViewController:(TDeskCameraViewController *)controller didFinishPickingMediaWithVideoURL:(NSURL *)url {
     [self transcodeIfNeed:YES message:nil videoUrl:url];
 }
@@ -712,8 +712,8 @@
                           NSString *fileName = [url lastPathComponent];
                           NSString *filePath = [TUIKit_File_Path stringByAppendingString:fileName];
                           if (fileData.length > 1e9 || fileData.length == 0) { // 1e9 bytes = 1GB
-                                UIAlertController *ac = [UIAlertController alertControllerWithTitle:TIMCommonLocalizableString(TUIKitFileSizeCheckLimited) message:nil preferredStyle:UIAlertControllerStyleAlert];
-                                [ac tuitheme_addAction:[UIAlertAction actionWithTitle:TIMCommonLocalizableString(Confirm) style:UIAlertActionStyleDefault handler:nil]];
+                                UIAlertController *ac = [UIAlertController alertControllerWithTitle:TDeskIMCommonLocalizableString(TUIKitFileSizeCheckLimited) message:nil preferredStyle:UIAlertControllerStyleAlert];
+                                [ac tuitheme_addAction:[UIAlertAction actionWithTitle:TDeskIMCommonLocalizableString(Confirm) style:UIAlertActionStyleDefault handler:nil]];
                                 [self.presentViewController presentViewController:ac animated:YES completion:nil];
                                 return;
                           }
@@ -725,7 +725,7 @@
                               NSArray *arrayM = [NSFileManager.defaultManager subpathsAtPath:TUIKit_File_Path];
                               for (NSString *sub in arrayM) {
                                   if ([sub.pathExtension isEqualToString:fileName.pathExtension] &&
-                                      [sub.stringByDeletingPathExtension tui_containsString:fileName.stringByDeletingPathExtension]) {
+                                      [sub.stringByDeletingPathExtension tdesk_containsString:fileName.stringByDeletingPathExtension]) {
                                       i++;
                                   }
                               }

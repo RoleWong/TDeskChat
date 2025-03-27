@@ -6,7 +6,7 @@
 #import "TDesk_TUICameraMacro.h"
 
 @class TDeskCameraViewController;
-@protocol TUICameraViewControllerDelegate <NSObject>
+@protocol TDeskCameraViewControllerDelegate <NSObject>
 
 - (void)cameraViewController:(TDeskCameraViewController *)controller didFinishPickingMediaWithVideoURL:(NSURL *)url;
 - (void)cameraViewController:(TDeskCameraViewController *)controller didFinishPickingMediaWithImageData:(NSData *)data;
@@ -16,7 +16,7 @@
 
 @interface TDeskCameraViewController : UIViewController
 
-@property(nonatomic, weak) id<TUICameraViewControllerDelegate> delegate;
+@property(nonatomic, weak) id<TDeskCameraViewControllerDelegate> delegate;
 
 /// default TUICameraMediaTypePhoto
 @property(nonatomic) TDeskCameraMediaType type;

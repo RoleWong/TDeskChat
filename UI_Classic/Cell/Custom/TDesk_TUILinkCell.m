@@ -19,14 +19,14 @@
         _myTextLabel.numberOfLines = 0;
         _myTextLabel.font = [UIFont systemFontOfSize:15];
         _myTextLabel.textAlignment = isRTL()?NSTextAlignmentRight:NSTextAlignmentLeft;
-        _myTextLabel.textColor = TUIChatDynamicColor(@"chat_link_message_title_color", @"#000000");
+        _myTextLabel.textColor = TDeskChatDynamicColor(@"chat_link_message_title_color", @"#000000");
         [self.container addSubview:_myTextLabel];
 
         _myLinkLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        _myLinkLabel.text = TIMCommonLocalizableString(TUIKitMoreLinkDetails);
+        _myLinkLabel.text = TDeskIMCommonLocalizableString(TUIKitMoreLinkDetails);
         _myLinkLabel.font = [UIFont systemFontOfSize:15];
         _myLinkLabel.textAlignment = isRTL()?NSTextAlignmentRight:NSTextAlignmentLeft;
-        _myLinkLabel.textColor = TUIChatDynamicColor(@"chat_link_message_subtitle_color", @"#0000FF");
+        _myLinkLabel.textColor = TDeskChatDynamicColor(@"chat_link_message_subtitle_color", @"#0000FF");
         [self.container addSubview:_myLinkLabel];
     }
     return self;

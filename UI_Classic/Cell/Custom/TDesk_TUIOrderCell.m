@@ -17,7 +17,7 @@
     if (self) {
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.font = [UIFont boldSystemFontOfSize:12];
-        _titleLabel.textColor = TUIChatDynamicColor(@"chat_text_message_receive_text_color", @"#000000");
+        _titleLabel.textColor = TDeskChatDynamicColor(@"chat_text_message_receive_text_color", @"#000000");
         _titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
         [self.container addSubview:_titleLabel];
 
@@ -25,13 +25,13 @@
         _descLabel.font = [UIFont systemFontOfSize:12];
         _descLabel.numberOfLines = 1;
         _descLabel.lineBreakMode = NSLineBreakByTruncatingTail;
-        _descLabel.textColor = TUIChatDynamicColor(@"chat_custom_order_message_desc_color", @"#999999");
+        _descLabel.textColor = TDeskChatDynamicColor(@"chat_custom_order_message_desc_color", @"#999999");
         [self.container addSubview:_descLabel];
 
         _priceLabel = [[UILabel alloc] init];
         _priceLabel.font = [UIFont boldSystemFontOfSize:18];
         _priceLabel.lineBreakMode = NSLineBreakByTruncatingTail;
-        _priceLabel.textColor = TUIChatDynamicColor(@"chat_custom_order_message_price_color", @"#FF7201");
+        _priceLabel.textColor = TDeskChatDynamicColor(@"chat_custom_order_message_price_color", @"#FF7201");
         [self.container addSubview:_priceLabel];
 
         _iconView = [[UIImageView alloc] init];

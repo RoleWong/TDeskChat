@@ -10,7 +10,7 @@
 @import AVFoundation;
 @import AVKit;
 
-@interface TUIVideoCollectionCellScrollView : UIScrollView <UIScrollViewDelegate>
+@interface TDeskVideoCollectionCellScrollView : UIScrollView <UIScrollViewDelegate>
 @property(nonatomic, strong) UIView *videoView;
 @property(assign, nonatomic) CGFloat videoViewNormalWidth;
 @property(assign, nonatomic) CGFloat videoViewNormalHeight;
@@ -19,7 +19,7 @@
 
 @end
 
-@implementation TUIVideoCollectionCellScrollView
+@implementation TDeskVideoCollectionCellScrollView
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
@@ -107,7 +107,7 @@
 
 @end
 @interface TDeskVideoCollectionCell ()
-@property(nonatomic, strong) TUIVideoCollectionCellScrollView *scrollView;
+@property(nonatomic, strong) TDeskVideoCollectionCellScrollView *scrollView;
 @property(nonatomic, strong) UILabel *duration;
 @property(nonatomic, strong) UILabel *playTime;
 @property(nonatomic, strong) UISlider *playProcess;
@@ -150,7 +150,7 @@
     }
 }
 - (void)setupViews {
-    self.scrollView = [[TUIVideoCollectionCellScrollView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
+    self.scrollView = [[TDeskVideoCollectionCellScrollView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
     [self addSubview:self.scrollView];
 
     self.imageView = [[UIImageView alloc] init];
@@ -307,7 +307,7 @@
     [self.mainDownloadBtn sizeToFit];
     self.mainDownloadBtn.mm_width(65).mm_height(65).mm__centerX(self.mm_w / 2).mm__centerY(self.mm_h / 2);
     self.mainDownloadBtn.layer.cornerRadius = (self.mainDownloadBtn.mm_h * 0.5);
-    self.animateCircleView.tui_mm_center();
+    self.animateCircleView.tdesk_mm_center();
 
     self.mainPlayBtn.mm_width(65).mm_height(65).mm__centerX(self.mm_w / 2).mm__centerY(self.mm_h / 2);
     self.closeBtn.mm_width(31).mm_height(31).mm_left(16).mm_bottom(47);
@@ -435,7 +435,7 @@
 - (void)onDownloadBtnClick {
     if (![self.videoData isVideoExist]) {
         self.isSaveVideo = YES;
-        [TDeskTool makeToast:TIMCommonLocalizableString(TUIKitVideoDownloading) duration:CGFLOAT_MAX];
+        [TDeskTool makeToast:TDeskIMCommonLocalizableString(TUIKitVideoDownloading) duration:CGFLOAT_MAX];
     } else {
         [self saveVideo];
     }
@@ -451,9 +451,9 @@
         completionHandler:^(BOOL success, NSError *_Nullable error) {
           dispatch_async(dispatch_get_main_queue(), ^{
             if (success) {
-                [TDeskTool makeToast:TIMCommonLocalizableString(TUIKitVideoSavedSuccess) duration:1];
+                [TDeskTool makeToast:TDeskIMCommonLocalizableString(TUIKitVideoSavedSuccess) duration:1];
             } else {
-                [TDeskTool makeToastError:-1 msg:TIMCommonLocalizableString(TUIKitVideoSavedFailed)];
+                [TDeskTool makeToastError:-1 msg:TDeskIMCommonLocalizableString(TUIKitVideoSavedFailed)];
             }
           });
         }];
@@ -517,10 +517,10 @@
         [self stopPlay];
     }
     UIAlertController *ac = [UIAlertController alertControllerWithTitle:nil
-                                                                message:TIMCommonLocalizableString(TUIKitVideoCheckRisk)
+                                                                message:TDeskIMCommonLocalizableString(TUIKitVideoCheckRisk)
                                                          preferredStyle:UIAlertControllerStyleAlert];
     __weak typeof(self) weakSelf = self;
-    [ac tuitheme_addAction:[UIAlertAction actionWithTitle:TIMCommonLocalizableString(TUIKitVideoCheckRiskCancel)
+    [ac tuitheme_addAction:[UIAlertAction actionWithTitle:TDeskIMCommonLocalizableString(TUIKitVideoCheckRiskCancel)
                                                     style:UIAlertActionStyleCancel
                                                   handler:^(UIAlertAction *_Nonnull action) {
                                                     __strong typeof(weakSelf) strongSelf = weakSelf;

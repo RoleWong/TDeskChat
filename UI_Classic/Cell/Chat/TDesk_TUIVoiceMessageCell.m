@@ -47,8 +47,8 @@
 
 // Override
 - (void)notifyBottomContainerReadyOfData:(TDeskMessageCellData *)cellData {
-    NSDictionary *param = @{TUICore_TUIChatExtension_BottomContainer_CellData : self.voiceData};
-    [TDeskCore raiseExtension:TUICore_TUIChatExtension_BottomContainer_ClassicExtensionID parentView:self.bottomContainer param:param];
+    NSDictionary *param = @{TDeskCore_TUIChatExtension_BottomContainer_CellData : self.voiceData};
+    [TDeskCore raiseExtension:TDeskCore_TUIChatExtension_BottomContainer_ClassicExtensionID parentView:self.bottomContainer param:param];
 }
 
 - (void)fillWithData:(TDeskVoiceMessageCellData *)data {
@@ -67,7 +67,7 @@
     BOOL hasRiskContent = self.messageData.innerMessage.hasRiskContent;
 
     if (hasRiskContent) {
-        self.securityStrikeView.textLabel.text = TIMCommonLocalizableString(TUIKitMessageTypeSecurityStrikeVoice);
+        self.securityStrikeView.textLabel.text = TDeskIMCommonLocalizableString(TUIKitMessageTypeSecurityStrikeVoice);
     }
     
     if (self.voiceData.innerMessage.localCustomInt == 0 && self.voiceData.direction == MsgDirectionIncoming) self.voiceReadPoint.hidden = NO;
@@ -98,10 +98,10 @@
 - (void)applyStyleFromDirection:(TDeskMsgDirection)direction {
     if (direction == MsgDirectionIncoming) {
         _duration.rtlAlignment = TUITextRTLAlignmentLeading;
-        _duration.textColor = TUIChatDynamicColor(@"chat_voice_message_recv_duration_time_color", @"#000000");
+        _duration.textColor = TDeskChatDynamicColor(@"chat_voice_message_recv_duration_time_color", @"#000000");
     } else {
         _duration.rtlAlignment = TUITextRTLAlignmentTrailing;
-        _duration.textColor = TUIChatDynamicColor(@"chat_voice_message_send_duration_time_color", @"#000000");
+        _duration.textColor = TDeskChatDynamicColor(@"chat_voice_message_send_duration_time_color", @"#000000");
     }
 }
 
@@ -218,7 +218,7 @@
     
     BOOL hasRiskContent = voiceCellData.innerMessage.hasRiskContent;
     if (hasRiskContent) {
-        width = MAX(width, 200);// width must more than  TIMCommonLocalizableString(TUIKitMessageTypeSecurityStrikeVoice)
+        width = MAX(width, 200);// width must more than  TDeskIMCommonLocalizableString(TUIKitMessageTypeSecurityStrikeVoice)
         height += kTUISecurityStrikeViewTopLineMargin;
         height += kTUISecurityStrikeViewTopLineToBottom;
     }

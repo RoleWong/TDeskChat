@@ -56,8 +56,8 @@
     _lineView.backgroundColor = TIMCommonDynamicColor(@"separator_color", @"#DBDBDB");
 
     _pageControl = [[UIPageControl alloc] init];
-    _pageControl.currentPageIndicatorTintColor = TUIChatDynamicColor(@"chat_face_page_control_current_color", @"#7D7D7D");
-    _pageControl.pageIndicatorTintColor = TUIChatDynamicColor(@"chat_face_page_control_color", @"#DEDEDE");
+    _pageControl.currentPageIndicatorTintColor = TDeskChatDynamicColor(@"chat_face_page_control_current_color", @"#7D7D7D");
+    _pageControl.pageIndicatorTintColor = TDeskChatDynamicColor(@"chat_face_page_control_color", @"#DEDEDE");
     _pageControl.userInteractionEnabled = NO;
     [self addSubview:_pageControl];
 }
@@ -136,7 +136,7 @@
     int itemCount = group.rowCount * group.itemCountPerRow;
     if (indexPath.row == itemCount - 1 && group.needBackDelete) {
         TDeskFaceCellData *data = [[TDeskFaceCellData alloc] init];
-        data.path = TUIChatFaceImagePath(@"del_normal");
+        data.path = TDeskChatFaceImagePath(@"del_normal");
         [cell setData:data];
         cell.face.image  = [cell.face.image rtl_imageFlippedForRightToLeftLayoutDirection];
     } else {

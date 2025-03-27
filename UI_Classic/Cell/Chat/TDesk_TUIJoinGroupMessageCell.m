@@ -94,7 +94,7 @@
 }
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.container.tui_mm_center();
+    self.container.tdesk_mm_center();
     self.textView.mm_fill();
 }
 

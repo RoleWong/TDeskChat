@@ -13,25 +13,25 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef void (^TUIChatPopMenuActionCallback)(void);
+typedef void (^TDeskChatPopMenuActionCallback)(void);
 
 @interface TDeskChatPopMenuAction : NSObject
 
 @property(nonatomic, copy) NSString *title;
 @property(nonatomic, strong) UIImage *image;
-@property(nonatomic, copy) TUIChatPopMenuActionCallback callback;
+@property(nonatomic, copy) TDeskChatPopMenuActionCallback callback;
 
 /**
  * The higher the weight, the more prominent it is: audioPlayback 11000 Copy 10000, Forward 9000, Multiple Choice 8000, Quote 7000, Reply 5000, Withdraw 4000, Delete 3000.
  */
 @property(nonatomic, assign) NSInteger weight;
 
-- (instancetype)initWithTitle:(NSString *)title image:(UIImage *)image weight:(NSInteger)weight callback:(TUIChatPopMenuActionCallback)callback;
+- (instancetype)initWithTitle:(NSString *)title image:(UIImage *)image weight:(NSInteger)weight callback:(TDeskChatPopMenuActionCallback)callback;
 @end
 
-typedef void (^TUIChatPopMenuHideCallback)(void);
+typedef void (^TDeskChatPopMenuHideCallback)(void);
 @interface TDeskChatPopMenu : UIView
-@property(nonatomic, copy) TUIChatPopMenuHideCallback hideCallback;
+@property(nonatomic, copy) TDeskChatPopMenuHideCallback hideCallback;
 @property(nonatomic, copy) void (^reactClickCallback)(NSString *faceName);
 @property(nonatomic, weak) TDeskMessageCellData *targetCellData;
 /**

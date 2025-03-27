@@ -27,7 +27,7 @@ typedef NS_ENUM(NSUInteger, TUIEmojiFaceType) {
     self = [super init];
     if (self) {
         [self updateEmojiGroups];
-        [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(onChangeLanguage) name:TUIChangeLanguageNotification object:nil];
+        [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(onChangeLanguage) name:TDeskChangeLanguageNotification object:nil];
         [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(onChangeTheme) name:TUIDidApplyingThemeChangedNotfication object:nil];
     }
     return self;
@@ -90,7 +90,7 @@ typedef NS_ENUM(NSUInteger, TUIEmojiFaceType) {
     // emoji group
 
     NSMutableArray *emojiFaces = [NSMutableArray array];
-    NSArray *emojis = [NSArray arrayWithContentsOfFile:TUIChatFaceImagePath(@"emoji/emoji.plist")];
+    NSArray *emojis = [NSArray arrayWithContentsOfFile:TDeskChatFaceImagePath(@"emoji/emoji.plist")];
     for (NSDictionary *dic in emojis) {
         TDeskFaceCellData *data = [[TDeskFaceCellData alloc] init];
         NSString *name = [dic objectForKey:@"face_name"];
@@ -98,7 +98,7 @@ typedef NS_ENUM(NSUInteger, TUIEmojiFaceType) {
         NSString *path = [NSString stringWithFormat:@"emoji/%@", fileName];
         NSString *localizableName = [TDeskGlobalization getLocalizedStringForKey:name bundle:@"TUIChatFace"];
         data.name = name;
-        data.path = TUIChatFaceImagePath(path);
+        data.path = TDeskChatFaceImagePath(path);
         data.localizableName = localizableName;
         [self addFaceToCache:data.path];
         [emojiFaces addObject:data];
@@ -107,10 +107,10 @@ typedef NS_ENUM(NSUInteger, TUIEmojiFaceType) {
         TDeskFaceGroup *emojiGroup = [[TDeskFaceGroup alloc] init];
         emojiGroup.faces = emojiFaces;
         emojiGroup.groupIndex = 0;
-        emojiGroup.groupPath = TUIChatFaceImagePath(@"emoji/");
-        emojiGroup.menuPath = TUIChatFaceImagePath(@"emoji/menu");
+        emojiGroup.groupPath = TDeskChatFaceImagePath(@"emoji/");
+        emojiGroup.menuPath = TDeskChatFaceImagePath(@"emoji/menu");
         emojiGroup.isNeedAddInInputBar = YES;
-        emojiGroup.groupName = TIMCommonLocalizableString(TUIChatFaceGroupAllEmojiName);
+        emojiGroup.groupName = TDeskIMCommonLocalizableString(TUIChatFaceGroupAllEmojiName);
         if (type == TUIEmojiFaceTypeKeyBoard) {
             emojiGroup.rowCount = 4;
             emojiGroup.itemCountPerRow = 8;
@@ -127,8 +127,8 @@ typedef NS_ENUM(NSUInteger, TUIEmojiFaceType) {
         }
 
         [self addFaceToCache:emojiGroup.menuPath];
-        [self addFaceToCache:TUIChatFaceImagePath(@"del_normal")];
-        [self addFaceToCache:TUIChatFaceImagePath(@"ic_unknown_image")];
+        [self addFaceToCache:TDeskChatFaceImagePath(@"del_normal")];
+        [self addFaceToCache:TDeskChatFaceImagePath(@"ic_unknown_image")];
         return emojiGroup;
     }
 
@@ -146,13 +146,13 @@ typedef NS_ENUM(NSUInteger, TUIEmojiFaceType) {
             NSString *name = [dic objectForKey:@"face_name"];
             NSString *fileName = [dic objectForKey:@"face_file"];
             NSString *path = [NSString stringWithFormat:@"emoji/%@", fileName];
-            UIImage * image = [UIImage imageWithContentsOfFile:TUIChatFaceImagePath(path)];
+            UIImage * image = [UIImage imageWithContentsOfFile:TDeskChatFaceImagePath(path)];
             if (image) {
                 return emojis;
             }
         }
     }
-    return [NSArray arrayWithContentsOfFile:TUIChatFaceImagePath(@"emoji/emojiRecentDefaultList.plist")];
+    return [NSArray arrayWithContentsOfFile:TDeskChatFaceImagePath(@"emoji/emojiRecentDefaultList.plist")];
 }
 
 - (TDeskFaceGroup *)getChatPopMenuRecentQueue {
@@ -166,7 +166,7 @@ typedef NS_ENUM(NSUInteger, TUIEmojiFaceType) {
         NSString *path = [NSString stringWithFormat:@"emoji/%@", fileName];
         NSString *localizableName = [TDeskGlobalization g_localizedStringForKey:name bundle:@"TUIChatFace"];
         data.name = name;
-        data.path = TUIChatFaceImagePath(path);
+        data.path = TDeskChatFaceImagePath(path);
         data.localizableName = localizableName;
         [emojiFaces addObject:data];
     }
@@ -174,8 +174,8 @@ typedef NS_ENUM(NSUInteger, TUIEmojiFaceType) {
         TDeskFaceGroup *emojiGroup = [[TDeskFaceGroup alloc] init];
         emojiGroup.faces = emojiFaces;
         emojiGroup.groupIndex = 0;
-        emojiGroup.groupPath = TUIChatFaceImagePath(@"emoji/");
-        emojiGroup.menuPath = TUIChatFaceImagePath(@"emoji/menu");
+        emojiGroup.groupPath = TDeskChatFaceImagePath(@"emoji/");
+        emojiGroup.menuPath = TDeskChatFaceImagePath(@"emoji/menu");
         emojiGroup.rowCount = 1;
         emojiGroup.itemCountPerRow = 6;
         emojiGroup.needBackDelete = NO;
@@ -206,7 +206,7 @@ typedef NS_ENUM(NSUInteger, TUIEmojiFaceType) {
         [muArray insertObject:targetDic atIndex:0];
     }else {
         [muArray removeLastObject];
-        NSArray *emojis = [NSArray arrayWithContentsOfFile:TUIChatFaceImagePath(@"emoji/emoji.plist")];
+        NSArray *emojis = [NSArray arrayWithContentsOfFile:TDeskChatFaceImagePath(@"emoji/emoji.plist")];
         NSDictionary *targetDic = @{@"face_name" : faceName};
         for (NSDictionary *dic in emojis) {
             NSString *name = [dic objectForKey:@"face_name"];

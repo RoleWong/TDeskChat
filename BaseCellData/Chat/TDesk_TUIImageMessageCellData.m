@@ -41,7 +41,7 @@
 }
 
 + (NSString *)getDisplayString:(V2TIMMessage *)message {
-    return TIMCommonLocalizableString(TUIkitMessageTypeImage);  // @"[Image]";
+    return TDeskIMCommonLocalizableString(TUIkitMessageTypeImage);  // @"[Image]";
 }
 
 - (Class)getReplyQuoteViewDataClass {
@@ -180,7 +180,7 @@
         [TDeskTool asyncDecodeImage:path
                          complete:^(NSString *path, UIImage *image) {
                            dispatch_async(dispatch_get_main_queue(), ^{
-                             if (![path tui_containsString:@".gif"] || (image.sd_imageFormat != SDImageFormatGIF)) {
+                             if (![path tdesk_containsString:@".gif"] || (image.sd_imageFormat != SDImageFormatGIF)) {
                                  /**
                                   * The gif image is too large to be cached in memory
                                   */

@@ -56,8 +56,8 @@
     [self addSubview:_lineView];
 
     _pageControl = [[UIPageControl alloc] init];
-    _pageControl.currentPageIndicatorTintColor = TUIChatDynamicColor(@"chat_face_page_control_current_color", @"#7D7D7D");
-    _pageControl.pageIndicatorTintColor = TUIChatDynamicColor(@"chat_face_page_control_color", @"#DEDEDE");
+    _pageControl.currentPageIndicatorTintColor = TDeskChatDynamicColor(@"chat_face_page_control_current_color", @"#7D7D7D");
+    _pageControl.pageIndicatorTintColor = TDeskChatDynamicColor(@"chat_face_page_control_color", @"#DEDEDE");
     [self addSubview:_pageControl];
 }
 

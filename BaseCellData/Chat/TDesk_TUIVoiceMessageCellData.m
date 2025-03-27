@@ -31,7 +31,7 @@
 }
 
 + (NSString *)getDisplayString:(V2TIMMessage *)message {
-    return TIMCommonLocalizableString(TUIKitMessageTypeVoice);  // @"[Voice]";
+    return TDeskIMCommonLocalizableString(TUIKitMessageTypeVoice);  // @"[Voice]";
 }
 
 - (Class)getReplyQuoteViewDataClass {
@@ -190,7 +190,7 @@
 }
 //The style of audio playback.
 + (TUIVoiceAudioPlaybackStyle)getAudioplaybackStyle {
-    NSString *style = [NSUserDefaults.standardUserDefaults objectForKey:@"tui_audioPlaybackStyle"];
+    NSString *style = [NSUserDefaults.standardUserDefaults objectForKey:@"tdesk_audioPlaybackStyle"];
     if ([style isEqualToString:@"1"]) {
         return TUIVoiceAudioPlaybackStyleLoudspeaker;
     } else if ([style isEqualToString:@"2"]) {
@@ -202,10 +202,10 @@
 + (void)changeAudioPlaybackStyle {
     TUIVoiceAudioPlaybackStyle style = [self getAudioplaybackStyle];
     if (style == TUIVoiceAudioPlaybackStyleLoudspeaker) {
-        [NSUserDefaults.standardUserDefaults setObject:@"2" forKey:@"tui_audioPlaybackStyle"];
+        [NSUserDefaults.standardUserDefaults setObject:@"2" forKey:@"tdesk_audioPlaybackStyle"];
     }
     else {
-        [NSUserDefaults.standardUserDefaults setObject:@"1" forKey:@"tui_audioPlaybackStyle"];
+        [NSUserDefaults.standardUserDefaults setObject:@"1" forKey:@"tdesk_audioPlaybackStyle"];
     }
     [NSUserDefaults.standardUserDefaults synchronize];
     

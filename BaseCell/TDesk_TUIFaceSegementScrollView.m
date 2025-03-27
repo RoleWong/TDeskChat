@@ -118,7 +118,7 @@
     indexGroup.recentGroup = [service getChatPopMenuRecentQueue];
     indexGroup.recentGroup.rowCount = 1;
     indexGroup.recentGroup.itemCountPerRow = 8;
-    indexGroup.recentGroup.groupName = TIMCommonLocalizableString(TUIChatFaceGroupRecentEmojiName);
+    indexGroup.recentGroup.groupName = TDeskIMCommonLocalizableString(TUIChatFaceGroupRecentEmojiName);
     if (indexGroup.isNeedAddInInputBar && indexGroup.recentGroup) {
         [faceView setData:[NSMutableArray arrayWithArray:@[indexGroup.recentGroup,indexGroup]]];
     }

@@ -21,7 +21,7 @@
 }
 
 - (void)setupViews {
-    self.backgroundColor = TUIChatDynamicColor(@"chat_controller_bg_color", @"#EBF0F6");
+    self.backgroundColor = TDeskChatDynamicColor(@"chat_controller_bg_color", @"#EBF0F6");
     _menu = [[UIImageView alloc] init];
     _menu.backgroundColor = [UIColor clearColor];
     [self addSubview:_menu];
@@ -34,7 +34,7 @@
     // set data
     _menu.image = [[TDeskImageCache sharedInstance] getFaceFromCache:data.path];
     if (data.isSelected) {
-        self.backgroundColor = TUIChatDynamicColor(@"chat_face_menu_select_color", @"#FFFFFF");
+        self.backgroundColor = TDeskChatDynamicColor(@"chat_face_menu_select_color", @"#FFFFFF");
     } else {
         self.backgroundColor = [UIColor clearColor];
     }

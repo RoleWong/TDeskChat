@@ -38,10 +38,10 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = TUIChatDynamicColor(@"chat_small_tongue_bg_color", @"#FFFFFF");
+        self.backgroundColor = TDeskChatDynamicColor(@"chat_small_tongue_bg_color", @"#FFFFFF");
         // border
         self.layer.borderWidth = 0.2;
-        self.layer.borderColor = TUIChatDynamicColor(@"chat_small_tongue_line_color", @"#E5E5E5").CGColor;
+        self.layer.borderColor = TDeskChatDynamicColor(@"chat_small_tongue_line_color", @"#E5E5E5").CGColor;
         self.layer.cornerRadius = 2;
         self.layer.masksToBounds = YES;
         // shadow
@@ -78,7 +78,7 @@
     }
     self.label.text = [TDeskChatSmallTongueView getTongueText:tongue];
     self.label.rtlAlignment = TUITextRTLAlignmentLeading;
-    self.label.textColor = TUIChatDynamicColor(@"chat_drop_down_color", @"#147AFF");
+    self.label.textColor = TDeskChatDynamicColor(@"chat_drop_down_color", @"#147AFF");
     [self.imageView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.width.height.mas_equalTo(TongueImageWidth);
         make.leading.mas_equalTo(TongueLeftSpace);
@@ -107,18 +107,18 @@
     static NSMutableDictionary *titleCacheFormat;
     if (titleCacheFormat == nil) {
         titleCacheFormat = [NSMutableDictionary dictionary];
-        [titleCacheFormat setObject:TIMCommonLocalizableString(TUIKitChatBackToLatestLocation) forKey:@(TUIChatSmallTongueType_ScrollToBoom)];
-        [titleCacheFormat setObject:TIMCommonLocalizableString(TUIKitChatNewMessages) forKey:@(TUIChatSmallTongueType_ReceiveNewMsg)];
+        [titleCacheFormat setObject:TDeskIMCommonLocalizableString(TUIKitChatBackToLatestLocation) forKey:@(TUIChatSmallTongueType_ScrollToBoom)];
+        [titleCacheFormat setObject:TDeskIMCommonLocalizableString(TUIKitChatNewMessages) forKey:@(TUIChatSmallTongueType_ReceiveNewMsg)];
     }
     
     if (tongue.type == TUIChatSmallTongueType_SomeoneAt) {
-        NSString *atMeStr = TIMCommonLocalizableString(TUIKitConversationTipsAtMe);
-        NSString *atAllStr = TIMCommonLocalizableString(TUIKitConversationTipsAtAll);
-        if ([tongue.atTipsStr tui_containsString:atMeStr]) {
+        NSString *atMeStr = TDeskIMCommonLocalizableString(TUIKitConversationTipsAtMe);
+        NSString *atAllStr = TDeskIMCommonLocalizableString(TUIKitConversationTipsAtAll);
+        if ([tongue.atTipsStr tdesk_containsString:atMeStr]) {
             atMeStr = [atMeStr stringByReplacingOccurrencesOfString:@"[" withString:@""];
             atMeStr = [atMeStr stringByReplacingOccurrencesOfString:@"]" withString:@""];
             [titleCacheFormat setObject:atMeStr forKey:@(TUIChatSmallTongueType_SomeoneAt)];
-        } else if ([tongue.atTipsStr tui_containsString:atAllStr]) {
+        } else if ([tongue.atTipsStr tdesk_containsString:atAllStr]) {
             atAllStr = [atAllStr stringByReplacingOccurrencesOfString:@"[" withString:@""];
             atAllStr = [atAllStr stringByReplacingOccurrencesOfString:@"]" withString:@""];
             [titleCacheFormat setObject:atAllStr forKey:@(TUIChatSmallTongueType_SomeoneAt)];

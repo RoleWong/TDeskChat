@@ -394,17 +394,17 @@
             callback:^(BOOL success, NSString *_Nonnull desc, NSArray<V2TIMMessage *> *_Nonnull msgs) {
               @strongify(self);
               if (!success) {
-                  [TDeskTool makeToast:TIMCommonLocalizableString(TUIKitReplyMessageNotFoundOriginMessage)];
+                  [TDeskTool makeToast:TDeskIMCommonLocalizableString(TUIKitReplyMessageNotFoundOriginMessage)];
                   return;
               }
               V2TIMMessage *message = msgs.firstObject;
               if (message == nil) {
-                  [TDeskTool makeToast:TIMCommonLocalizableString(TUIKitReplyMessageNotFoundOriginMessage)];
+                  [TDeskTool makeToast:TDeskIMCommonLocalizableString(TUIKitReplyMessageNotFoundOriginMessage)];
                   return;
               }
 
               if (message.status == V2TIM_MSG_STATUS_HAS_DELETED || message.status == V2TIM_MSG_STATUS_LOCAL_REVOKED) {
-                  [TDeskTool makeToast:TIMCommonLocalizableString(TUIKitReplyMessageNotFoundOriginMessage)];
+                  [TDeskTool makeToast:TDeskIMCommonLocalizableString(TUIKitReplyMessageNotFoundOriginMessage)];
                   return;
               }
 
@@ -529,7 +529,7 @@
                 }];
     }
     /*
-     The message whose reference is withdrawn should not expose the original message content, so it is necessary to traverse all reference messages and reply messages and replace the original message content with "TIMCommonLocalizableString(TUIKitRepliesOriginMessageRevoke)"
+     The message whose reference is withdrawn should not expose the original message content, so it is necessary to traverse all reference messages and reply messages and replace the original message content with "TDeskIMCommonLocalizableString(TUIKitRepliesOriginMessageRevoke)"
      */
     for (TDeskMessageCellData * cellData in self.messageDataProvider.uiMsgs) {
         if ([cellData isKindOfClass:TDeskReplyMessageCellData.class]) {

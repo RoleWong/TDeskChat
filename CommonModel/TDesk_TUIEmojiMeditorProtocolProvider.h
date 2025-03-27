@@ -1,5 +1,5 @@
 //
-//  TUIEmojiMeditorProtocolProvider.h
+//  TDeskEmojiMeditorProtocolProvider.h
 //  TUIEmojiPlugin
 //
 //  Created by wyl on 2023/11/14.
@@ -11,7 +11,7 @@
 #import <TDeskCommon/TDesk_TIMCommonModel.h>
 NS_ASSUME_NONNULL_BEGIN
 @class TDeskFaceGroup;
-@interface TUIEmojiMeditorProtocolProvider : NSObject <TDeskEmojiMeditorProtocol>
+@interface TDeskEmojiMeditorProtocolProvider : NSObject <TDeskEmojiMeditorProtocol>
 
 @end
 

@@ -17,7 +17,7 @@
     V2TIMMergerElem *elem = message.mergerElem;
     if (elem.layersOverLimit) {
         TDeskTextMessageCellData *limitCell = [[TDeskTextMessageCellData alloc] initWithDirection:(message.isSelf ? MsgDirectionOutgoing : MsgDirectionIncoming)];
-        limitCell.content = TIMCommonLocalizableString(TUIKitRelayLayerLimitTips);
+        limitCell.content = TDeskIMCommonLocalizableString(TUIKitRelayLayerLimitTips);
         return limitCell;
     }
 
@@ -31,7 +31,7 @@
 }
 
 + (NSString *)getDisplayString:(V2TIMMessage *)message {
-    return [NSString stringWithFormat:@"[%@]", TIMCommonLocalizableString(TUIKitRelayChatHistory)];
+    return [NSString stringWithFormat:@"[%@]", TDeskIMCommonLocalizableString(TUIKitRelayChatHistory)];
 }
 
 - (Class)getReplyQuoteViewDataClass {
@@ -83,7 +83,7 @@
         }
         NSString *str = ab;
         NSString * splitStr = @":";
-        if ([str tui_containsString:@"\u202C:"]) {
+        if ([str tdesk_containsString:@"\u202C:"]) {
             splitStr = @"\u202C:";
         }
         NSArray<NSString *> *result =  [str componentsSeparatedByString:splitStr];

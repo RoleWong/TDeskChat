@@ -29,14 +29,14 @@
 
 @end
 
-@interface TUIChatPopContextExtionItemView : UIView
+@interface TDeskChatPopContextExtionItemView : UIView
 @property(nonatomic, strong) TDeskChatPopContextExtionItem *item;
 @property(nonatomic, strong) UIImageView *icon;
 @property(nonatomic, strong) UILabel *l;
 - (void)configBaseUIWithItem:(TDeskChatPopContextExtionItem *)item;
 @end
 
-@implementation TUIChatPopContextExtionItemView
+@implementation TDeskChatPopContextExtionItemView
 
 - (void)configBaseUIWithItem:(TDeskChatPopContextExtionItem *)item {
     self.item = item;
@@ -67,7 +67,7 @@
 
     if (item.needBottomLine) {
         UIView *line = [UIView new];
-        line.backgroundColor = [UIColor tui_colorWithHex:@"DDDDDD"];
+        line.backgroundColor = [UIColor tdesk_colorWithHex:@"DDDDDD"];
         line.frame = CGRectMake(0, itemHeight - kScale390(0.5), itemWidth, kScale390(0.5));
         [self addSubview:line];
     }
@@ -104,7 +104,7 @@
     }
     int i = 0;
     for (TDeskChatPopContextExtionItem *item in items) {
-        TUIChatPopContextExtionItemView *itemView = [[TUIChatPopContextExtionItemView alloc] init];
+        TDeskChatPopContextExtionItemView *itemView = [[TDeskChatPopContextExtionItemView alloc] init];
         itemView.frame = CGRectMake(0, (kScale390(40)) * i + topBottomMargin, kScale390(180), kScale390(40));
         [itemView configBaseUIWithItem:item];
         [self addSubview:itemView];

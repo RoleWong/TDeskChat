@@ -38,9 +38,9 @@
     if (self.cmd && [self.cmd isKindOfClass:NSNumber.class]) {
         NSInteger command = [self.cmd integerValue];
         if (command == 1) {
-            localizableContent = TIMCommonLocalizableString(TUICommunityCreateTipsMessage);
+            localizableContent = TDeskIMCommonLocalizableString(TUICommunityCreateTipsMessage);
         } else {
-            localizableContent = TIMCommonLocalizableString(TUIGroupCreateTipsMessage);
+            localizableContent = TDeskIMCommonLocalizableString(TUIGroupCreateTipsMessage);
         }
     }
     NSString *str = [NSString stringWithFormat:@"\"%@\" %@", self.opUser, localizableContent];
@@ -74,9 +74,9 @@
     if (cmd && [cmd isKindOfClass:NSNumber.class]) {
         NSInteger command = [cmd integerValue];
         if (command == 1) {
-            localizableContent = TIMCommonLocalizableString(TUICommunityCreateTipsMessage);
+            localizableContent = TDeskIMCommonLocalizableString(TUICommunityCreateTipsMessage);
         } else {
-            localizableContent = TIMCommonLocalizableString(TUIGroupCreateTipsMessage);
+            localizableContent = TDeskIMCommonLocalizableString(TUIGroupCreateTipsMessage);
         }
     }
     NSString * opUser = [self.class getOpUserName:msg]?:param[@"opUser"];

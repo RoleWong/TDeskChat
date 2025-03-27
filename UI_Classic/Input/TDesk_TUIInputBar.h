@@ -15,7 +15,7 @@
 #import "TDesk_TUIResponderTextView.h"
 
 #define kTUIInputNoramlFont [UIFont systemFontOfSize:16.0]
-#define kTUIInputNormalTextColor TUIChatDynamicColor(@"chat_input_text_color", @"#000000")
+#define kTUIInputNormalTextColor TDeskChatDynamicColor(@"chat_input_text_color", @"#000000")
 
 @class TDeskInputBar;
 

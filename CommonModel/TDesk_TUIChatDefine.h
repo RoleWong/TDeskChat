@@ -6,8 +6,8 @@
 //  Copyright © 2023 Tencent. All rights reserved.
 //
 
-#ifndef TUI_COMPONENTS_IOS_TUICHAT_COMMONMODEL_TUICHATDEFINE_H_
-#define TUI_COMPONENTS_IOS_TUICHAT_COMMONMODEL_TUICHATDEFINE_H_
+#ifndef TDesk_COMPONENTS_IOS_TUICHAT_COMMONMODEL_TUICHATDEFINE_H_
+#define TDesk_COMPONENTS_IOS_TUICHAT_COMMONMODEL_TUICHATDEFINE_H_
 
 static NSString* const kMemberCellReuseId = @"kMemberCellReuseId";
 
@@ -27,17 +27,17 @@ typedef void (^TUIReferenceSelectAllContentCallback)(BOOL);
 
 typedef void (^TUIReplySelectAllContentCallback)(BOOL);
 
-typedef NS_ENUM(NSInteger, TUIMultiResultOption) {
+typedef NS_ENUM(NSInteger, TDeskMultiResultOption) {
     /**
      * 
      * Get all selected results
      */
-    TUIMultiResultOptionAll = 0,
+    TDeskMultiResultOptionAll = 0,
     /**
      * 
      * Filter out data that does not support forwarding
      */
-    TUIMultiResultOptionFiterUnsupportRelay = 1 << 0,
+    TDeskMultiResultOptionFiterUnsupportRelay = 1 << 0,
 };
 
 typedef NS_ENUM(NSInteger, TUIMessageReadViewTag) {
@@ -77,4 +77,4 @@ typedef NS_ENUM(NSInteger, TDeskChatSmallTongueType) {
 #define TUIChatSendMessageNotification @"TUIChatSendMessageNotification"
 #define TUIChatSendMessageWithoutUpdateUINotification @"TUIChatSendMessageWithoutUpdateUINotification"
 
-#endif  // TUI_COMPONENTS_IOS_TUICHAT_COMMONMODEL_TUICHATDEFINE_H_
+#endif  // TDesk_COMPONENTS_IOS_TUICHAT_COMMONMODEL_TUICHATDEFINE_H_

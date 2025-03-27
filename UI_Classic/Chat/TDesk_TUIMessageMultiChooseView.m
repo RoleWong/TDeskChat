@@ -95,12 +95,12 @@
     [self addSubview:_toolView];
 
     _menuView = [[UIView alloc] init];
-    _menuView.backgroundColor = TUIChatDynamicColor(@"chat_controller_bg_color", @"#FFFFFF");
+    _menuView.backgroundColor = TDeskChatDynamicColor(@"chat_controller_bg_color", @"#FFFFFF");
     [_menuView.layer addSublayer:self.separtorLayer];
     [self addSubview:_menuView];
 
     _cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_cancelButton setTitle:TIMCommonLocalizableString(Cancel) forState:UIControlStateNormal];
+    [_cancelButton setTitle:TDeskIMCommonLocalizableString(Cancel) forState:UIControlStateNormal];
     [_cancelButton setTitleColor:TIMCommonDynamicColor(@"form_title_color", @"#000000") forState:UIControlStateNormal];
     _cancelButton.titleLabel.font = [UIFont systemFontOfSize:15.0];
     [_cancelButton addTarget:self action:@selector(onCancel:) forControlEvents:UIControlEventTouchUpInside];
@@ -114,14 +114,14 @@
     [_toolView addSubview:_titleLabel];
 
 //    _relayButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [_relayButton setTitle:TIMCommonLocalizableString(Forward) forState:UIControlStateNormal];
+//    [_relayButton setTitle:TDeskIMCommonLocalizableString(Forward) forState:UIControlStateNormal];
 //    _relayButton.titleLabel.font = [UIFont systemFontOfSize:14.0];
 //    [_relayButton setTitleColor:TIMCommonDynamicColor(@"form_title_color", @"#000000") forState:UIControlStateNormal];
 //    [_relayButton addTarget:self action:@selector(onRelay:) forControlEvents:UIControlEventTouchUpInside];
 //    [_menuView addSubview:_relayButton];
 
     _deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_deleteButton setTitle:TIMCommonLocalizableString(Delete) forState:UIControlStateNormal];
+    [_deleteButton setTitle:TDeskIMCommonLocalizableString(Delete) forState:UIControlStateNormal];
     _deleteButton.titleLabel.font = [UIFont systemFontOfSize:14.0];
     [_deleteButton setTitleColor:TIMCommonDynamicColor(@"form_title_color", @"#000000") forState:UIControlStateNormal];
     [_deleteButton addTarget:self action:@selector(onDelete:) forControlEvents:UIControlEventTouchUpInside];

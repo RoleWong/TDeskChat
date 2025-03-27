@@ -42,36 +42,36 @@
 
 - (UIViewController *)createChatViewControllerParam:(nullable NSDictionary *)param {
     
-    NSString *title = [param tui_objectForKey:TDeskCore_TUIChatObjectFactory_ChatViewController_Title asClass:NSString.class];
-    NSString *userID = [param tui_objectForKey:TDeskCore_TUIChatObjectFactory_ChatViewController_UserID asClass:NSString.class];
-    NSString *groupID = [param tui_objectForKey:TDeskCore_TUIChatObjectFactory_ChatViewController_GroupID asClass:NSString.class];
-    NSString *conversationID = [param tui_objectForKey:TDeskCore_TUIChatObjectFactory_ChatViewController_ConversationID asClass:NSString.class];
-    UIImage *avatarImage = [param tui_objectForKey:TDeskCore_TUIChatObjectFactory_ChatViewController_AvatarImage asClass:UIImage.class];
-    NSString *avatarUrl = [param tui_objectForKey:TDeskCore_TUIChatObjectFactory_ChatViewController_AvatarUrl asClass:NSString.class];
-    NSString *highlightKeyword = [param tui_objectForKey:TDeskCore_TUIChatObjectFactory_ChatViewController_HighlightKeyword asClass:NSString.class];
-    V2TIMMessage *locateMessage = [param tui_objectForKey:TDeskCore_TUIChatObjectFactory_ChatViewController_LocateMessage asClass:V2TIMMessage.class];
-    NSString * atTipsStr = [param tui_objectForKey:TDeskCore_TUIChatObjectFactory_ChatViewController_AtTipsStr asClass:NSString.class];
-    NSArray * atMsgSeqs = [param tui_objectForKey:TDeskCore_TUIChatObjectFactory_ChatViewController_AtMsgSeqs asClass:NSArray.class];
-    NSString *draft = [param tui_objectForKey:TDeskCore_TUIChatObjectFactory_ChatViewController_Draft asClass:NSString.class];
-    NSString *isEnableVideoInfoStr = [param tui_objectForKey:TDeskCore_TUIChatObjectFactory_ChatViewController_Enable_Video_Call asClass:NSString.class];
-    NSString *isEnableAudioInfoStr = [param tui_objectForKey:TDeskCore_TUIChatObjectFactory_ChatViewController_Enable_Audio_Call asClass:NSString.class];
-    NSString *isEnableRoomInfoStr = [param tui_objectForKey:TDeskCore_TUIChatObjectFactory_ChatViewController_Enable_Room asClass:NSString.class];
-    NSString *isLimitedPortraitOrientationStr = [param tui_objectForKey:TDeskCore_TUIChatObjectFactory_ChatViewController_Limit_Portrait_Orientation
+    NSString *title = [param tdesk_objectForKey:TDeskCore_TUIChatObjectFactory_ChatViewController_Title asClass:NSString.class];
+    NSString *userID = [param tdesk_objectForKey:TDeskCore_TUIChatObjectFactory_ChatViewController_UserID asClass:NSString.class];
+    NSString *groupID = [param tdesk_objectForKey:TDeskCore_TUIChatObjectFactory_ChatViewController_GroupID asClass:NSString.class];
+    NSString *conversationID = [param tdesk_objectForKey:TDeskCore_TUIChatObjectFactory_ChatViewController_ConversationID asClass:NSString.class];
+    UIImage *avatarImage = [param tdesk_objectForKey:TDeskCore_TUIChatObjectFactory_ChatViewController_AvatarImage asClass:UIImage.class];
+    NSString *avatarUrl = [param tdesk_objectForKey:TDeskCore_TUIChatObjectFactory_ChatViewController_AvatarUrl asClass:NSString.class];
+    NSString *highlightKeyword = [param tdesk_objectForKey:TDeskCore_TUIChatObjectFactory_ChatViewController_HighlightKeyword asClass:NSString.class];
+    V2TIMMessage *locateMessage = [param tdesk_objectForKey:TDeskCore_TUIChatObjectFactory_ChatViewController_LocateMessage asClass:V2TIMMessage.class];
+    NSString * atTipsStr = [param tdesk_objectForKey:TDeskCore_TUIChatObjectFactory_ChatViewController_AtTipsStr asClass:NSString.class];
+    NSArray * atMsgSeqs = [param tdesk_objectForKey:TDeskCore_TUIChatObjectFactory_ChatViewController_AtMsgSeqs asClass:NSArray.class];
+    NSString *draft = [param tdesk_objectForKey:TDeskCore_TUIChatObjectFactory_ChatViewController_Draft asClass:NSString.class];
+    NSString *isEnableVideoInfoStr = [param tdesk_objectForKey:TDeskCore_TUIChatObjectFactory_ChatViewController_Enable_Video_Call asClass:NSString.class];
+    NSString *isEnableAudioInfoStr = [param tdesk_objectForKey:TDeskCore_TUIChatObjectFactory_ChatViewController_Enable_Audio_Call asClass:NSString.class];
+    NSString *isEnableRoomInfoStr = [param tdesk_objectForKey:TDeskCore_TUIChatObjectFactory_ChatViewController_Enable_Room asClass:NSString.class];
+    NSString *isLimitedPortraitOrientationStr = [param tdesk_objectForKey:TDeskCore_TUIChatObjectFactory_ChatViewController_Limit_Portrait_Orientation
                                                                 asClass: NSString.class];
-    NSString *isEnablePollInfoStr = [param tui_objectForKey:TDeskCore_TUIChatObjectFactory_ChatViewController_Enable_Poll 
+    NSString *isEnablePollInfoStr = [param tdesk_objectForKey:TDeskCore_TUIChatObjectFactory_ChatViewController_Enable_Poll 
                                                     asClass:NSString.class];
-    NSString *isEnableGroupNoteInfoStr = [param tui_objectForKey:TDeskCore_TUIChatObjectFactory_ChatViewController_Enable_GroupNote asClass:NSString.class];
-    NSString *isEnableWelcomeCustomMessage = [param tui_objectForKey:
+    NSString *isEnableGroupNoteInfoStr = [param tdesk_objectForKey:TDeskCore_TUIChatObjectFactory_ChatViewController_Enable_GroupNote asClass:NSString.class];
+    NSString *isEnableWelcomeCustomMessage = [param tdesk_objectForKey:
                                               TDeskCore_TUIChatObjectFactory_ChatViewController_Enable_WelcomeCustomMessage 
                                                              asClass:NSString.class];
 
-    NSString *isEnableTakePhotoStr = [param tui_objectForKey:TDeskCore_TUIChatObjectFactory_ChatViewController_Enable_TakePhoto asClass:NSString.class];
+    NSString *isEnableTakePhotoStr = [param tdesk_objectForKey:TDeskCore_TUIChatObjectFactory_ChatViewController_Enable_TakePhoto asClass:NSString.class];
 
-    NSString *isEnableRecordVideoStr = [param tui_objectForKey:TDeskCore_TUIChatObjectFactory_ChatViewController_Enable_RecordVideo asClass:NSString.class];
+    NSString *isEnableRecordVideoStr = [param tdesk_objectForKey:TDeskCore_TUIChatObjectFactory_ChatViewController_Enable_RecordVideo asClass:NSString.class];
     
-    NSString *isEnableFileStr = [param tui_objectForKey:TDeskCore_TUIChatObjectFactory_ChatViewController_Enable_File
+    NSString *isEnableFileStr = [param tdesk_objectForKey:TDeskCore_TUIChatObjectFactory_ChatViewController_Enable_File
                                                 asClass:NSString.class];
-    NSString *isEnableAlbumStr = [param tui_objectForKey:TDeskCore_TUIChatObjectFactory_ChatViewController_Enable_Album 
+    NSString *isEnableAlbumStr = [param tdesk_objectForKey:TDeskCore_TUIChatObjectFactory_ChatViewController_Enable_Album 
                                                  asClass:NSString.class];
     
     

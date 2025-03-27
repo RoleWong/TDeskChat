@@ -33,8 +33,8 @@
                             !self.showRevokedOriginMessage;
     if (showRevokeStr) {
         NSString * revokeStr = self.supportForReply?
-        TIMCommonLocalizableString(TUIKitRepliesOriginMessageRevoke):
-        TIMCommonLocalizableString(TUIKitReferenceOriginMessageRevoke);
+        TDeskIMCommonLocalizableString(TUIKitRepliesOriginMessageRevoke):
+        TDeskIMCommonLocalizableString(TUIKitReferenceOriginMessageRevoke);
         attributeString = [revokeStr getFormatEmojiStringWithFont:[UIFont systemFontOfSize:10.0] emojiLocations:nil];
     } else {
         attributeString = [self.text getFormatEmojiStringWithFont:[UIFont systemFontOfSize:10.0] emojiLocations:nil];

@@ -260,7 +260,7 @@ static Class<TDeskMessageDataProviderDataSource> gDataSourceClass = nil;
             }
         }
         // In CustomerService scenarios, unsupported messages are not displayed directly.
-        if ([businessID tui_containsString:BussinessID_CustomerService]) {
+        if ([businessID tdesk_containsString:BussinessID_CustomerService]) {
             return nil;
         }
         return [self getUnsupportedCellData:message];
@@ -271,7 +271,7 @@ static Class<TDeskMessageDataProviderDataSource> gDataSourceClass = nil;
 
 + (TDeskMessageCellData *)getUnsupportedCellData:(V2TIMMessage *)message {
     TDeskTextMessageCellData *cellData = [[TDeskTextMessageCellData alloc] initWithDirection:(message.isSelf ? MsgDirectionOutgoing : MsgDirectionIncoming)];
-    cellData.content = TIMCommonLocalizableString(TUIKitNotSupportThisMessage);
+    cellData.content = TDeskIMCommonLocalizableString(TUIKitNotSupportThisMessage);
     cellData.reuseId = TTextMessageCell_ReuseId;
     return cellData;
 }
@@ -407,7 +407,7 @@ static Class<TDeskMessageDataProviderDataSource> gDataSourceClass = nil;
     BOOL hasRiskContent = message.hasRiskContent;
     BOOL isRevoked = (message.status == V2TIM_MSG_STATUS_LOCAL_REVOKED);
     if (hasRiskContent && !isRevoked) {
-        return TIMCommonLocalizableString(TUIKitMessageDisplayRiskContent);
+        return TDeskIMCommonLocalizableString(TUIKitMessageDisplayRiskContent);
     }
     NSString *str = [self parseDisplayStringFromMessageStatus:message];
     if (str == nil) {
@@ -459,7 +459,7 @@ static Class<TDeskMessageDataProviderDataSource> gDataSourceClass = nil;
             str = [self getCustomDisplayString:message];
         } break;
         default:
-            str = TIMCommonLocalizableString(TUIKitMessageTipsUnsupportCustomMessage);
+            str = TDeskIMCommonLocalizableString(TUIKitMessageTipsUnsupportCustomMessage);
             break;
     }
     return str;
@@ -482,11 +482,11 @@ static Class<TDeskMessageDataProviderDataSource> gDataSourceClass = nil;
                 str = nil;
             } else {
                 // Get display text
-                str = callingInfo.content ?: TIMCommonLocalizableString(TUIKitMessageTipsUnsupportCustomMessage);
+                str = callingInfo.content ?: TDeskIMCommonLocalizableString(TUIKitMessageTipsUnsupportCustomMessage);
             }
         } else {
             // Unsupported voice-video-call message
-            str = TIMCommonLocalizableString(TUIKitMessageTipsUnsupportCustomMessage);
+            str = TDeskIMCommonLocalizableString(TUIKitMessageTipsUnsupportCustomMessage);
         }
         return str;
     }
@@ -523,12 +523,12 @@ static Class<TDeskMessageDataProviderDataSource> gDataSourceClass = nil;
             return [cellDataClass getDisplayString:message];
         }
         // In CustomerService scenarios, unsupported messages are not displayed directly.
-        if ([businessID tui_containsString:BussinessID_CustomerService]) {
+        if ([businessID tdesk_containsString:BussinessID_CustomerService]) {
             return nil;
         }
-        return TIMCommonLocalizableString(TUIKitMessageTipsUnsupportCustomMessage);
+        return TDeskIMCommonLocalizableString(TUIKitMessageTipsUnsupportCustomMessage);
     } else {
-        return TIMCommonLocalizableString(TUIKitMessageTipsUnsupportCustomMessage);
+        return TDeskIMCommonLocalizableString(TUIKitMessageTipsUnsupportCustomMessage);
     }
 }
 

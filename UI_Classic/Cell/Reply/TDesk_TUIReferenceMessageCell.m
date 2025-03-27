@@ -71,7 +71,7 @@
     self.textView.editable = NO;
     self.textView.delegate = self;
     self.textView.font = [UIFont systemFontOfSize:16.0];
-    self.textView.textColor = TUIChatDynamicColor(@"chat_reference_message_content_text_color", @"#000000");
+    self.textView.textColor = TDeskChatDynamicColor(@"chat_reference_message_content_text_color", @"#000000");
 
     [self.bubbleView addSubview:self.textView];
 }
@@ -124,8 +124,8 @@
 
 // Override
 - (void)notifyBottomContainerReadyOfData:(TDeskMessageCellData *)cellData {
-    NSDictionary *param = @{TUICore_TUIChatExtension_BottomContainer_CellData : self.referenceData};
-    [TDeskCore raiseExtension:TUICore_TUIChatExtension_BottomContainer_ClassicExtensionID parentView:self.bottomContainer param:param];
+    NSDictionary *param = @{TDeskCore_TUIChatExtension_BottomContainer_CellData : self.referenceData};
+    [TDeskCore raiseExtension:TDeskCore_TUIChatExtension_BottomContainer_ClassicExtensionID parentView:self.bottomContainer param:param];
 }
 
 - (void)updateUI:(TDeskReferenceMessageCellData *)referenceData {
@@ -144,13 +144,13 @@
     }];
 
     if (referenceData.direction == MsgDirectionIncoming) {
-        self.textView.textColor = TUIChatDynamicColor(@"chat_reference_message_content_recv_text_color", @"#000000");
-        self.senderLabel.textColor = TUIChatDynamicColor(@"chat_reference_message_quoteView_recv_text_color", @"#888888");
-        self.quoteView.backgroundColor = TUIChatDynamicColor(@"chat_reference_message_quoteView_bg_color", @"#4444440c");
+        self.textView.textColor = TDeskChatDynamicColor(@"chat_reference_message_content_recv_text_color", @"#000000");
+        self.senderLabel.textColor = TDeskChatDynamicColor(@"chat_reference_message_quoteView_recv_text_color", @"#888888");
+        self.quoteView.backgroundColor = TDeskChatDynamicColor(@"chat_reference_message_quoteView_bg_color", @"#4444440c");
     } else {
-        self.textView.textColor = TUIChatDynamicColor(@"chat_reference_message_content_text_color", @"#000000");
-        self.senderLabel.textColor = TUIChatDynamicColor(@"chat_reference_message_quoteView_text_color", @"#888888");
-        self.quoteView.backgroundColor = TUIChatDynamicColor(@"chat_reference_message_quoteView_bg_color", @"#4444440c");
+        self.textView.textColor = TDeskChatDynamicColor(@"chat_reference_message_content_text_color", @"#000000");
+        self.senderLabel.textColor = TDeskChatDynamicColor(@"chat_reference_message_quoteView_text_color", @"#888888");
+        self.quoteView.backgroundColor = TDeskChatDynamicColor(@"chat_reference_message_quoteView_bg_color", @"#4444440c");
     }
     if (referenceData.textColor) {
         self.textView.textColor = referenceData.textColor;
@@ -253,16 +253,16 @@
     if ([view isKindOfClass:[TDeskTextReplyQuoteView class]]) {
         TDeskTextReplyQuoteView *quoteView = (TDeskTextReplyQuoteView *)view;
         if (self.referenceData.direction == MsgDirectionIncoming) {
-            quoteView.textLabel.textColor = TUIChatDynamicColor(@"chat_reference_message_quoteView_recv_text_color", @"#888888");
+            quoteView.textLabel.textColor = TDeskChatDynamicColor(@"chat_reference_message_quoteView_recv_text_color", @"#888888");
         } else {
-            quoteView.textLabel.textColor = TUIChatDynamicColor(@"chat_reference_message_quoteView_text_color", @"#888888");
+            quoteView.textLabel.textColor = TDeskChatDynamicColor(@"chat_reference_message_quoteView_text_color", @"#888888");
         }
     } else if ([view isKindOfClass:[TDeskMergeReplyQuoteView class]]) {
         TDeskMergeReplyQuoteView *quoteView = (TDeskMergeReplyQuoteView *)view;
         if (self.referenceData.direction == MsgDirectionIncoming) {
-            quoteView.titleLabel.textColor = TUIChatDynamicColor(@"chat_reference_message_quoteView_recv_text_color", @"#888888");
+            quoteView.titleLabel.textColor = TDeskChatDynamicColor(@"chat_reference_message_quoteView_recv_text_color", @"#888888");
         } else {
-            quoteView.titleLabel.textColor = TUIChatDynamicColor(@"chat_reference_message_quoteView_text_color", @"#888888");
+            quoteView.titleLabel.textColor = TDeskChatDynamicColor(@"chat_reference_message_quoteView_text_color", @"#888888");
         }
     }
 
@@ -327,7 +327,7 @@
         _senderLabel = [[UILabel alloc] init];
         _senderLabel.text = @"harvy:";
         _senderLabel.font = [UIFont systemFontOfSize:12.0];
-        _senderLabel.textColor = TUIChatDynamicColor(@"chat_reference_message_sender_text_color", @"#888888");
+        _senderLabel.textColor = TDeskChatDynamicColor(@"chat_reference_message_sender_text_color", @"#888888");
     }
     return _senderLabel;
 }
@@ -335,7 +335,7 @@
 - (UIView *)quoteView {
     if (_quoteView == nil) {
         _quoteView = [[UIView alloc] init];
-        _quoteView.backgroundColor = TUIChatDynamicColor(@"chat_reference_message_quoteView_bg_color", @"#4444440c");
+        _quoteView.backgroundColor = TDeskChatDynamicColor(@"chat_reference_message_quoteView_bg_color", @"#4444440c");
         _quoteView.layer.cornerRadius = 4.0;
         _quoteView.layer.masksToBounds = YES;
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(quoteViewOnTap)];
@@ -425,7 +425,7 @@
     bool showRevokeStr = (referenceCellData.originCellData.innerMessage.status == V2TIM_MSG_STATUS_LOCAL_REVOKED) &&
                             !referenceCellData.showRevokedOriginMessage;
     if (showRevokeStr) {
-        NSString *msgRevokeStr = TIMCommonLocalizableString(TUIKitReferenceOriginMessageRevoke);
+        NSString *msgRevokeStr = TDeskIMCommonLocalizableString(TUIKitReferenceOriginMessageRevoke);
         messageRevokeRect = [msgRevokeStr boundingRectWithSize:CGSizeMake(quoteMaxWidth, senderSize.height)
                                                        options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
                                                     attributes:@{NSFontAttributeName : [UIFont boldSystemFontOfSize:12.0]}
@@ -454,7 +454,7 @@
 
     BOOL hasRiskContent = referenceCellData.innerMessage.hasRiskContent;
     if (hasRiskContent) {
-        size.width = MAX(size.width, 200);// width must more than  TIMCommonLocalizableString(TUIKitMessageTypeSecurityStrike)
+        size.width = MAX(size.width, 200);// width must more than  TDeskIMCommonLocalizableString(TUIKitMessageTypeSecurityStrike)
         size.height += kTUISecurityStrikeViewTopLineMargin;
         size.height += kTUISecurityStrikeViewTopLineToBottom;
     }

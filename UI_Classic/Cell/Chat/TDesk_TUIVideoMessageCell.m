@@ -82,7 +82,7 @@
     BOOL hasRiskContent = self.messageData.innerMessage.hasRiskContent;
     if (hasRiskContent) {
         self.thumb.image = TIMCommonBundleThemeImage(@"", @"icon_security_strike");
-        self.securityStrikeView.textLabel.text = TIMCommonLocalizableString(TUIKitMessageTypeSecurityStrikeImage);
+        self.securityStrikeView.textLabel.text = TDeskIMCommonLocalizableString(TUIKitMessageTypeSecurityStrikeImage);
         self.duration.text = @"";
         self.play.hidden = YES;
         self.downloadImage.hidden = YES;
@@ -406,7 +406,7 @@
         CGFloat bubbleTopMargin = 12;
         CGFloat bubbleBottomMargin = 12;
         size.height = MAX(size.height, 150);// width must more than  TIMCommonBundleThemeImage(@"", @"icon_security_strike");
-        size.width = MAX(size.width, 200);// width must more than  TIMCommonLocalizableString(TUIKitMessageTypeSecurityStrike)
+        size.width = MAX(size.width, 200);// width must more than  TDeskIMCommonLocalizableString(TUIKitMessageTypeSecurityStrike)
         size.height += bubbleTopMargin;
         size.height += kTUISecurityStrikeViewTopLineMargin;
         size.height += kTUISecurityStrikeViewTopLineToBottom;

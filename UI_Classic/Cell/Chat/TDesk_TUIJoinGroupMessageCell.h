@@ -7,7 +7,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class TDeskJoinGroupMessageCell;
 
-@protocol TUIJoinGroupMessageCellDelegate <NSObject>
+@protocol TDeskJoinGroupMessageCellDelegate <NSObject>
 
 @optional
 
@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property TDeskJoinGroupMessageCellData *joinData;
 
-@property(nonatomic, weak) id<TUIJoinGroupMessageCellDelegate> joinGroupDelegate;
+@property(nonatomic, weak) id<TDeskJoinGroupMessageCellDelegate> joinGroupDelegate;
 
 @end
 

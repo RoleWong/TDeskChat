@@ -29,7 +29,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
 
     UILabel *titleLabel = [[UILabel alloc] init];
-    titleLabel.text = TIMCommonLocalizableString(File);
+    titleLabel.text = TDeskIMCommonLocalizableString(File);
     titleLabel.font = [UIFont boldSystemFontOfSize:17.0];
     titleLabel.textColor = TIMCommonDynamicColor(@"nav_title_text_color", @"#000000");
     titleLabel.textAlignment = isRTL()?NSTextAlignmentRight:NSTextAlignmentLeft;
@@ -72,16 +72,16 @@
       @strongify(self);
       int progress = [x intValue];
       if (progress < 100 && progress > 0) {
-          [self.button setTitle:[NSString stringWithFormat:TIMCommonLocalizableString(TUIKitDownloadProgressFormat), progress] forState:UIControlStateNormal];
+          [self.button setTitle:[NSString stringWithFormat:TDeskIMCommonLocalizableString(TUIKitDownloadProgressFormat), progress] forState:UIControlStateNormal];
       } else {
-          [self.button setTitle:TIMCommonLocalizableString(TUIKitOpenWithOtherApp) forState:UIControlStateNormal];
+          [self.button setTitle:TDeskIMCommonLocalizableString(TUIKitOpenWithOtherApp) forState:UIControlStateNormal];
       }
     }];
     if ([_data isLocalExist]) {
-        [self.button setTitle:TIMCommonLocalizableString(TUIKitOpenWithOtherApp) forState:UIControlStateNormal];
+        [self.button setTitle:TDeskIMCommonLocalizableString(TUIKitOpenWithOtherApp) forState:UIControlStateNormal];
 
     } else {
-        [self.button setTitle:TIMCommonLocalizableString(Download) forState:UIControlStateNormal];
+        [self.button setTitle:TDeskIMCommonLocalizableString(Download) forState:UIControlStateNormal];
     }
 }
 

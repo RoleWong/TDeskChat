@@ -81,8 +81,8 @@
 
     [[V2TIMManager sharedInstance] addAdvancedMsgListener:self];
 
-    [TDeskCore registerEvent:TUICore_TUIPluginNotify
-                    subKey:TUICore_TUIPluginNotify_DidChangePluginViewSubKey
+    [TDeskCore registerEvent:TDeskCore_TUIPluginNotify
+                    subKey:TDeskCore_TUIPluginNotify_DidChangePluginViewSubKey
                     object:self];
 }
 - (void)viewWillAppear:(BOOL)animated {
@@ -181,8 +181,8 @@
 }
 
 - (void)setupViews {
-    self.title = TIMCommonLocalizableString(TUIKitRepliesDetailTitle);
-    self.view.backgroundColor = TUIChatDynamicColor(@"chat_controller_bg_color", @"#FFFFFF");
+    self.title = TDeskIMCommonLocalizableString(TUIKitRepliesDetailTitle);
+    self.view.backgroundColor = TDeskChatDynamicColor(@"chat_controller_bg_color", @"#FFFFFF");
     self.tableView.scrollsToTop = NO;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -682,9 +682,9 @@
 
 #pragma mark - TDeskNotificationProtocol
 - (void)onNotifyEvent:(NSString *)key subKey:(NSString *)subKey object:(id)anObject param:(NSDictionary *)param {
-    if ([key isEqualToString:TUICore_TUIPluginNotify] &&
-        [subKey isEqualToString:TUICore_TUIPluginNotify_DidChangePluginViewSubKey]) {
-        TDeskMessageCellData *data = param[TUICore_TUIPluginNotify_DidChangePluginViewSubKey_Data];
+    if ([key isEqualToString:TDeskCore_TUIPluginNotify] &&
+        [subKey isEqualToString:TDeskCore_TUIPluginNotify_DidChangePluginViewSubKey]) {
+        TDeskMessageCellData *data = param[TDeskCore_TUIPluginNotify_DidChangePluginViewSubKey_Data];
         NSInteger section = 1;
         if ([data.msgID isEqualToString:self.cellData.msgID] ) {
             //root section

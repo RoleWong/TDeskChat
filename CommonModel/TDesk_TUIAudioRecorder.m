@@ -38,7 +38,7 @@
 }
 
 - (void)configNotify {
-    [TDeskCore registerEvent:TUICore_RecordAudioMessageNotify subKey:TUICore_RecordAudioMessageNotify_RecordAudioVoiceVolumeSubKey object:self];
+    [TDeskCore registerEvent:TDeskCore_RecordAudioMessageNotify subKey:TDeskCore_RecordAudioMessageNotify_RecordAudioVoiceVolumeSubKey object:self];
 }
 
 - (void)dealloc {
@@ -49,7 +49,7 @@
 - (void)record {
     [self checkMicPermissionWithCompletion:^(BOOL isGranted, BOOL isFirstChek) {
       if (TDeskLogin.getCurrentBusinessScene != None) {
-          [TDeskTool makeToast:TIMCommonLocalizableString(TUIKitMessageTypeOtherUseMic) duration:3];
+          [TDeskTool makeToast:TDeskIMCommonLocalizableString(TUIKitMessageTypeOtherUseMic) duration:3];
           return;
       }
       if (isFirstChek) {
@@ -227,7 +227,7 @@
 
 #pragma mark-- Record audio using TUICallKit framework
 - (BOOL)startCallKitRecording {
-    if (![TDeskCore getService:TUICore_TUIAudioMessageRecordService]) {
+    if (![TDeskCore getService:TDeskCore_TUIAudioMessageRecordService]) {
         NSLog(@"TUICallKit audio recording service does not exist");
         return NO;
     }
@@ -238,22 +238,22 @@
 //    }
 
     NSMutableDictionary *audioRecordParam = [[NSMutableDictionary alloc] init];
-//    [audioRecordParam setValue:signature forKey:TUICore_TUIAudioMessageRecordService_StartRecordAudioMessageMethod_SignatureKey];
-    [audioRecordParam setValue:@([TDeskLogin getSdkAppID]) forKey:TUICore_TUIAudioMessageRecordService_StartRecordAudioMessageMethod_SdkappidKey];
-    [audioRecordParam setValue:self.recordedFilePath forKey:TUICore_TUIAudioMessageRecordService_StartRecordAudioMessageMethod_PathKey];
+//    [audioRecordParam setValue:signature forKey:TDeskCore_TUIAudioMessageRecordService_StartRecordAudioMessageMethod_SignatureKey];
+    [audioRecordParam setValue:@([TDeskLogin getSdkAppID]) forKey:TDeskCore_TUIAudioMessageRecordService_StartRecordAudioMessageMethod_SdkappidKey];
+    [audioRecordParam setValue:self.recordedFilePath forKey:TDeskCore_TUIAudioMessageRecordService_StartRecordAudioMessageMethod_PathKey];
 
     @weakify(self);
     void (^startCallBack)(NSInteger errorCode, NSString *errorMessage, NSDictionary *param) =
         ^(NSInteger errorCode, NSString *errorMessage, NSDictionary *param) {
           @strongify(self);
           NSString *method = param[@"method"];
-          if ([method isEqualToString:TUICore_RecordAudioMessageNotify_StartRecordAudioMessageSubKey]) {
+          if ([method isEqualToString:TDeskCore_RecordAudioMessageNotify_StartRecordAudioMessageSubKey]) {
               [self onTUICallKitRecordStarted:errorCode];
           }
         };
 
-    [TDeskCore callService:TUICore_TUIAudioMessageRecordService
-                  method:TUICore_TUIAudioMessageRecordService_StartRecordAudioMessageMethod
+    [TDeskCore callService:TDeskCore_TUIAudioMessageRecordService
+                  method:TDeskCore_TUIAudioMessageRecordService_StartRecordAudioMessageMethod
                    param:audioRecordParam
           resultCallback:startCallBack];
 
@@ -268,13 +268,13 @@
         ^(NSInteger errorCode, NSString *errorMessage, NSDictionary *param) {
           @strongify(self);
           NSString *method = param[@"method"];
-          if ([method isEqualToString:TUICore_RecordAudioMessageNotify_StopRecordAudioMessageSubKey]) {
+          if ([method isEqualToString:TDeskCore_RecordAudioMessageNotify_StopRecordAudioMessageSubKey]) {
               [self onTUICallKitRecordCompleted:errorCode];
           }
         };
 
-    [TDeskCore callService:TUICore_TUIAudioMessageRecordService
-                  method:TUICore_TUIAudioMessageRecordService_StopRecordAudioMessageMethod
+    [TDeskCore callService:TDeskCore_TUIAudioMessageRecordService
+                  method:TDeskCore_TUIAudioMessageRecordService_StopRecordAudioMessageMethod
                    param:nil
           resultCallback:stopCallBack];
 
@@ -283,12 +283,12 @@
 
 #pragma mark - TDeskNotificationProtocol
 - (void)onNotifyEvent:(NSString *)key subKey:(NSString *)subKey object:(nullable id)anObject param:(NSDictionary *)param {
-    if ([key isEqualToString:TUICore_RecordAudioMessageNotify]) {
+    if ([key isEqualToString:TDeskCore_RecordAudioMessageNotify]) {
         if (param == nil) {
             NSLog(@"TUICallKit notify param is invalid");
             return;
         }
-        if ([subKey isEqualToString:TUICore_RecordAudioMessageNotify_RecordAudioVoiceVolumeSubKey]) {
+        if ([subKey isEqualToString:TDeskCore_RecordAudioMessageNotify_RecordAudioVoiceVolumeSubKey]) {
             NSUInteger volume = [param[@"volume"] unsignedIntegerValue];
             [self onTUICallKitVolumeChanged:volume];
         }
@@ -297,35 +297,35 @@
 
 - (void)onTUICallKitRecordStarted:(NSInteger)errorCode {
     switch (errorCode) {
-        case TUICore_RecordAudioMessageNotifyError_None: {
+        case TDeskCore_RecordAudioMessageNotifyError_None: {
             [self triggerRecordTimer];
             break;
         }
-        case TUICore_RecordAudioMessageNotifyError_MicPermissionRefused: {
+        case TDeskCore_RecordAudioMessageNotifyError_MicPermissionRefused: {
             break;
         }
-        case TUICore_RecordAudioMessageNotifyError_StatusInCall: {
-            [TDeskTool makeToast:TIMCommonLocalizableString(TUIKitInputRecordRejectedInCall)];
+        case TDeskCore_RecordAudioMessageNotifyError_StatusInCall: {
+            [TDeskTool makeToast:TDeskIMCommonLocalizableString(TUIKitInputRecordRejectedInCall)];
             break;
         }
-        case TUICore_RecordAudioMessageNotifyError_StatusIsAudioRecording: {
-            [TDeskTool makeToast:TIMCommonLocalizableString(TUIKitInputRecordRejectedIsRecording)];
+        case TDeskCore_RecordAudioMessageNotifyError_StatusIsAudioRecording: {
+            [TDeskTool makeToast:TDeskIMCommonLocalizableString(TUIKitInputRecordRejectedIsRecording)];
             break;
         }
-        case TUICore_RecordAudioMessageNotifyError_RequestAudioFocusFailed:
-        case TUICore_RecordAudioMessageNotifyError_RecordInitFailed:
-        case TUICore_RecordAudioMessageNotifyError_PathFormatNotSupport:
-        case TUICore_RecordAudioMessageNotifyError_MicStartFail:
-        case TUICore_RecordAudioMessageNotifyError_MicNotAuthorized:
-        case TUICore_RecordAudioMessageNotifyError_MicSetParamFail:
-        case TUICore_RecordAudioMessageNotifyError_MicOccupy: {
+        case TDeskCore_RecordAudioMessageNotifyError_RequestAudioFocusFailed:
+        case TDeskCore_RecordAudioMessageNotifyError_RecordInitFailed:
+        case TDeskCore_RecordAudioMessageNotifyError_PathFormatNotSupport:
+        case TDeskCore_RecordAudioMessageNotifyError_MicStartFail:
+        case TDeskCore_RecordAudioMessageNotifyError_MicNotAuthorized:
+        case TDeskCore_RecordAudioMessageNotifyError_MicSetParamFail:
+        case TDeskCore_RecordAudioMessageNotifyError_MicOccupy: {
             [self stopCallKitRecording];
             NSLog(@"start TUICallKit recording failed, errorCode: %ld", (long)errorCode);
             break;
         }
-        case TUICore_RecordAudioMessageNotifyError_InvalidParam:
-        case TUICore_RecordAudioMessageNotifyError_SignatureError:
-        case TUICore_RecordAudioMessageNotifyError_SignatureExpired:
+        case TDeskCore_RecordAudioMessageNotifyError_InvalidParam:
+        case TDeskCore_RecordAudioMessageNotifyError_SignatureError:
+        case TDeskCore_RecordAudioMessageNotifyError_SignatureExpired:
         default: {
             [self stopCallKitRecording];
             [self startSystemRecording];
@@ -337,12 +337,12 @@
 
 - (void)onTUICallKitRecordCompleted:(NSInteger)errorCode {
     switch (errorCode) {
-        case TUICore_RecordAudioMessageNotifyError_None: {
+        case TDeskCore_RecordAudioMessageNotifyError_None: {
             [self stopRecordTimer];
             break;
         }
-        case TUICore_RecordAudioMessageNotifyError_NoMessageToRecord:
-        case TUICore_RecordAudioMessageNotifyError_RecordFailed: {
+        case TDeskCore_RecordAudioMessageNotifyError_NoMessageToRecord:
+        case TDeskCore_RecordAudioMessageNotifyError_RecordFailed: {
             NSLog(@"stop TUICallKit recording failed, errorCode: %ld", (long)errorCode);
         }
         default:

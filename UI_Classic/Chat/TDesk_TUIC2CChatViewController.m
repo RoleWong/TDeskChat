@@ -36,9 +36,9 @@
     self.sendTypingBaseCondationInVC = NO;
     
     // notify
-    NSDictionary *param = @{TUICore_TUIChatNotify_ChatVC_ViewDidLoadSubKey_UserID: self.conversationData.userID ? : @""};
-    [TDeskCore notifyEvent:TUICore_TUIChatNotify
-                  subKey:TUICore_TUIChatNotify_ChatVC_ViewDidLoadSubKey
+    NSDictionary *param = @{TDeskCore_TUIChatNotify_ChatVC_ViewDidLoadSubKey_UserID: self.conversationData.userID ? : @""};
+    [TDeskCore notifyEvent:TDeskCore_TUIChatNotify
+                  subKey:TDeskCore_TUIChatNotify_ChatVC_ViewDidLoadSubKey
                   object:nil
                    param:param];
     
@@ -55,7 +55,7 @@
 }
 
 - (NSString *)forwardTitleWithMyName:(NSString *)nameStr {
-    NSString *title = [NSString stringWithFormat:TIMCommonLocalizableString(TUIKitRelayChatHistoryForSomebodyFormat), self.conversationData.title, nameStr];
+    NSString *title = [NSString stringWithFormat:TDeskIMCommonLocalizableString(TUIKitRelayChatHistoryForSomebodyFormat), self.conversationData.title, nameStr];
     return rtlString(title);
 }
 

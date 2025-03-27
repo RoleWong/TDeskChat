@@ -50,8 +50,8 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        [TDeskCore registerEvent:TUICore_TUIPluginNotify
-                        subKey:TUICore_TUIPluginNotify_DidChangePluginViewSubKey
+        [TDeskCore registerEvent:TDeskCore_TUIPluginNotify
+                        subKey:TDeskCore_TUIPluginNotify_DidChangePluginViewSubKey
                         object:self];
     }
     return self;
@@ -93,11 +93,11 @@
     [self.stylesCache setObject:NSStringFromUIEdgeInsets(incommingMessageInsets) forKey:STR(incommingMessageInsets)];
 
     UIColor *outgoingTextColor = [TDeskTextMessageCell outgoingTextColor];
-    [TDeskTextMessageCell setOutgoingTextColor:TUIChatDynamicColor(@"chat_text_message_send_text_color", @"#000000")];
+    [TDeskTextMessageCell setOutgoingTextColor:TDeskChatDynamicColor(@"chat_text_message_send_text_color", @"#000000")];
     [self.stylesCache setObject:outgoingTextColor forKey:STR(outgoingTextColor)];
 
     UIColor *incomingTextColor = [TDeskTextMessageCell incommingTextColor];
-    [TDeskTextMessageCell setIncommingTextColor:TUIChatDynamicColor(@"chat_text_message_receive_text_color", @"#000000")];
+    [TDeskTextMessageCell setIncommingTextColor:TDeskChatDynamicColor(@"chat_text_message_receive_text_color", @"#000000")];
     [self.stylesCache setObject:incomingTextColor forKey:STR(incomingTextColor)];
 }
 
@@ -166,7 +166,7 @@
         } else if ([data isKindOfClass:TDeskReplyMessageCellData.class] || [data isKindOfClass:TDeskReferenceMessageCellData.class]) {
             layout = TDeskMessageCellLayout.incommingTextMessageLayout;
             TDeskReferenceMessageCellData *textData = (TDeskReferenceMessageCellData *)data;
-            textData.textColor = TUIChatDynamicColor(@"chat_text_message_receive_text_color", @"#000000");
+            textData.textColor = TDeskChatDynamicColor(@"chat_text_message_receive_text_color", @"#000000");
             textData.showRevokedOriginMessage = YES;
         } else if ([data isKindOfClass:TDeskVoiceMessageCellData.class]) {
             TDeskVoiceMessageCellData *voiceData = (TDeskVoiceMessageCellData *)data;
@@ -190,11 +190,11 @@
 }
 
 - (void)setupViews {
-    self.title = TIMCommonLocalizableString(TUIKitRelayChatHistory);
+    self.title = TDeskIMCommonLocalizableString(TUIKitRelayChatHistory);
     self.tableView.scrollsToTop = NO;
     self.tableView.estimatedRowHeight = 0;
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    self.tableView.backgroundColor = TUIChatDynamicColor(@"chat_controller_bg_color", @"#FFFFFF");
+    self.tableView.backgroundColor = TDeskChatDynamicColor(@"chat_controller_bg_color", @"#FFFFFF");
     self.tableView.contentInset = UIEdgeInsetsMake(5, 0, 0, 0);
     [self.messageCellConfig bindTableView:self.tableView];
 }
@@ -376,17 +376,17 @@
             findMessages:@[ originMsgID ?: @"" ]
                 callback:^(BOOL success, NSString *_Nonnull desc, NSArray<V2TIMMessage *> *_Nonnull msgs) {
                   if (!success) {
-                      [TDeskTool makeToast:TIMCommonLocalizableString(TUIKitReplyMessageNotFoundOriginMessage)];
+                      [TDeskTool makeToast:TDeskIMCommonLocalizableString(TUIKitReplyMessageNotFoundOriginMessage)];
                       return;
                   }
                   V2TIMMessage *message = msgs.firstObject;
                   if (message == nil) {
-                      [TDeskTool makeToast:TIMCommonLocalizableString(TUIKitReplyMessageNotFoundOriginMessage)];
+                      [TDeskTool makeToast:TDeskIMCommonLocalizableString(TUIKitReplyMessageNotFoundOriginMessage)];
                       return;
                   }
 
                   if (message.status == V2TIM_MSG_STATUS_HAS_DELETED || message.status == V2TIM_MSG_STATUS_LOCAL_REVOKED) {
-                      [TDeskTool makeToast:TIMCommonLocalizableString(TUIKitReplyMessageNotFoundOriginMessage)];
+                      [TDeskTool makeToast:TDeskIMCommonLocalizableString(TUIKitReplyMessageNotFoundOriginMessage)];
                       return;
                   }
 
@@ -525,8 +525,8 @@
 
 #pragma mark - TDeskNotificationProtocol
 - (void)onNotifyEvent:(NSString *)key subKey:(NSString *)subKey object:(id)anObject param:(NSDictionary *)param {
-    if ([key isEqualToString:TUICore_TUIPluginNotify] && [subKey isEqualToString:TUICore_TUIPluginNotify_DidChangePluginViewSubKey]) {
-        TDeskMessageCellData *data = param[TUICore_TUIPluginNotify_DidChangePluginViewSubKey_Data];
+    if ([key isEqualToString:TDeskCore_TUIPluginNotify] && [subKey isEqualToString:TDeskCore_TUIPluginNotify_DidChangePluginViewSubKey]) {
+        TDeskMessageCellData *data = param[TDeskCore_TUIPluginNotify_DidChangePluginViewSubKey_Data];
         [self.messageCellConfig removeHeightCacheOfMessageCellData:data];
         [self reloadAndScrollToBottomOfMessage:data.innerMessage.msgID section:0];
     }

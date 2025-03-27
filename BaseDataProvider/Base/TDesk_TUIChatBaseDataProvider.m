@@ -19,7 +19,7 @@ static NSArray *gCustomInputBtnInfo = nil;
 
 @implementation TDeskChatBaseDataProvider
 + (void)initialize {
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(onChangeLanguage) name:TUIChangeLanguageNotification object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(onChangeLanguage) name:TDeskChangeLanguageNotification object:nil];
 }
 
 + (void)onChangeLanguage {
@@ -30,7 +30,7 @@ static NSArray *gCustomInputBtnInfo = nil;
     if (gCustomInputBtnInfo == nil) {
         gCustomInputBtnInfo = @[ @{
             Input_SendBtn_Key : TUIInputMoreCellKey_Link,
-            Input_SendBtn_Title : TIMCommonLocalizableString(TUIKitMoreLink),
+            Input_SendBtn_Title : TDeskIMCommonLocalizableString(TUIKitMoreLink),
             Input_SendBtn_ImageName : @"chat_more_link_img"
         } ];
     }
@@ -106,7 +106,7 @@ static NSArray *gCustomInputBtnInfo = nil;
                                              if (uiMsgs.count > 2) {
                                                  [abstactList addObject:[self abstractDisplayWithMessage:msgs[2]]];
                                              }
-                                             NSString *compatibleText = TIMCommonLocalizableString(TUIKitRelayCompatibleText);
+                                             NSString *compatibleText = TDeskIMCommonLocalizableString(TUIKitRelayCompatibleText);
                                              V2TIMMessage *mergeMessage = [V2TIMManager.sharedInstance createMergerMessage:msgs
                                                                                                                      title:title
                                                                                                               abstractList:abstactList

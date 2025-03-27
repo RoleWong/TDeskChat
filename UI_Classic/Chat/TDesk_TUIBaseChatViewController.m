@@ -54,13 +54,13 @@ static CGRect gCustomTopViewRect;
                                          TDeskMessageMultiChooseViewDelegate,
                                          TDeskChatBaseDataProviderDelegate,
                                          TDeskNotificationProtocol,
-                                         TUIJoinGroupMessageCellDelegate,
+                                         TDeskJoinGroupMessageCellDelegate,
                                          V2TIMConversationListener,
-                                         TUINavigationControllerDelegate,
+                                         TDeskNavigationControllerDelegate,
                                          TDeskChatMediaDataListener,
                                          TDeskInputViewMoreActionProtocol>
 
-@property(nonatomic, strong) TUINaviBarIndicatorView *titleView;
+@property(nonatomic, strong) TDeskNaviBarIndicatorView *titleView;
 @property(nonatomic, strong) TDeskMessageMultiChooseView *multiChooseView;
 @property(nonatomic, assign) BOOL responseKeyboard;
 @property(nonatomic, strong) TDeskChatDataProvider *dataProvider;
@@ -86,7 +86,7 @@ static CGRect gCustomTopViewRect;
 //        [[TDeskAIDenoiseSignatureManager sharedInstance] updateSignature];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(reloadTopViewsAndMessagePage)
-                                                     name:TUICore_TUIChatExtension_ChatViewTopArea_ChangedNotification
+                                                     name:TDeskCore_TUIChatExtension_ChatViewTopArea_ChangedNotification
                                                    object:nil];
 
     }
@@ -285,7 +285,7 @@ static CGRect gCustomTopViewRect;
           titleLabel.text = _conversationData.title;
       }
       else {
-          NSString *typingText = [NSString stringWithFormat:@"%@...", TIMCommonLocalizableString(TUIKitTyping)];
+          NSString *typingText = [NSString stringWithFormat:@"%@...", TDeskIMCommonLocalizableString(TUIKitTyping)];
           titleLabel.text = typingText;
       }
     }];
@@ -331,7 +331,7 @@ static CGRect gCustomTopViewRect;
     self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
 
     
-    _titleView = [[TUINaviBarIndicatorView alloc] init];
+    _titleView = [[TDeskNaviBarIndicatorView alloc] init];
     self.navigationItem.titleView = _titleView;
     self.navigationItem.title = @"";
     __weak typeof(self) weakSelf = self;
@@ -345,7 +345,7 @@ static CGRect gCustomTopViewRect;
           [weakSelf checkTitle:YES];
       }
       else {
-          NSString *typingText = [NSString stringWithFormat:@"%@...", TIMCommonLocalizableString(TUIKitTyping)];
+          NSString *typingText = [NSString stringWithFormat:@"%@...", TDeskIMCommonLocalizableString(TUIKitTyping)];
           [weakSelf.titleView setTitle:typingText];
       }
     }];
@@ -364,14 +364,14 @@ static CGRect gCustomTopViewRect;
     NSMutableArray *rightBarButtonList = [NSMutableArray array];
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     if (self.conversationData.userID.length > 0) {
-        param[TUICore_TUIChatExtension_NavigationMoreItem_UserID] = self.conversationData.userID;
+        param[TDeskCore_TUIChatExtension_NavigationMoreItem_UserID] = self.conversationData.userID;
     } else if (self.conversationData.groupID.length > 0) {
-        param[TUICore_TUIChatExtension_NavigationMoreItem_GroupID] = self.conversationData.groupID;
+        param[TDeskCore_TUIChatExtension_NavigationMoreItem_GroupID] = self.conversationData.groupID;
     }
-    param[TUICore_TUIChatExtension_NavigationMoreItem_ItemSize] = NSStringFromCGSize(itemSize);
-    param[TUICore_TUIChatExtension_NavigationMoreItem_FilterVideoCall] = @(!TDeskChatConfig.defaultConfig.enableVideoCall);
-    param[TUICore_TUIChatExtension_NavigationMoreItem_FilterAudioCall] = @(!TDeskChatConfig.defaultConfig.enableAudioCall);
-    NSArray<TDeskExtensionInfo *> *extensionList = [TDeskCore getExtensionList:TUICore_TUIChatExtension_NavigationMoreItem_ClassicExtensionID param:param];
+    param[TDeskCore_TUIChatExtension_NavigationMoreItem_ItemSize] = NSStringFromCGSize(itemSize);
+    param[TDeskCore_TUIChatExtension_NavigationMoreItem_FilterVideoCall] = @(!TDeskChatConfig.defaultConfig.enableVideoCall);
+    param[TDeskCore_TUIChatExtension_NavigationMoreItem_FilterAudioCall] = @(!TDeskChatConfig.defaultConfig.enableAudioCall);
+    NSArray<TDeskExtensionInfo *> *extensionList = [TDeskCore getExtensionList:TDeskCore_TUIChatExtension_NavigationMoreItem_ClassicExtensionID param:param];
     TDeskExtensionInfo *maxWeightInfo = [TDeskExtensionInfo new];
     maxWeightInfo.weight = INT_MIN;
     for (TDeskExtensionInfo *info in extensionList) {
@@ -386,7 +386,7 @@ static CGRect gCustomTopViewRect;
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, itemSize.width, itemSize.height)];
         [button.widthAnchor constraintEqualToConstant:itemSize.width].active = YES;
         [button.heightAnchor constraintEqualToConstant:itemSize.height].active = YES;
-        button.tui_extValueObj = maxWeightInfo;
+        button.tdesk_extValueObj = maxWeightInfo;
         [button addTarget:self action:@selector(rightBarButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         [button setImage:maxWeightInfo.icon forState:UIControlStateNormal];
         UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:button];
@@ -421,13 +421,13 @@ static CGRect gCustomTopViewRect;
     gTopExentsionView.frame = CGRectMake(0, 0, self.view.frame.size.width, 0);
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     if (self.conversationData.userID.length > 0) {
-        param[TUICore_TUIChatExtension_ChatViewTopArea_ChatID] = self.conversationData.userID;
-        param[TUICore_TUIChatExtension_ChatViewTopArea_IsGroup] = @"0";
+        param[TDeskCore_TUIChatExtension_ChatViewTopArea_ChatID] = self.conversationData.userID;
+        param[TDeskCore_TUIChatExtension_ChatViewTopArea_IsGroup] = @"0";
     } else if (self.conversationData.groupID.length > 0) {
-        param[TUICore_TUIChatExtension_ChatViewTopArea_IsGroup] = @"1";
-        param[TUICore_TUIChatExtension_ChatViewTopArea_ChatID] = self.conversationData.groupID;
+        param[TDeskCore_TUIChatExtension_ChatViewTopArea_IsGroup] = @"1";
+        param[TDeskCore_TUIChatExtension_ChatViewTopArea_ChatID] = self.conversationData.groupID;
     }
-    [TDeskCore raiseExtension:TUICore_TUIChatExtension_ChatViewTopArea_ClassicExtensionID parentView:gTopExentsionView param:param];
+    [TDeskCore raiseExtension:TDeskCore_TUIChatExtension_ChatViewTopArea_ClassicExtensionID parentView:gTopExentsionView param:param];
 
 }
 
@@ -476,7 +476,7 @@ static CGRect gCustomTopViewRect;
 - (void)configBackgroundView {
     self.backgroudView = [[UIImageView alloc] init];
     self.backgroudView.backgroundColor =
-        TDeskChatConfig.defaultConfig.backgroudColor ? TDeskChatConfig.defaultConfig.backgroudColor : TUIChatDynamicColor(@"chat_controller_bg_color", @"#FFFFFF");
+        TDeskChatConfig.defaultConfig.backgroudColor ? TDeskChatConfig.defaultConfig.backgroudColor : TDeskChatDynamicColor(@"chat_controller_bg_color", @"#FFFFFF");
     NSString *conversationID = [self getConversationID];
     NSString *imgUrl = [self getBackgroundImageUrlByConversationID:conversationID];
 
@@ -500,11 +500,11 @@ static CGRect gCustomTopViewRect;
 
 - (void)configNotify {
     [[V2TIMManager sharedInstance] addConversationListener:self];
-    [TDeskCore registerEvent:TUICore_TUIConversationNotify subKey:TUICore_TUIConversationNotify_ClearConversationUIHistorySubKey object:self];
+    [TDeskCore registerEvent:TDeskCore_TUIConversationNotify subKey:TDeskCore_TUIConversationNotify_ClearConversationUIHistorySubKey object:self];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(onFriendInfoChanged:) name:@"FriendInfoChangedNotification" object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(appWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
-    [TDeskCore registerEvent:TUICore_TUIContactNotify subKey:TUICore_TUIContactNotify_UpdateConversationBackgroundImageSubKey object:self];
-    [TDeskCore registerEvent:TUICore_TUIGroupNotify subKey:TUICore_TUIGroupNotify_UpdateConversationBackgroundImageSubKey object:self];
+    [TDeskCore registerEvent:TDeskCore_TUIContactNotify subKey:TDeskCore_TUIContactNotify_UpdateConversationBackgroundImageSubKey object:self];
+    [TDeskCore registerEvent:TDeskCore_TUIGroupNotify subKey:TDeskCore_TUIGroupNotify_UpdateConversationBackgroundImageSubKey object:self];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -519,13 +519,13 @@ static CGRect gCustomTopViewRect;
 
 #pragma mark - Extension
 - (void)notifyBttomContainerReady {
-    [TDeskCore registerEvent:TUICore_TUIPluginNotify
-                    subKey:TUICore_TUIPluginNotify_PluginViewDidAddToSuperview
+    [TDeskCore registerEvent:TDeskCore_TUIPluginNotify
+                    subKey:TDeskCore_TUIPluginNotify_PluginViewDidAddToSuperview
                     object:self];
-    [TDeskCore raiseExtension:TUICore_TUIChatExtension_ChatVCBottomContainer_ClassicExtensionID
+    [TDeskCore raiseExtension:TDeskCore_TUIChatExtension_ChatVCBottomContainer_ClassicExtensionID
                  parentView:self.bottomContainerView
-                      param:@{TUICore_TUIChatExtension_ChatVCBottomContainer_UserID: self.conversationData.userID ? : @"",
-                              TUICore_TUIChatExtension_ChatVCBottomContainer_VC: self}];
+                      param:@{TDeskCore_TUIChatExtension_ChatVCBottomContainer_UserID: self.conversationData.userID ? : @"",
+                              TDeskCore_TUIChatExtension_ChatVCBottomContainer_VC: self}];
 }
 
 - (UIView *)bottomContainerView {
@@ -545,7 +545,7 @@ static CGRect gCustomTopViewRect;
 }
 
 - (void)saveDraft {
-    NSString *content = [self.inputController.inputBar.inputTextView.textStorage tui_getPlainString];
+    NSString *content = [self.inputController.inputBar.inputTextView.textStorage tdesk_getPlainString];
 
     TDeskReplyPreviewData *previewData = nil;
     if (self.inputController.referenceData) {
@@ -675,15 +675,15 @@ static CGRect gCustomTopViewRect;
     _conversationData = conversationData;
 
     //  conversationData
-    NSDictionary *param = @{TUICore_TUIChatExtension_GetChatConversationModelParams_UserID: self.conversationData.userID ? : @""};
-    NSArray<TDeskExtensionInfo *> *extensionList = [TDeskCore getExtensionList:TUICore_TUIChatExtension_GetChatConversationModelParams param:param];
+    NSDictionary *param = @{TDeskCore_TUIChatExtension_GetChatConversationModelParams_UserID: self.conversationData.userID ? : @""};
+    NSArray<TDeskExtensionInfo *> *extensionList = [TDeskCore getExtensionList:TDeskCore_TUIChatExtension_GetChatConversationModelParams param:param];
     TDeskExtensionInfo *extention = extensionList.firstObject;
     if (extention) {
-        _conversationData.msgNeedReadReceipt = [extention.data[TUICore_TUIChatExtension_GetChatConversationModelParams_MsgNeedReadReceipt] boolValue];
-        _conversationData.enableVideoCall = [extention.data[TUICore_TUIChatExtension_GetChatConversationModelParams_EnableVideoCall] boolValue];
-        _conversationData.enableAudioCall = [extention.data[TUICore_TUIChatExtension_GetChatConversationModelParams_EnableAudioCall] boolValue];
+        _conversationData.msgNeedReadReceipt = [extention.data[TDeskCore_TUIChatExtension_GetChatConversationModelParams_MsgNeedReadReceipt] boolValue];
+        _conversationData.enableVideoCall = [extention.data[TDeskCore_TUIChatExtension_GetChatConversationModelParams_EnableVideoCall] boolValue];
+        _conversationData.enableAudioCall = [extention.data[TDeskCore_TUIChatExtension_GetChatConversationModelParams_EnableAudioCall] boolValue];
         _conversationData.enableWelcomeCustomMessage =
-            [extention.data[TUICore_TUIChatExtension_GetChatConversationModelParams_EnableWelcomeCustomMessage] boolValue];
+            [extention.data[TDeskCore_TUIChatExtension_GetChatConversationModelParams_EnableWelcomeCustomMessage] boolValue];
     }
 }
 
@@ -754,49 +754,49 @@ static CGRect gCustomTopViewRect;
 - (void)rightBarButtonClick:(UIButton *)button {
     [self.inputController reset];
 
-    TDeskExtensionInfo *info = button.tui_extValueObj;
+    TDeskExtensionInfo *info = button.tdesk_extValueObj;
     if (info == nil || ![info isKindOfClass:TDeskExtensionInfo.class] || info.onClicked == nil) {
         return;
     }
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     if (self.conversationData.userID.length > 0) {
-        param[TUICore_TUIChatExtension_NavigationMoreItem_UserID] = self.conversationData.userID;
+        param[TDeskCore_TUIChatExtension_NavigationMoreItem_UserID] = self.conversationData.userID;
     } else if (self.conversationData.groupID.length > 0) {
-        param[TUICore_TUIChatExtension_NavigationMoreItem_GroupID] = self.conversationData.groupID;
+        param[TDeskCore_TUIChatExtension_NavigationMoreItem_GroupID] = self.conversationData.groupID;
     }
 
     if (self.navigationController) {
-        param[TUICore_TUIChatExtension_NavigationMoreItem_PushVC] = self.navigationController;
+        param[TDeskCore_TUIChatExtension_NavigationMoreItem_PushVC] = self.navigationController;
     }
     info.onClicked(param);
 }
 
 - (void)getUserOrFriendProfileVCWithUserID:(NSString *)userID succBlock:(void (^)(UIViewController *vc))succ failBlock:(nullable V2TIMFail)fail {
     NSDictionary *param = @{
-        TUICore_TUIContactObjectFactory_GetUserOrFriendProfileVCMethod_UserIDKey: userID ? : @"",
-        TUICore_TUIContactObjectFactory_GetUserOrFriendProfileVCMethod_SuccKey: succ ? : ^(UIViewController *vc){},
-        TUICore_TUIContactObjectFactory_GetUserOrFriendProfileVCMethod_FailKey: fail ? : ^(int code, NSString * desc){}
+        TDeskCore_TUIContactObjectFactory_GetUserOrFriendProfileVCMethod_UserIDKey: userID ? : @"",
+        TDeskCore_TUIContactObjectFactory_GetUserOrFriendProfileVCMethod_SuccKey: succ ? : ^(UIViewController *vc){},
+        TDeskCore_TUIContactObjectFactory_GetUserOrFriendProfileVCMethod_FailKey: fail ? : ^(int code, NSString * desc){}
     };
-    [TDeskCore createObject:TUICore_TUIContactObjectFactory key:TUICore_TUIContactObjectFactory_GetUserOrFriendProfileVCMethod param:param];
+    [TDeskCore createObject:TDeskCore_TUIContactObjectFactory key:TDeskCore_TUIContactObjectFactory_GetUserOrFriendProfileVCMethod param:param];
 }
 
 #pragma mark - TDeskCore notify
 
 - (void)onNotifyEvent:(NSString *)key subKey:(NSString *)subKey object:(id)anObject param:(NSDictionary *)param {
-    if ([key isEqualToString:TUICore_TUIConversationNotify] && [subKey isEqualToString:TUICore_TUIConversationNotify_ClearConversationUIHistorySubKey]) {
+    if ([key isEqualToString:TDeskCore_TUIConversationNotify] && [subKey isEqualToString:TDeskCore_TUIConversationNotify_ClearConversationUIHistorySubKey]) {
         [self.messageController clearUImsg];
-    } else if ([key isEqualToString:TUICore_TUIContactNotify] && [subKey isEqualToString:TUICore_TUIContactNotify_UpdateConversationBackgroundImageSubKey]) {
-        NSString *conversationID = param[TUICore_TUIContactNotify_UpdateConversationBackgroundImageSubKey_ConversationID];
+    } else if ([key isEqualToString:TDeskCore_TUIContactNotify] && [subKey isEqualToString:TDeskCore_TUIContactNotify_UpdateConversationBackgroundImageSubKey]) {
+        NSString *conversationID = param[TDeskCore_TUIContactNotify_UpdateConversationBackgroundImageSubKey_ConversationID];
         if (IS_NOT_EMPTY_NSSTRING(conversationID)) {
             [self updateBackgroundImageUrlByConversationID:conversationID];
         }
-    } else if ([key isEqualToString:TUICore_TUIGroupNotify] && [subKey isEqualToString:TUICore_TUIGroupNotify_UpdateConversationBackgroundImageSubKey]) {
-        NSString *conversationID = param[TUICore_TUIGroupNotify_UpdateConversationBackgroundImageSubKey_ConversationID];
+    } else if ([key isEqualToString:TDeskCore_TUIGroupNotify] && [subKey isEqualToString:TDeskCore_TUIGroupNotify_UpdateConversationBackgroundImageSubKey]) {
+        NSString *conversationID = param[TDeskCore_TUIGroupNotify_UpdateConversationBackgroundImageSubKey_ConversationID];
         if (IS_NOT_EMPTY_NSSTRING(conversationID)) {
             [self updateBackgroundImageUrlByConversationID:conversationID];
         }
-    } else if ([key isEqualToString:TUICore_TUIPluginNotify] && [subKey isEqualToString:TUICore_TUIPluginNotify_PluginViewDidAddToSuperview]) {
-        float height = [param[TUICore_TUIPluginNotify_PluginViewDidAddToSuperviewSubKey_PluginViewHeight] floatValue];
+    } else if ([key isEqualToString:TDeskCore_TUIPluginNotify] && [subKey isEqualToString:TDeskCore_TUIPluginNotify_PluginViewDidAddToSuperview]) {
+        float height = [param[TDeskCore_TUIPluginNotify_PluginViewDidAddToSuperviewSubKey_PluginViewHeight] floatValue];
         
         self.messageController.view.frame = CGRectMake(0, [self topMarginByCustomView],
                                                        self.view.frame.size.width, self.messageController.view.mm_h - height);
@@ -927,13 +927,13 @@ static CGRect gCustomTopViewRect;
 
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     if (self.conversationData.userID.length > 0) {
-        param[TUICore_TUIChatExtension_InputViewMoreItem_UserID] = self.conversationData.userID;
+        param[TDeskCore_TUIChatExtension_InputViewMoreItem_UserID] = self.conversationData.userID;
     } else if (self.conversationData.groupID.length > 0) {
-        param[TUICore_TUIChatExtension_InputViewMoreItem_GroupID] = self.conversationData.groupID;
+        param[TDeskCore_TUIChatExtension_InputViewMoreItem_GroupID] = self.conversationData.groupID;
     }
     if (self.navigationController) {
-        param[TUICore_TUIChatExtension_InputViewMoreItem_PushVC] = self.navigationController;
-        param[TUICore_TUIChatExtension_InputViewMoreItem_VC] = self;
+        param[TDeskCore_TUIChatExtension_InputViewMoreItem_PushVC] = self.navigationController;
+        param[TDeskCore_TUIChatExtension_InputViewMoreItem_VC] = self;
     }
     data.onClicked(param);
 }
@@ -996,15 +996,15 @@ static CGRect gCustomTopViewRect;
     // Get extensions first
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     if (self.conversationData.userID.length > 0) {
-        param[TUICore_TUIChatExtension_ClickAvatar_UserID] = self.conversationData.userID;
+        param[TDeskCore_TUIChatExtension_ClickAvatar_UserID] = self.conversationData.userID;
     } else if (self.conversationData.groupID.length > 0) {
-        param[TUICore_TUIChatExtension_ClickAvatar_GroupID] = self.conversationData.groupID;
+        param[TDeskCore_TUIChatExtension_ClickAvatar_GroupID] = self.conversationData.groupID;
     }
     if (self.navigationController) {
-        param[TUICore_TUIChatExtension_ClickAvatar_PushVC] = self.navigationController;
+        param[TDeskCore_TUIChatExtension_ClickAvatar_PushVC] = self.navigationController;
     }
     
-    NSArray<TDeskExtensionInfo *> *extensionList = [TDeskCore getExtensionList:TUICore_TUIChatExtension_ClickAvatar_ClassicExtensionID param:param];
+    NSArray<TDeskExtensionInfo *> *extensionList = [TDeskCore getExtensionList:TDeskCore_TUIChatExtension_ClickAvatar_ClassicExtensionID param:param];
     if (extensionList.count > 0) {
         TDeskExtensionInfo *maxWeightInfo = [TDeskExtensionInfo new];
         maxWeightInfo.weight = INT_MIN;
@@ -1087,7 +1087,7 @@ static CGRect gCustomTopViewRect;
     [self.mediaProvider selectFile];
 }
 
-#pragma mark - TUINavigationControllerDelegate
+#pragma mark - TDeskNavigationControllerDelegate
 - (void)navigationControllerDidClickLeftButton:(TDeskNavigationController *)controller {
     if (controller.currentShowVC == self) {
         [self.messageController readReport];
@@ -1152,14 +1152,14 @@ static CGRect gCustomTopViewRect;
 }
 
 - (void)messageMultiChooseViewOnRelayClicked:(TDeskMessageMultiChooseView *)multiChooseView {
-    NSArray *uiMsgs = [self.messageController multiSelectedResult:TUIMultiResultOptionAll];
+    NSArray *uiMsgs = [self.messageController multiSelectedResult:TDeskMultiResultOptionAll];
     [self prepareForwardMessages:uiMsgs];
 }
 
 - (void)messageMultiChooseViewOnDeleteClicked:(TDeskMessageMultiChooseView *)multiChooseView {
-    NSArray *uiMsgs = [self.messageController multiSelectedResult:TUIMultiResultOptionAll];
+    NSArray *uiMsgs = [self.messageController multiSelectedResult:TDeskMultiResultOptionAll];
     if (uiMsgs.count == 0) {
-        [TDeskTool makeToast:TIMCommonLocalizableString(TUIKitRelayNoMessageTips)];
+        [TDeskTool makeToast:TDeskIMCommonLocalizableString(TUIKitRelayNoMessageTips)];
         return;
     }
 
@@ -1170,7 +1170,7 @@ static CGRect gCustomTopViewRect;
 
 - (void)prepareForwardMessages:(NSArray<TDeskMessageCellData *> *)uiMsgs {
     if (uiMsgs.count == 0) {
-        [TDeskTool makeToast:TIMCommonLocalizableString(TUIKitRelayNoMessageTips)];
+        [TDeskTool makeToast:TDeskIMCommonLocalizableString(TUIKitRelayNoMessageTips)];
         return;
     }
 
@@ -1187,10 +1187,10 @@ static CGRect gCustomTopViewRect;
     }
 
     if (hasSendFailedMsg) {
-        UIAlertController *vc = [UIAlertController alertControllerWithTitle:TIMCommonLocalizableString(TUIKitRelayUnsupportForward)
+        UIAlertController *vc = [UIAlertController alertControllerWithTitle:TDeskIMCommonLocalizableString(TUIKitRelayUnsupportForward)
                                                                     message:nil
                                                              preferredStyle:UIAlertControllerStyleAlert];
-        [vc tuitheme_addAction:[UIAlertAction actionWithTitle:TIMCommonLocalizableString(Confirm)
+        [vc tuitheme_addAction:[UIAlertAction actionWithTitle:TDeskIMCommonLocalizableString(Confirm)
                                                         style:UIAlertActionStyleDefault
                                                       handler:^(UIAlertAction *_Nonnull action){
 
@@ -1200,10 +1200,10 @@ static CGRect gCustomTopViewRect;
     }
 
     if (!canForwardMsg) {
-        UIAlertController *vc = [UIAlertController alertControllerWithTitle:TIMCommonLocalizableString(TUIKitRelayPluginNotAllowed)
+        UIAlertController *vc = [UIAlertController alertControllerWithTitle:TDeskIMCommonLocalizableString(TUIKitRelayPluginNotAllowed)
                                                                     message:nil
                                                              preferredStyle:UIAlertControllerStyleAlert];
-        [vc tuitheme_addAction:[UIAlertAction actionWithTitle:TIMCommonLocalizableString(Confirm)
+        [vc tuitheme_addAction:[UIAlertAction actionWithTitle:TDeskIMCommonLocalizableString(Confirm)
                                                         style:UIAlertActionStyleDefault
                                                       handler:^(UIAlertAction *_Nonnull action){
 
@@ -1216,7 +1216,7 @@ static CGRect gCustomTopViewRect;
     UIAlertController *tipsVc = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     //  Forward one-by-one
     [tipsVc
-        tuitheme_addAction:[UIAlertAction actionWithTitle:TIMCommonLocalizableString(TUIKitRelayOneByOneForward)
+        tuitheme_addAction:[UIAlertAction actionWithTitle:TDeskIMCommonLocalizableString(TUIKitRelayOneByOneForward)
                                                     style:UIAlertActionStyleDefault
                                                   handler:^(UIAlertAction *_Nonnull action) {
                                                     if (uiMsgs.count <= 30) {
@@ -1224,13 +1224,13 @@ static CGRect gCustomTopViewRect;
                                                         return;
                                                     }
                                                     UIAlertController *vc =
-                                                        [UIAlertController alertControllerWithTitle:TIMCommonLocalizableString(TUIKitRelayOneByOnyOverLimit)
+                                                        [UIAlertController alertControllerWithTitle:TDeskIMCommonLocalizableString(TUIKitRelayOneByOnyOverLimit)
                                                                                             message:nil
                                                                                      preferredStyle:UIAlertControllerStyleAlert];
-                                                    [vc tuitheme_addAction:[UIAlertAction actionWithTitle:TIMCommonLocalizableString(Cancel)
+                                                    [vc tuitheme_addAction:[UIAlertAction actionWithTitle:TDeskIMCommonLocalizableString(Cancel)
                                                                                                     style:UIAlertActionStyleDefault
                                                                                                   handler:nil]];
-                                                    [vc tuitheme_addAction:[UIAlertAction actionWithTitle:TIMCommonLocalizableString(TUIKitRelayCombineForwad)
+                                                    [vc tuitheme_addAction:[UIAlertAction actionWithTitle:TDeskIMCommonLocalizableString(TUIKitRelayCombineForwad)
                                                                                                     style:UIAlertActionStyleDefault
                                                                                                   handler:^(UIAlertAction *_Nonnull action) {
                                                                                                     [weakSelf selectTarget:YES
@@ -1240,12 +1240,12 @@ static CGRect gCustomTopViewRect;
                                                     [weakSelf presentViewController:vc animated:YES completion:nil];
                                                   }]];
     //  Merge-forward
-    [tipsVc tuitheme_addAction:[UIAlertAction actionWithTitle:TIMCommonLocalizableString(TUIKitRelayCombineForwad)
+    [tipsVc tuitheme_addAction:[UIAlertAction actionWithTitle:TDeskIMCommonLocalizableString(TUIKitRelayCombineForwad)
                                                         style:UIAlertActionStyleDefault
                                                       handler:^(UIAlertAction *_Nonnull action) {
                                                         [weakSelf selectTarget:YES toForwardMessage:uiMsgs orForwardText:nil];
                                                       }]];
-    [tipsVc tuitheme_addAction:[UIAlertAction actionWithTitle:TIMCommonLocalizableString(Cancel) style:UIAlertActionStyleDefault handler:nil]];
+    [tipsVc tuitheme_addAction:[UIAlertAction actionWithTitle:TDeskIMCommonLocalizableString(Cancel) style:UIAlertActionStyleDefault handler:nil]];
     [self presentViewController:tipsVc animated:YES completion:nil];
 }
 
@@ -1253,19 +1253,19 @@ static CGRect gCustomTopViewRect;
     __weak typeof(self) weakSelf = self;
     UINavigationController *nav = [[UINavigationController alloc] init];
     nav.modalPresentationStyle = UIModalPresentationFullScreen;
-    [self presentViewControllerForTDesk:TUICore_TUIConversationObjectFactory_ConversationSelectVC_Classic
+    [self presentViewControllerForTDesk:TDeskCore_TUIConversationObjectFactory_ConversationSelectVC_Classic
                           param:nil
                        embbedIn:nav
                       forResult:^(NSDictionary *_Nonnull param) {
-                        NSArray<NSDictionary *> *selectList = param[TUICore_TUIConversationObjectFactory_ConversationSelectVC_ResultList];
+                        NSArray<NSDictionary *> *selectList = param[TDeskCore_TUIConversationObjectFactory_ConversationSelectVC_ResultList];
 
                         NSMutableArray<TDeskChatConversationModel *> *targetList = [NSMutableArray arrayWithCapacity:selectList.count];
                         for (NSDictionary *selectItem in selectList) {
                             TDeskChatConversationModel *model = [[TDeskChatConversationModel alloc] init];
-                            model.title = selectItem[TUICore_TUIConversationObjectFactory_ConversationSelectVC_ResultList_Title];
-                            model.userID = selectItem[TUICore_TUIConversationObjectFactory_ConversationSelectVC_ResultList_UserID];
-                            model.groupID = selectItem[TUICore_TUIConversationObjectFactory_ConversationSelectVC_ResultList_GroupID];
-                            model.conversationID = selectItem[TUICore_TUIConversationObjectFactory_ConversationSelectVC_ResultList_ConversationID];
+                            model.title = selectItem[TDeskCore_TUIConversationObjectFactory_ConversationSelectVC_ResultList_Title];
+                            model.userID = selectItem[TDeskCore_TUIConversationObjectFactory_ConversationSelectVC_ResultList_UserID];
+                            model.groupID = selectItem[TDeskCore_TUIConversationObjectFactory_ConversationSelectVC_ResultList_GroupID];
+                            model.conversationID = selectItem[TDeskCore_TUIConversationObjectFactory_ConversationSelectVC_ResultList_ConversationID];
                             [targetList addObject:model];
                         }
 
@@ -1479,7 +1479,7 @@ static CGRect gCustomTopViewRect;
     }
 }
 
-#pragma mark - TUIJoinGroupMessageCellDelegate
+#pragma mark - TDeskJoinGroupMessageCellDelegate
 - (void)didTapOnRestNameLabel:(TDeskJoinGroupMessageCell *)cell withIndex:(NSInteger)index {
     NSString *userId = cell.joinData.userIDList[index];
 
@@ -1497,7 +1497,7 @@ static CGRect gCustomTopViewRect;
     for (V2TIMConversation *conv in conversationList) {
         if ([conv.conversationID isEqualToString:self.conversationData.conversationID]) {
             if (!self.conversationData.otherSideTyping) {
-                self.conversationData.title = [NSString stringWithFormat:TIMCommonLocalizableString(TUICustomerHeader), conv.showName];
+                self.conversationData.title = [NSString stringWithFormat:TDeskIMCommonLocalizableString(TUICustomerHeader), conv.showName];
             }
             if (conv.faceUrl) {
                 self.conversationData.faceUrl = conv.faceUrl;

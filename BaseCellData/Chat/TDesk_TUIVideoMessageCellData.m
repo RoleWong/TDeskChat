@@ -58,7 +58,7 @@
 }
 
 + (NSString *)getDisplayString:(V2TIMMessage *)message {
-    return TIMCommonLocalizableString(TUIkitMessageTypeVideo);
+    return TDeskIMCommonLocalizableString(TUIkitMessageTypeVideo);
 }
 
 - (Class)getReplyQuoteViewDataClass {

@@ -28,7 +28,7 @@
 }
 
 + (NSString *)getDisplayString:(V2TIMMessage *)message {
-    return TIMCommonLocalizableString(TUIKitMessageTypeAnimateEmoji);
+    return TDeskIMCommonLocalizableString(TUIKitMessageTypeAnimateEmoji);
 }
 
 @end

@@ -30,7 +30,7 @@
 }
 
 + (NSString *)getDisplayString:(V2TIMMessage *)message {
-    return TIMCommonLocalizableString(TUIkitMessageTypeFile);  // @"[File]";
+    return TDeskIMCommonLocalizableString(TUIkitMessageTypeFile);  // @"[File]";
 }
 
 - (Class)getReplyQuoteViewDataClass {

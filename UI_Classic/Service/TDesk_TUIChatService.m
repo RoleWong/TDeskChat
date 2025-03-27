@@ -18,8 +18,8 @@
 @implementation TDeskChatService
 
 + (void)load {
-    [TDeskCore registerService:TUICore_TUIChatService object:[TDeskChatService shareInstance]];
-    TDeskRegisterThemeResourcePath(TUIChatThemePath, TUIThemeModuleChat);
+    [TDeskCore registerService:TDeskCore_TUIChatService object:[TDeskChatService shareInstance]];
+    TDeskRegisterThemeResourcePath(TUDeskChatThemePath, TUIThemeModuleChat);
 }
 
 + (TDeskChatService *)shareInstance {
@@ -39,14 +39,14 @@
 }
 
 - (void)loginSuccessNotification {
-    [TDeskCore callService:TUICore_TUICallingService
-                  method:TUICore_TUICallingService_EnableFloatWindowMethod
-                   param:@{TUICore_TUICallingService_EnableFloatWindowMethod_EnableFloatWindow : @(TDeskChatConfig.defaultConfig.enableFloatWindowForCall)}];
+    [TDeskCore callService:TDeskCore_TUICallingService
+                  method:TDeskCore_TUICallingService_EnableFloatWindowMethod
+                   param:@{TDeskCore_TUICallingService_EnableFloatWindowMethod_EnableFloatWindow : @(TDeskChatConfig.defaultConfig.enableFloatWindowForCall)}];
     [TDeskCore
-        callService:TUICore_TUICallingService
-             method:TUICore_TUICallingService_EnableMultiDeviceAbilityMethod
+        callService:TDeskCore_TUICallingService
+             method:TDeskCore_TUICallingService_EnableMultiDeviceAbilityMethod
               param:@{
-                  TUICore_TUICallingService_EnableMultiDeviceAbilityMethod_EnableMultiDeviceAbility : @(TDeskChatConfig.defaultConfig.enableMultiDeviceForCall)
+                  TDeskCore_TUICallingService_EnableMultiDeviceAbilityMethod_EnableMultiDeviceAbility : @(TDeskChatConfig.defaultConfig.enableMultiDeviceForCall)
               }];
 }
 
@@ -54,7 +54,7 @@
     return [TDeskBaseMessageController getDisplayString:message];
 }
 
-- (void)asyncGetDisplayString:(NSArray<V2TIMMessage *> *)messageList callback:(TUICallServiceResultCallback)resultCallback {
+- (void)asyncGetDisplayString:(NSArray<V2TIMMessage *> *)messageList callback:(TDeskCallServiceResultCallback)resultCallback {
   if (resultCallback == nil) {
     return;
   }
@@ -66,29 +66,29 @@
 
 #pragma mark - TDeskServiceProtocol
 - (id)onCall:(NSString *)method param:(nullable NSDictionary *)param {
-    if ([method isEqualToString:TUICore_TUIChatService_GetDisplayStringMethod]) {
-        return [self getDisplayString:param[TUICore_TUIChatService_GetDisplayStringMethod_MsgKey]];
-    } else if ([method isEqualToString:TUICore_TUIChatService_SendMessageMethod]) {
-        V2TIMMessage *message = [param tui_objectForKey:TUICore_TUIChatService_SendMessageMethod_MsgKey asClass:V2TIMMessage.class];
+    if ([method isEqualToString:TDeskCore_TUIChatService_GetDisplayStringMethod]) {
+        return [self getDisplayString:param[TDeskCore_TUIChatService_GetDisplayStringMethod_MsgKey]];
+    } else if ([method isEqualToString:TDeskCore_TUIChatService_SendMessageMethod]) {
+        V2TIMMessage *message = [param tdesk_objectForKey:TDeskCore_TUIChatService_SendMessageMethod_MsgKey asClass:V2TIMMessage.class];
         if (message == nil) {
             return nil;
         }
-        NSDictionary *userInfo = @{TUICore_TUIChatService_SendMessageMethod_MsgKey : message};
+        NSDictionary *userInfo = @{TDeskCore_TUIChatService_SendMessageMethod_MsgKey : message};
         [[NSNotificationCenter defaultCenter] postNotificationName:TUIChatSendMessageNotification object:nil userInfo:userInfo];
-    } else if ([method isEqualToString:TUICore_TUIChatService_SendMessageMethodWithoutUpdateUI]) {
-        V2TIMMessage *message = [param tui_objectForKey:TUICore_TUIChatService_SendMessageMethodWithoutUpdateUI_MsgKey asClass:V2TIMMessage.class];
+    } else if ([method isEqualToString:TDeskCore_TUIChatService_SendMessageMethodWithoutUpdateUI]) {
+        V2TIMMessage *message = [param tdesk_objectForKey:TDeskCore_TUIChatService_SendMessageMethodWithoutUpdateUI_MsgKey asClass:V2TIMMessage.class];
         if (message == nil) {
             return nil;
         }
-        NSDictionary *userInfo = @{TUICore_TUIChatService_SendMessageMethodWithoutUpdateUI_MsgKey : message};
+        NSDictionary *userInfo = @{TDeskCore_TUIChatService_SendMessageMethodWithoutUpdateUI_MsgKey : message};
         [[NSNotificationCenter defaultCenter] postNotificationName:TUIChatSendMessageWithoutUpdateUINotification object:nil userInfo:userInfo];
-    } else if ([method isEqualToString:TUICore_TUIChatService_SetChatExtensionMethod]) {
+    } else if ([method isEqualToString:TDeskCore_TUIChatService_SetChatExtensionMethod]) {
         [param enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSNumber *obj, BOOL *_Nonnull stop) {
           if (![key isKindOfClass:NSString.class] || ![obj isKindOfClass:NSNumber.class]) {
               return;
           }
         }];
-    } else if ([method isEqualToString:TUICore_TUIChatService_AppendCustomMessageMethod]) {
+    } else if ([method isEqualToString:TDeskCore_TUIChatService_AppendCustomMessageMethod]) {
         if ([param isKindOfClass:NSDictionary.class]) {
             NSString *businessID = param[BussinessID];
             NSString *cellName = param[TMessageCell_Name];
@@ -96,7 +96,7 @@
             [TDeskMessageCellConfig registerCustomMessageCell:cellName messageCellData:cellDataName forBusinessID:businessID isPlugin:YES];
         }
     }
-    else if ([method isEqualToString:TUICore_TUIChatService_SetMaxTextSize]) {
+    else if ([method isEqualToString:TDeskCore_TUIChatService_SetMaxTextSize]) {
         if ([param isKindOfClass:NSDictionary.class]) {
             CGSize sizeVa = [param[@"maxsize"] CGSizeValue];
             [TDeskMessageCellConfig setMaxTextSize:sizeVa];
@@ -106,9 +106,9 @@
     return nil;
 }
 
-- (id)onCall:(NSString *)method param:(NSDictionary *)param resultCallback:(TUICallServiceResultCallback)resultCallback {
-  if ([method isEqualToString:TUICore_TUIChatService_AsyncGetDisplayStringMethod]) {
-    NSArray *messageList = param[TUICore_TUIChatService_AsyncGetDisplayStringMethod_MsgListKey];
+- (id)onCall:(NSString *)method param:(NSDictionary *)param resultCallback:(TDeskCallServiceResultCallback)resultCallback {
+  if ([method isEqualToString:TDeskCore_TUIChatService_AsyncGetDisplayStringMethod]) {
+    NSArray *messageList = param[TDeskCore_TUIChatService_AsyncGetDisplayStringMethod_MsgListKey];
     [self asyncGetDisplayString:messageList callback:resultCallback];
     return nil;
   }

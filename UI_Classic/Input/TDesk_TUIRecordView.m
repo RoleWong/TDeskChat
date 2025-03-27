@@ -53,7 +53,7 @@
 
 - (void)defaultLayout {
     CGSize backSize = CGSizeMake(150, 150);
-    _title.text = TIMCommonLocalizableString(TUIKitInputRecordSlideToCancel);
+    _title.text = TDeskIMCommonLocalizableString(TUIKitInputRecordSlideToCancel);
     CGSize titleSize = [_title sizeThatFits:CGSizeMake(Screen_Width, Screen_Height)];
     CGSize timeSize = CGSizeMake(100, 15);
     if (titleSize.width > backSize.width) {
@@ -90,22 +90,22 @@
 - (void)setStatus:(RecordStatus)status {
     switch (status) {
         case Record_Status_Recording: {
-            _title.text = TIMCommonLocalizableString(TUIKitInputRecordSlideToCancel);
+            _title.text = TDeskIMCommonLocalizableString(TUIKitInputRecordSlideToCancel);
             _title.backgroundColor = [UIColor clearColor];
             break;
         }
         case Record_Status_Cancel: {
-            _title.text = TIMCommonLocalizableString(TUIKitInputRecordReleaseToCancel);
+            _title.text = TDeskIMCommonLocalizableString(TUIKitInputRecordReleaseToCancel);
             _title.backgroundColor = [UIColor clearColor];
             break;
         }
         case Record_Status_TooShort: {
-            _title.text = TIMCommonLocalizableString(TUIKitInputRecordTimeshort);
+            _title.text = TDeskIMCommonLocalizableString(TUIKitInputRecordTimeshort);
             _title.backgroundColor = [UIColor clearColor];
             break;
         }
         case Record_Status_TooLong: {
-            _title.text = TIMCommonLocalizableString(TUIKitInputRecordTimeLong);
+            _title.text = TDeskIMCommonLocalizableString(TUIKitInputRecordTimeLong);
             _title.backgroundColor = [UIColor clearColor];
             break;
         }

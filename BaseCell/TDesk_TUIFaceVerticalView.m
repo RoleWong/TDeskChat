@@ -71,7 +71,7 @@
     _floatCtrlView = [[UIView alloc] init];
     [self addSubview:_floatCtrlView];
     _sendButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.sendButton setTitle:TIMCommonLocalizableString(Send)forState:UIControlStateNormal];
+    [self.sendButton setTitle:TDeskIMCommonLocalizableString(Send)forState:UIControlStateNormal];
     _sendButton.titleLabel.font = [UIFont systemFontOfSize:16];
     [self.sendButton addTarget:self action:@selector(didSelectSendButton:) forControlEvents:UIControlEventTouchUpInside];
     self.sendButton.backgroundColor = TIMCommonDynamicColor(@"", @"#0069F6");
@@ -79,7 +79,7 @@
     [_floatCtrlView addSubview:self.sendButton];
 
     _deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_deleteButton setImage:[UIImage imageWithContentsOfFile:TUIChatFaceImagePath(@"del_normal")] forState:UIControlStateNormal];
+    [_deleteButton setImage:[UIImage imageWithContentsOfFile:TDeskChatFaceImagePath(@"del_normal")] forState:UIControlStateNormal];
     [_deleteButton setImageEdgeInsets:UIEdgeInsetsMake(5, 5, 5, 5)];
     _deleteButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
     _deleteButton.layer.cornerRadius = 2;

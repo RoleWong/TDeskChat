@@ -51,7 +51,7 @@
     [[V2TIMManager sharedInstance] addGroupListener:self];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(refreshTipsView)
-                                                 name:TUICore_TUIChatExtension_ChatViewTopArea_ChangedNotification
+                                                 name:TDeskCore_TUIChatExtension_ChatViewTopArea_ChangedNotification
                                                object:nil];
 }
 
@@ -76,7 +76,7 @@
 
     self.pendencyBtn = [UIButton buttonWithType:UIButtonTypeSystem];
     [self.tipsView addSubview:self.pendencyBtn];
-    [self.pendencyBtn setTitle:TIMCommonLocalizableString(TUIKitChatPendencyTitle) forState:UIControlStateNormal];
+    [self.pendencyBtn setTitle:TDeskIMCommonLocalizableString(TUIKitChatPendencyTitle) forState:UIControlStateNormal];
     [self.pendencyBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
     [self.pendencyBtn addTarget:self action:@selector(openPendency:) forControlEvents:UIControlEventTouchUpInside];
     [self.pendencyBtn sizeToFit];
@@ -86,7 +86,7 @@
     [RACObserve(self.pendencyViewModel, unReadCnt) subscribeNext:^(NSNumber *unReadCnt) {
       @strongify(self);
       if ([unReadCnt intValue]) {
-          self.pendencyLabel.text = [NSString stringWithFormat:TIMCommonLocalizableString(TUIKitChatPendencyRequestToJoinGroupFormat), unReadCnt];
+          self.pendencyLabel.text = [NSString stringWithFormat:TDeskIMCommonLocalizableString(TUIKitChatPendencyRequestToJoinGroupFormat), unReadCnt];
           [self.pendencyLabel sizeToFit];
           CGFloat gap = (self.tipsView.mm_w - self.pendencyLabel.mm_w - self.pendencyBtn.mm_w - 8) / 2;
           self.pendencyLabel.mm_left(gap).mm__centerY(self.tipsView.mm_h / 2);
@@ -161,7 +161,7 @@
             topView.frame = CGRectMake(0, 0, self.view.mm_w, 0);
         }
         self.groupPinList = groupPinList;
-        [[NSNotificationCenter defaultCenter] postNotificationName:TUICore_TUIChatExtension_ChatViewTopArea_ChangedNotification object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:TDeskCore_TUIChatExtension_ChatViewTopArea_ChangedNotification object:nil];
         if (self.pinPageVC) {
             NSMutableArray *formatGroupPinList = [NSMutableArray arrayWithArray:groupPinList.reverseObjectEnumerator.allObjects];
             self.pinPageVC.groupPinList = formatGroupPinList;
@@ -242,7 +242,7 @@
                 [msgVC locateAssignMessage:originMessage matchKeyWord:@""];
             }
             else {
-                [TDeskTool makeToast:TIMCommonLocalizableString(TUIKitReplyMessageNotFoundOriginMessage)];
+                [TDeskTool makeToast:TDeskIMCommonLocalizableString(TUIKitReplyMessageNotFoundOriginMessage)];
             }
         }
     }];
@@ -277,11 +277,11 @@
                                              succ:^(NSArray<V2TIMUserFullInfo *> *profiles) {
                                                // Show user profile VC
                                                NSDictionary *param = @{
-                                                   TUICore_TUIContactObjectFactory_UserProfileController_UserProfile : profiles.firstObject,
-                                                   TUICore_TUIContactObjectFactory_UserProfileController_PendencyData : cell.pendencyData,
-                                                   TUICore_TUIContactObjectFactory_UserProfileController_ActionType : @(3)
+                                                   TDeskCore_TUIContactObjectFactory_UserProfileController_UserProfile : profiles.firstObject,
+                                                   TDeskCore_TUIContactObjectFactory_UserProfileController_PendencyData : cell.pendencyData,
+                                                   TDeskCore_TUIContactObjectFactory_UserProfileController_ActionType : @(3)
                                                };
-                                               [self.navigationController pushViewControllerForTDesk:TUICore_TUIContactObjectFactory_UserProfileController_Classic
+                                               [self.navigationController pushViewControllerForTDesk:TDeskCore_TUIContactObjectFactory_UserProfileController_Classic
                                                                                        param:param
                                                                                    forResult:nil];
                                              }
@@ -355,14 +355,14 @@
         }
         __weak typeof(self) weakSelf = self;
         NSMutableDictionary *param = [NSMutableDictionary dictionary];
-        param[TUICore_TUIGroupObjectFactory_SelectGroupMemberVC_GroupID] = self.conversationData.groupID;
-        param[TUICore_TUIGroupObjectFactory_SelectGroupMemberVC_Name] = TIMCommonLocalizableString(TUIKitAtSelectMemberTitle);
-        param[TUICore_TUIGroupObjectFactory_SelectGroupMemberVC_OptionalStyle] = @(1);
+        param[TDeskCore_TUIGroupObjectFactory_SelectGroupMemberVC_GroupID] = self.conversationData.groupID;
+        param[TDeskCore_TUIGroupObjectFactory_SelectGroupMemberVC_Name] = TDeskIMCommonLocalizableString(TUIKitAtSelectMemberTitle);
+        param[TDeskCore_TUIGroupObjectFactory_SelectGroupMemberVC_OptionalStyle] = @(1);
         [self.navigationController
-            pushViewControllerForTDesk:TUICore_TUIGroupObjectFactory_SelectGroupMemberVC_Classic
+            pushViewControllerForTDesk:TDeskCore_TUIGroupObjectFactory_SelectGroupMemberVC_Classic
                          param:param
                      forResult:^(NSDictionary *_Nonnull param) {
-                       NSArray<TDeskUserModel *> *modelList = [param tui_objectForKey:TUICore_TUIGroupObjectFactory_SelectGroupMemberVC_ResultUserList
+                       NSArray<TDeskUserModel *> *modelList = [param tdesk_objectForKey:TDeskCore_TUIGroupObjectFactory_SelectGroupMemberVC_ResultUserList
                                                                             asClass:NSArray.class];
                        NSMutableString *atText = [[NSMutableString alloc] init];
                        for (int i = 0; i < modelList.count; i++) {
@@ -428,7 +428,7 @@
 
 #pragma mark - Override Methods
 - (NSString *)forwardTitleWithMyName:(NSString *)nameStr {
-    return TIMCommonLocalizableString(TUIKitRelayGroupChatHistory);
+    return TDeskIMCommonLocalizableString(TUIKitRelayGroupChatHistory);
 }
 
 @end

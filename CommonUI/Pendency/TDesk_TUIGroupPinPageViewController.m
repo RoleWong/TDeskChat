@@ -27,8 +27,8 @@
 - (instancetype)init {
     self = [super init];
     if (self) {        
-        self.tableview.backgroundColor = TUIChatDynamicColor(@"chat_pop_group_pin_back_color", @"#F9F9F9");
-        self.customArrowView.backgroundColor = TUIChatDynamicColor(@"chat_pop_group_pin_back_color", @"#F9F9F9");
+        self.tableview.backgroundColor = TDeskChatDynamicColor(@"chat_pop_group_pin_back_color", @"#F9F9F9");
+        self.customArrowView.backgroundColor = TDeskChatDynamicColor(@"chat_pop_group_pin_back_color", @"#F9F9F9");
         self.bottomShadow.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:.5];
 
         [self addSingleTapGesture];

@@ -75,7 +75,7 @@ NS_ASSUME_NONNULL_BEGIN
  * After enabling multi-selection mode, get the currently selected result
  * Returns an empty array if multiple selection mode is off
  */
-- (NSArray<TDeskMessageCellData *> *)multiSelectedResult:(TUIMultiResultOption)option;
+- (NSArray<TDeskMessageCellData *> *)multiSelectedResult:(TDeskMultiResultOption)option;
 - (void)enableMultiSelectedMode:(BOOL)enable;
 
 - (void)deleteMessages:(NSArray<TDeskMessageCellData *> *)uiMsgs;

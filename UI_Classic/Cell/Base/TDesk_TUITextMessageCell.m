@@ -60,8 +60,8 @@
 
 // Override
 - (void)notifyBottomContainerReadyOfData:(TDeskMessageCellData *)cellData {
-    NSDictionary *param = @{TUICore_TUIChatExtension_BottomContainer_CellData : self.textData};
-    [TDeskCore raiseExtension:TUICore_TUIChatExtension_BottomContainer_ClassicExtensionID parentView:self.bottomContainer param:param];
+    NSDictionary *param = @{TDeskCore_TUIChatExtension_BottomContainer_CellData : self.textData};
+    [TDeskCore raiseExtension:TDeskCore_TUIChatExtension_BottomContainer_ClassicExtensionID parentView:self.bottomContainer param:param];
 }
 
 - (void)fillWithData:(TDeskTextMessageCellData *)data {
@@ -249,7 +249,7 @@ static CGSize gMaxTextSize;
     
     BOOL hasRiskContent = textCellData.innerMessage.hasRiskContent;
     if (hasRiskContent) {
-        width = MAX(width, 200);// width must more than  TIMCommonLocalizableString(TUIKitMessageTypeSecurityStrike)
+        width = MAX(width, 200);// width must more than  TDeskIMCommonLocalizableString(TUIKitMessageTypeSecurityStrike)
         height += kTUISecurityStrikeViewTopLineMargin;
         height += kTUISecurityStrikeViewTopLineToBottom;
     }
@@ -271,7 +271,7 @@ static UIColor *gOutgoingTextColor;
 
 + (UIColor *)outgoingTextColor {
     if (!gOutgoingTextColor) {
-        gOutgoingTextColor = TUIChatDynamicColor(@"chat_text_message_send_text_color", @"#000000");
+        gOutgoingTextColor = TDeskChatDynamicColor(@"chat_text_message_send_text_color", @"#000000");
     }
     return gOutgoingTextColor;
 }
@@ -297,7 +297,7 @@ static UIColor *gIncommingTextColor;
 
 + (UIColor *)incommingTextColor {
     if (!gIncommingTextColor) {
-        gIncommingTextColor = TUIChatDynamicColor(@"chat_text_message_receive_text_color", @"#000000");
+        gIncommingTextColor = TDeskChatDynamicColor(@"chat_text_message_receive_text_color", @"#000000");
     }
     return gIncommingTextColor;
 }

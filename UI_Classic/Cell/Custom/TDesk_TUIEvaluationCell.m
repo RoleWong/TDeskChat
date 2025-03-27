@@ -19,7 +19,7 @@
         _titleLabel.font = [UIFont systemFontOfSize:15];
         _titleLabel.numberOfLines = 1;
         _titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
-        _titleLabel.textColor = TUIChatDynamicColor(@"chat_text_message_receive_text_color", @"#000000");
+        _titleLabel.textColor = TDeskChatDynamicColor(@"chat_text_message_receive_text_color", @"#000000");
         [self.container addSubview:_titleLabel];
 
         for (int i = 0; i < 5; i++) {
@@ -32,7 +32,7 @@
         _commentLabel = [[UILabel alloc] init];
         _commentLabel.font = [UIFont systemFontOfSize:15];
         _commentLabel.numberOfLines = 0;
-        _commentLabel.textColor = TUIChatDynamicColor(@"chat_custom_evaluation_message_desc_color", @"#000000");
+        _commentLabel.textColor = TDeskChatDynamicColor(@"chat_custom_evaluation_message_desc_color", @"#000000");
         [self.container addSubview:_commentLabel];
     }
     return self;

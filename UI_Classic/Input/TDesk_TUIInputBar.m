@@ -117,17 +117,17 @@
     [_recordButton addTarget:self action:@selector(onRecordButtonTouchCancel:) forControlEvents:UIControlEventTouchUpOutside | UIControlEventTouchCancel];
     [_recordButton addTarget:self action:@selector(onRecordButtonTouchDragExit:) forControlEvents:UIControlEventTouchDragExit];
     [_recordButton addTarget:self action:@selector(onRecordButtonTouchDragEnter:) forControlEvents:UIControlEventTouchDragEnter];
-    [_recordButton setTitle:TIMCommonLocalizableString(TUIKitInputHoldToTalk) forState:UIControlStateNormal];
-    [_recordButton setTitleColor:TUIChatDynamicColor(@"chat_input_text_color", @"#000000") forState:UIControlStateNormal];
+    [_recordButton setTitle:TDeskIMCommonLocalizableString(TUIKitInputHoldToTalk) forState:UIControlStateNormal];
+    [_recordButton setTitleColor:TDeskChatDynamicColor(@"chat_input_text_color", @"#000000") forState:UIControlStateNormal];
     _recordButton.hidden = YES;
-    _recordButton.backgroundColor = TUIChatDynamicColor(@"chat_input_bg_color", @"#FFFFFF");
+    _recordButton.backgroundColor = TDeskChatDynamicColor(@"chat_input_bg_color", @"#FFFFFF");
     [self addSubview:_recordButton];
 
     _inputTextView = [[TDeskResponderTextView alloc] init];
     _inputTextView.delegate = self;
     [_inputTextView setFont:kTUIInputNoramlFont];
-    _inputTextView.backgroundColor = TUIChatDynamicColor(@"chat_input_bg_color", @"#FFFFFF");
-    _inputTextView.textColor = TUIChatDynamicColor(@"chat_input_text_color", @"#000000");
+    _inputTextView.backgroundColor = TDeskChatDynamicColor(@"chat_input_bg_color", @"#FFFFFF");
+    _inputTextView.textColor = TDeskChatDynamicColor(@"chat_input_text_color", @"#000000");
     _inputTextView.textAlignment = isRTL()?NSTextAlignmentRight: NSTextAlignmentLeft;
 
     [_inputTextView setReturnKeyType:UIReturnKeySend];
@@ -242,7 +242,7 @@
 #pragma mark - Event response
 - (void)onMicButtonClicked:(UIButton *)sender {
     _recordButton.hidden = NO;
-    _recordButton.backgroundColor = TUIChatDynamicColor(@"chat_input_bg_color", @"#FFFFFF");
+    _recordButton.backgroundColor = TDeskChatDynamicColor(@"chat_input_bg_color", @"#FFFFFF");
     _inputTextView.hidden = YES;
     _micButton.hidden = YES;
     _keyboardButton.hidden = NO;
@@ -294,8 +294,8 @@
 }
 
 - (void)onRecordButtonTouchUpInside:(UIButton *)sender {
-    self.recordButton.backgroundColor = TUIChatDynamicColor(@"chat_input_bg_color", @"#FFFFFF");
-    [self.recordButton setTitle:TIMCommonLocalizableString(TUIKitInputHoldToTalk) forState:UIControlStateNormal];
+    self.recordButton.backgroundColor = TDeskChatDynamicColor(@"chat_input_bg_color", @"#FFFFFF");
+    [self.recordButton setTitle:TDeskIMCommonLocalizableString(TUIKitInputHoldToTalk) forState:UIControlStateNormal];
 
     NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:self.recordStartTime];
     @weakify(self);
@@ -338,21 +338,21 @@
 - (void)onRecordButtonTouchCancel:(UIButton *)sender {
     [self.recordView removeFromSuperview];
     self.recordView = nil;
-    self.recordButton.backgroundColor = TUIChatDynamicColor(@"chat_input_bg_color", @"#FFFFFF");
-    [self.recordButton setTitle:TIMCommonLocalizableString(TUIKitInputHoldToTalk) forState:UIControlStateNormal];
+    self.recordButton.backgroundColor = TDeskChatDynamicColor(@"chat_input_bg_color", @"#FFFFFF");
+    [self.recordButton setTitle:TDeskIMCommonLocalizableString(TUIKitInputHoldToTalk) forState:UIControlStateNormal];
     [self.recorder cancel];
 }
 
 - (void)onRecordButtonTouchDragExit:(UIButton *)sender {
     [self.recordView setStatus:Record_Status_Cancel];
-    _recordButton.backgroundColor = TUIChatDynamicColor(@"chat_input_bg_color", @"#FFFFFF");
-    [_recordButton setTitle:TIMCommonLocalizableString(TUIKitInputReleaseToCancel) forState:UIControlStateNormal];
+    _recordButton.backgroundColor = TDeskChatDynamicColor(@"chat_input_bg_color", @"#FFFFFF");
+    [_recordButton setTitle:TDeskIMCommonLocalizableString(TUIKitInputReleaseToCancel) forState:UIControlStateNormal];
 }
 
 - (void)onRecordButtonTouchDragEnter:(UIButton *)sender {
     [self.recordView setStatus:Record_Status_Recording];
-    _recordButton.backgroundColor = TUIChatDynamicColor(@"chat_input_bg_color", @"#FFFFFF");
-    [_recordButton setTitle:TIMCommonLocalizableString(TUIKitInputReleaseToSend) forState:UIControlStateNormal];
+    _recordButton.backgroundColor = TDeskChatDynamicColor(@"chat_input_bg_color", @"#FFFFFF");
+    [_recordButton setTitle:TDeskIMCommonLocalizableString(TUIKitInputReleaseToSend) forState:UIControlStateNormal];
 }
 
 - (void)showHapticFeedback {
@@ -379,14 +379,14 @@
     self.allowSendTypingStatusByChangeWord = YES;
 
     __weak typeof(self) weakSelf = self;
-    self.sendTypingStatusTimer = [NSTimer tui_scheduledTimerWithTimeInterval:4
+    self.sendTypingStatusTimer = [NSTimer tdesk_scheduledTimerWithTimeInterval:4
                                                                      repeats:YES
                                                                        block:^(NSTimer *_Nonnull timer) {
                                                                          __strong typeof(weakSelf) strongSelf = weakSelf;
                                                                          strongSelf.allowSendTypingStatusByChangeWord = YES;
                                                                        }];
 
-    if (self.isFocusOn && [textView.textStorage tui_getPlainString].length > 0) {
+    if (self.isFocusOn && [textView.textStorage tdesk_getPlainString].length > 0) {
         if (_delegate && [_delegate respondsToSelector:@selector(inputTextViewShouldBeginTyping:)]) {
             [_delegate inputTextViewShouldBeginTyping:textView];
         }
@@ -401,14 +401,14 @@
 }
 
 - (void)textViewDidChange:(UITextView *)textView {
-    if (self.allowSendTypingStatusByChangeWord && self.isFocusOn && [textView.textStorage tui_getPlainString].length > 0) {
+    if (self.allowSendTypingStatusByChangeWord && self.isFocusOn && [textView.textStorage tdesk_getPlainString].length > 0) {
         if (_delegate && [_delegate respondsToSelector:@selector(inputTextViewShouldBeginTyping:)]) {
             self.allowSendTypingStatusByChangeWord = NO;
             [_delegate inputTextViewShouldBeginTyping:textView];
         }
     }
 
-    if (self.isFocusOn && [textView.textStorage tui_getPlainString].length == 0) {
+    if (self.isFocusOn && [textView.textStorage tdesk_getPlainString].length == 0) {
         if (_delegate && [_delegate respondsToSelector:@selector(inputTextViewShouldEndTyping:)]) {
             [_delegate inputTextViewShouldEndTyping:textView];
         }
@@ -444,7 +444,7 @@
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
-    if ([text tui_containsString:@"["] && [text tui_containsString:@"]"]) {
+    if ([text tdesk_containsString:@"["] && [text tdesk_containsString:@"]"]) {
         NSRange selectedRange = textView.selectedRange;
         if (selectedRange.length > 0) {
             [textView.textStorage deleteCharactersInRange:selectedRange];
@@ -462,15 +462,15 @@
 
     if ([text isEqualToString:@"\n"]) {
         if (_delegate && [_delegate respondsToSelector:@selector(inputBar:didSendText:)]) {
-            NSString *sp = [[textView.textStorage tui_getPlainString] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+            NSString *sp = [[textView.textStorage tdesk_getPlainString] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
             if (sp.length == 0) {
-                UIAlertController *ac = [UIAlertController alertControllerWithTitle:TIMCommonLocalizableString(TUIKitInputBlankMessageTitle)
+                UIAlertController *ac = [UIAlertController alertControllerWithTitle:TDeskIMCommonLocalizableString(TUIKitInputBlankMessageTitle)
                                                                             message:nil
                                                                      preferredStyle:UIAlertControllerStyleAlert];
-                [ac tuitheme_addAction:[UIAlertAction actionWithTitle:TIMCommonLocalizableString(Confirm) style:UIAlertActionStyleDefault handler:nil]];
+                [ac tuitheme_addAction:[UIAlertAction actionWithTitle:TDeskIMCommonLocalizableString(Confirm) style:UIAlertActionStyleDefault handler:nil]];
                 [self.mm_viewController presentViewController:ac animated:YES completion:nil];
             } else {
-                [_delegate inputBar:self didSendText:[textView.textStorage tui_getPlainString]];
+                [_delegate inputBar:self didSendText:[textView.textStorage tdesk_getPlainString]];
                 [self clearInput];
             }
         }
@@ -479,7 +479,7 @@
         if (textView.textStorage.length > range.location) {
             // Delete the @ message like @xxx at one time
             NSAttributedString *lastAttributedStr = [textView.textStorage attributedSubstringFromRange:NSMakeRange(range.location, 1)];
-            NSString *lastStr = [lastAttributedStr tui_getPlainString];
+            NSString *lastStr = [lastAttributedStr tdesk_getPlainString];
             if (lastStr && lastStr.length > 0 && [lastStr characterAtIndex:0] == ' ') {
                 NSUInteger location = range.location;
                 NSUInteger length = range.length;
@@ -494,10 +494,10 @@
                     location--;
                     length++;
                     // Convert characters to ascii code, copy to int, avoid out of bounds
-                    int c = (int)[[[textView.textStorage attributedSubstringFromRange:NSMakeRange(location, 1)] tui_getPlainString] characterAtIndex:0];
+                    int c = (int)[[[textView.textStorage attributedSubstringFromRange:NSMakeRange(location, 1)] tdesk_getPlainString] characterAtIndex:0];
 
                     if (c == at) {
-                        NSString *atText = [[textView.textStorage attributedSubstringFromRange:NSMakeRange(location, length)] tui_getPlainString];
+                        NSString *atText = [[textView.textStorage attributedSubstringFromRange:NSMakeRange(location, length)] tdesk_getPlainString];
                         UIFont *textFont = kTUIInputNoramlFont;
                         NSAttributedString *spaceString = [[NSAttributedString alloc] initWithString:@"" attributes:@{NSFontAttributeName : textFont}];
                         [textView.textStorage replaceCharactersInRange:NSMakeRange(location, length) withAttributedString:spaceString];
@@ -535,12 +535,12 @@
 }
 
 - (NSString *)getInput {
-    return [_inputTextView.textStorage tui_getPlainString];
+    return [_inputTextView.textStorage tdesk_getPlainString];
 }
 
 - (void)addEmoji:(TDeskFaceCellData *)emoji {
     // Create emoji attachment
-    TUIEmojiTextAttachment *emojiTextAttachment = [[TUIEmojiTextAttachment alloc] init];
+    TDeskEmojiTextAttachment *emojiTextAttachment = [[TDeskEmojiTextAttachment alloc] init];
     emojiTextAttachment.faceCellData = emoji;
 
     NSString *localizableFaceName =  emoji.name;
@@ -637,11 +637,11 @@
 }
 
 - (void)showRequestMicAuthorizationAlert {
-    UIAlertController *ac = [UIAlertController alertControllerWithTitle:TIMCommonLocalizableString(TUIKitInputNoMicTitle)
-                                                                message:TIMCommonLocalizableString(TUIKitInputNoMicTips)
+    UIAlertController *ac = [UIAlertController alertControllerWithTitle:TDeskIMCommonLocalizableString(TUIKitInputNoMicTitle)
+                                                                message:TDeskIMCommonLocalizableString(TUIKitInputNoMicTips)
                                                          preferredStyle:UIAlertControllerStyleAlert];
-    [ac tuitheme_addAction:[UIAlertAction actionWithTitle:TIMCommonLocalizableString(TUIKitInputNoMicOperateLater) style:UIAlertActionStyleCancel handler:nil]];
-    [ac tuitheme_addAction:[UIAlertAction actionWithTitle:TIMCommonLocalizableString(TUIKitInputNoMicOperateEnable)
+    [ac tuitheme_addAction:[UIAlertAction actionWithTitle:TDeskIMCommonLocalizableString(TUIKitInputNoMicOperateLater) style:UIAlertActionStyleCancel handler:nil]];
+    [ac tuitheme_addAction:[UIAlertAction actionWithTitle:TDeskIMCommonLocalizableString(TUIKitInputNoMicOperateEnable)
                                                     style:UIAlertActionStyleDefault
                                                   handler:^(UIAlertAction *_Nonnull action) {
                                                     UIApplication *app = [UIApplication sharedApplication];
@@ -664,7 +664,7 @@
     self.recordStartTime = [NSDate date];
     [self.recordView setStatus:Record_Status_Recording];
     self.recordButton.backgroundColor = [UIColor lightGrayColor];
-    [self.recordButton setTitle:TIMCommonLocalizableString(TUIKitInputReleaseToSend) forState:UIControlStateNormal];
+    [self.recordButton setTitle:TDeskIMCommonLocalizableString(TUIKitInputReleaseToSend) forState:UIControlStateNormal];
     [self showHapticFeedback];
 }
 
@@ -685,7 +685,7 @@
          * The long type is cast here to eliminate compiler warnings.
          * Here +1 is to round up and optimize the time logic.
          */
-        self.recordView.title.text = [NSString stringWithFormat:TIMCommonLocalizableString(TUIKitInputWillFinishRecordInSeconds), (long)seconds + 1];
+        self.recordView.title.text = [NSString stringWithFormat:TDeskIMCommonLocalizableString(TUIKitInputWillFinishRecordInSeconds), (long)seconds + 1];
     } else if (time > realMaxDuration) {
         [self.recorder stop];
         NSString *path = self.recorder.recordedFilePath;

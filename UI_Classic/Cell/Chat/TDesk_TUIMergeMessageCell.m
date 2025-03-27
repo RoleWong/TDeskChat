@@ -19,14 +19,14 @@
 #endif
 #endif
 
-@interface TUIMergeMessageDetailRow : UIView
+@interface TDeskMergeMessageDetailRow : UIView
 @property(nonatomic, strong) UILabel *abstractName;
 @property(nonatomic, strong) UILabel *abstractBreak;
 @property(nonatomic, strong) UILabel *abstractDetail;
 @property(nonatomic, assign) CGFloat abstractNameLimitedWidth;
 - (void)fillWithData:(NSAttributedString *)name detailContent:(NSAttributedString *)detailContent;
 @end
-@implementation TUIMergeMessageDetailRow
+@implementation TDeskMergeMessageDetailRow
 
 - (instancetype)init {
     self = [super init];
@@ -56,7 +56,7 @@
         _abstractBreak = [[UILabel alloc] init];
         _abstractBreak.text = @":";
         _abstractBreak.font = [UIFont systemFontOfSize:12.0];
-        _abstractBreak.textColor = TUIChatDynamicColor(@"chat_merge_message_content_color", @"#d5d5d5");
+        _abstractBreak.textColor = TDeskChatDynamicColor(@"chat_merge_message_content_color", @"#d5d5d5");
     }
     return _abstractBreak;
 }
@@ -65,7 +65,7 @@
         _abstractDetail = [[UILabel alloc] init];
         _abstractDetail.numberOfLines = 0;
         _abstractDetail.font = [UIFont systemFontOfSize:12.0];
-        _abstractDetail.textColor = TUIChatDynamicColor(@"chat_merge_message_content_color", @"#d5d5d5");
+        _abstractDetail.textColor = TDeskChatDynamicColor(@"chat_merge_message_content_color", @"#d5d5d5");
         _abstractDetail.textAlignment = isRTL()? NSTextAlignmentRight:NSTextAlignmentLeft;
 
     }
@@ -136,9 +136,9 @@
 
 @property(nonatomic, strong) CAShapeLayer *maskLayer;
 @property(nonatomic, strong) CAShapeLayer *borderLayer;
-@property(nonatomic, strong) TUIMergeMessageDetailRow *contentRowView1;
-@property(nonatomic, strong) TUIMergeMessageDetailRow *contentRowView2;
-@property(nonatomic, strong) TUIMergeMessageDetailRow *contentRowView3;
+@property(nonatomic, strong) TDeskMergeMessageDetailRow *contentRowView1;
+@property(nonatomic, strong) TDeskMergeMessageDetailRow *contentRowView2;
+@property(nonatomic, strong) TDeskMergeMessageDetailRow *contentRowView3;
 @end
 
 @implementation TDeskMergeMessageCell
@@ -152,19 +152,19 @@
 }
 
 - (void)setupViews {
-    self.container.backgroundColor = TUIChatDynamicColor(@"chat_merge_message_bg_color", @"#FFFFFF");
+    self.container.backgroundColor = TDeskChatDynamicColor(@"chat_merge_message_bg_color", @"#FFFFFF");
 
     _relayTitleLabel = [[UILabel alloc] init];
     _relayTitleLabel.text = @"Chat history";
     _relayTitleLabel.font = [UIFont systemFontOfSize:16];
-    _relayTitleLabel.textColor = TUIChatDynamicColor(@"chat_merge_message_title_color", @"#000000");
+    _relayTitleLabel.textColor = TDeskChatDynamicColor(@"chat_merge_message_title_color", @"#000000");
     [self.container addSubview:_relayTitleLabel];
 
-    _contentRowView1 = [[TUIMergeMessageDetailRow alloc] init];
+    _contentRowView1 = [[TDeskMergeMessageDetailRow alloc] init];
     [self.container addSubview:_contentRowView1];
-    _contentRowView2 = [[TUIMergeMessageDetailRow alloc] init];
+    _contentRowView2 = [[TDeskMergeMessageDetailRow alloc] init];
     [self.container addSubview:_contentRowView2];
-    _contentRowView3 = [[TUIMergeMessageDetailRow alloc] init];
+    _contentRowView3 = [[TDeskMergeMessageDetailRow alloc] init];
     [self.container addSubview:_contentRowView3];
     
     _separtorView = [[UIView alloc] init];
@@ -172,8 +172,8 @@
     [self.container addSubview:_separtorView];
 
     _bottomTipsLabel = [[UILabel alloc] init];
-    _bottomTipsLabel.text = TIMCommonLocalizableString(TUIKitRelayChatHistory);
-    _bottomTipsLabel.textColor = TUIChatDynamicColor(@"chat_merge_message_content_color", @"#d5d5d5");
+    _bottomTipsLabel.text = TDeskIMCommonLocalizableString(TUIKitRelayChatHistory);
+    _bottomTipsLabel.textColor = TDeskChatDynamicColor(@"chat_merge_message_content_color", @"#d5d5d5");
     _bottomTipsLabel.font = [UIFont systemFontOfSize:9];
     [self.container addSubview:_bottomTipsLabel];
 
@@ -329,8 +329,8 @@
 }
 
 - (void)prepareReactTagUI:(UIView *)containerView {
-    NSDictionary *param = @{TUICore_TUIChatExtension_ChatMessageReactPreview_Delegate: self};
-    [TDeskCore raiseExtension:TUICore_TUIChatExtension_ChatMessageReactPreview_ClassicExtensionID parentView:containerView param:param];
+    NSDictionary *param = @{TDeskCore_TUIChatExtension_ChatMessageReactPreview_Delegate: self};
+    [TDeskCore raiseExtension:TDeskCore_TUIChatExtension_ChatMessageReactPreview_ClassicExtensionID parentView:containerView param:param];
 }
 
 #pragma mark - TDeskMessageCellProtocol

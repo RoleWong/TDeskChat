@@ -83,13 +83,13 @@
     }
     NSString * serviceName = @"";
     if (styleType == TUIChatRegisterCustomMessageStyleTypeClassic) {
-        serviceName = TUICore_TUIChatService;
+        serviceName = TDeskCore_TUIChatService;
     }
     else {
-        serviceName = TUICore_TUIChatService_Minimalist;
+        serviceName = TDeskCore_TUIChatService_Minimalist;
     }
     [TDeskCore callService:serviceName
-                  method:TUICore_TUIChatService_AppendCustomMessageMethod
+                  method:TDeskCore_TUIChatService_AppendCustomMessageMethod
                    param:@{BussinessID : businessID,
                            TMessageCell_Name : cellName,
                            TMessageCell_Data_Name : cellDataName
