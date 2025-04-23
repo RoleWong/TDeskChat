@@ -117,9 +117,43 @@ static CGRect gCustomTopViewRect;
         
         self.isUIInitialized = YES;
         
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                         selector:@selector(handleMenuItemUpdated)
+                                                             name:@"TUICustomerServiceMenuItemUpdatedNotification"
+                                                           object:nil];
     }
 }
 
+- (void)handleMenuItemUpdated {
+    [TDeskCore raiseExtension:TDeskCore_TUIChatExtension_ChatVCBottomContainer_ClassicExtensionID
+                 parentView:self.bottomContainerView
+                      param:@{TDeskCore_TUIChatExtension_ChatVCBottomContainer_UserID: self.conversationData.userID ? : @"",
+                              TDeskCore_TUIChatExtension_ChatVCBottomContainer_VC: self}];
+}
+
+
+- (void)setupBottomContainerView {
+    [self.view addSubview:self.bottomContainerView];
+    [self notifyBttomContainerReady];
+}
+
+#pragma mark - Extension
+- (void)notifyBttomContainerReady {
+    [TDeskCore registerEvent:TDeskCore_TUIPluginNotify
+                    subKey:TDeskCore_TUIPluginNotify_PluginViewDidAddToSuperview
+                    object:self];
+    [TDeskCore raiseExtension:TDeskCore_TUIChatExtension_ChatVCBottomContainer_ClassicExtensionID
+                 parentView:self.bottomContainerView
+                      param:@{TDeskCore_TUIChatExtension_ChatVCBottomContainer_UserID: self.conversationData.userID ? : @"",
+                              TDeskCore_TUIChatExtension_ChatVCBottomContainer_VC: self}];
+}
+
+- (UIView *)bottomContainerView {
+    if (!_bottomContainerView) {
+        _bottomContainerView = [[UIView alloc] init];
+    }
+    return _bottomContainerView;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -300,6 +334,7 @@ static CGRect gCustomTopViewRect;
 
 - (void)dealloc {
     [TDeskCore unRegisterEventByObject:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 - (void)onBackButtonPressed {
     if (self.navigationController && self.navigationController.viewControllers.count > 1) {
@@ -446,11 +481,6 @@ static CGRect gCustomTopViewRect;
     }
 }
 
-- (void)setupBottomContainerView {
-    [self.view addSubview:self.bottomContainerView];
-    [self notifyBttomContainerReady];
-}
-
 - (void)setupInputController {
     _inputController = [[TDeskInputController alloc] init];
     _inputController.delegate = self;
@@ -513,24 +543,6 @@ static CGRect gCustomTopViewRect;
     [self openMultiChooseBoard:NO];
     [self.messageController enableMultiSelectedMode:NO];
     [self.navigationController setNavigationBarHidden:self.originalNavigationBarHidden animated:NO];
-}
-
-#pragma mark - Extension
-- (void)notifyBttomContainerReady {
-    [TDeskCore registerEvent:TDeskCore_TUIPluginNotify
-                    subKey:TDeskCore_TUIPluginNotify_PluginViewDidAddToSuperview
-                    object:self];
-    [TDeskCore raiseExtension:TDeskCore_TUIChatExtension_ChatVCBottomContainer_ClassicExtensionID
-                 parentView:self.bottomContainerView
-                      param:@{TDeskCore_TUIChatExtension_ChatVCBottomContainer_UserID: self.conversationData.userID ? : @"",
-                              TDeskCore_TUIChatExtension_ChatVCBottomContainer_VC: self}];
-}
-
-- (UIView *)bottomContainerView {
-    if (!_bottomContainerView) {
-        _bottomContainerView = [[UIView alloc] init];
-    }
-    return _bottomContainerView;
 }
 
 #pragma mark - Public Methods
