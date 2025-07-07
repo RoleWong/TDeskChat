@@ -303,6 +303,25 @@
     }
     NSIndexPath *indexPath = [self indexPathOfMessage:messageID];
     
+    if (!indexPath) {
+       NSLog(@"Message %@ not found, skip scrolling", messageID);
+       return;
+   }
+   
+   // 检查 indexPath 是否在当前表格的数据源范围内
+   NSInteger section = indexPath.section;
+   NSInteger row = indexPath.row;
+   NSInteger sectionCount = [self numberOfSectionsInTableView:self.tableView];
+   NSInteger rowCount = [self tableView:self.tableView numberOfRowsInSection:section];
+   if (section >= sectionCount || row >= rowCount) {
+       NSLog(@"Invalid indexPath: section %ld, row %ld (sectionCount %ld, rowCount %ld)",
+             section, row, sectionCount, rowCount);
+       return;
+   }
+   if (CGRectIsEmpty(self.tableView.bounds)) {
+       NSLog(@"TableView bounds is empty, skip");
+       return;
+   }
     // Scroll the tableView only if the bottom of the cell is invisible.
     CGRect cellRect = [self.tableView rectForRowAtIndexPath:indexPath];
     CGRect tableViewRect = self.tableView.bounds;
