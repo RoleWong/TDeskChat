@@ -1,0 +1,31 @@
+/* 
+  Localizable.strings
+  English
+  
+  Created by harvy on 2020/10/9.
+  
+*/
+"TUIChatCallDurationFormat" = "Durée";
+"TUIChatCallCancelInCaller" = "Annulé";
+"TUIChatCallCancelInCallee" = "Appel Annulé";
+"TUIChatCallRejectInCaller" = "Appel Refusé";
+"TUIChatCallRejectInCallee" = "Refusé";
+"TUIChatCallTimeoutInCaller" = "Appel Sans Réponse";
+"TUIChatCallTimeoutInCallee" = "Appel Annulé";
+"TUIChatCallLinebusyInCaller" = "Ligne Occupée";
+"TUIChatCallLinebusyInCallee" = "Appel Annulé";
+"TUIChatCallSend" = "Démarrer l'Appel";
+"TUIChatCallAccept" = "Répondu";
+"TUIChatCallSwitchToAudio" = "Passer à l'Audio";
+"TUIChatCallConfirmSwitchToAudio" = "Confirmer l'Audio";
+"TUIChatCallUnrecognized" = "Autre Instruction";
+"TUIChatGroupCallSendFormat" = "%@ a Lancé un Appel Groupe";
+"TUIChatGroupCallEnd" = "Fin d'Appel Groupe";
+"TUIChatGroupCallNoAnswer" = "pas de réponse";
+"TUIChatGroupCallRejectFormat" = "Appel Refusé par %@";
+"TUIChatGroupCallAcceptFormat" = "Répondu par %@";
+"TUIChatGroupCallSwitchToAudioFormat" = "Passage Audio par %@";
+"TUIChatGroupCallConfirmSwitchToAudioFormat" = "Audio Confirmé par %@";
+"TUIChatVideoCall" = "Appel Vidéo";
+"TUIChatAudioCall" = "Appel Audio";
+"TUIChatUnknownCall" = "Appel Inconnu";

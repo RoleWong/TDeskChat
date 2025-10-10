@@ -1,0 +1,31 @@
+/* 
+  Localizable.strings
+  English
+  
+  Created by harvy on 2020/10/9.
+  
+*/
+"TUIChatCallDurationFormat" = "Süre";
+"TUIChatCallCancelInCaller" = "İptal Edildi";
+"TUIChatCallCancelInCallee" = "Arayan İptal Etti";
+"TUIChatCallRejectInCaller" = "Arama Reddedildi";
+"TUIChatCallRejectInCallee" = "Reddedildi";
+"TUIChatCallTimeoutInCaller" = "Cevapsız Arama";
+"TUIChatCallTimeoutInCallee" = "Arayan İptal Etti";
+"TUIChatCallLinebusyInCaller" = "Hat Meşgul";
+"TUIChatCallLinebusyInCallee" = "Arayan İptal Etti";
+"TUIChatCallSend" = "Aramayı Başlat";
+"TUIChatCallAccept" = "Cevaplandı";
+"TUIChatCallSwitchToAudio" = "Sesli Aramaya Geç";
+"TUIChatCallConfirmSwitchToAudio" = "Sesli Aramayı Onayla";
+"TUIChatCallUnrecognized" = "Diğer Çağrı";
+"TUIChatGroupCallSendFormat" = "%@ Grup Araması Başlattı";
+"TUIChatGroupCallEnd" = "Grup Araması Sonlandı";
+"TUIChatGroupCallNoAnswer" = "cevap yok";
+"TUIChatGroupCallRejectFormat" = "%@ Tarafından Reddedildi";
+"TUIChatGroupCallAcceptFormat" = "%@ Tarafından Cevaplandı";
+"TUIChatGroupCallSwitchToAudioFormat" = "%@ Sesli Aramaya Geçti";
+"TUIChatGroupCallConfirmSwitchToAudioFormat" = "%@ Sesli Aramayı Onayladı";
+"TUIChatVideoCall" = "Görüntülü Arama";
+"TUIChatAudioCall" = "Sesli Arama";
+"TUIChatUnknownCall" = "Bilinmeyen Arama";
