@@ -806,18 +806,43 @@ static CGRect gCustomTopViewRect;
             [self updateBackgroundImageUrlByConversationID:conversationID];
         }
     } else if ([key isEqualToString:TDeskCore_TUIPluginNotify] && [subKey isEqualToString:TDeskCore_TUIPluginNotify_PluginViewDidAddToSuperview]) {
+        // height 为插件容器的新高度：显示时为 46，隐藏时为 0
         float height = [param[TDeskCore_TUIPluginNotify_PluginViewDidAddToSuperviewSubKey_PluginViewHeight] floatValue];
         
+        // 【修复关键点1】重新计算消息列表的高度，确保布局正确
+        // 问题：之前使用 messageController.view.mm_h - height 会导致累积误差
+        // 解决：基于视图总高度重新计算，避免累积误差
+        
+        // 获取输入框当前高度（包含安全区域）
+        CGFloat inputHeight = self.inputController.view.mm_h;
+        
+        // 计算消息列表可用高度 = 总高度 - 输入框高度 - 顶部边距 - 插件容器高度
+        // 这样确保无论插件如何显示/隐藏，都能正确计算剩余空间
+        CGFloat calHeight = self.view.frame.size.height - inputHeight - [self topMarginByCustomView] - height;
+        
+        // 更新消息列表的 frame
+        // x: 0, y: 顶部边距, width: 屏幕宽度, height: 计算出的可用高度（使用 MAX 确保不为负）
         self.messageController.view.frame = CGRectMake(0, [self topMarginByCustomView],
-                                                       self.view.frame.size.width, self.messageController.view.mm_h - height);
+                                                       self.view.frame.size.width, MAX(0, calHeight));
         [self.messageController.view setNeedsLayout];
         [self.messageController.view layoutIfNeeded];
         
         dispatch_async(dispatch_get_main_queue(), ^{
+            // 【修复关键点2】更新插件容器（bottomContainerView）的位置和高度
+            // 位置：紧跟在消息列表下方
+            // 高度：插件的实际高度（0 或 46）
             self.bottomContainerView.frame = CGRectMake(0, self.messageController.view.mm_maxY,
                                                         self.messageController.view.mm_w, height);
+            
+            // 【修复关键点3】更新输入框位置，确保始终紧贴底部
+            // 问题：之前缺少这段代码，导致输入框位置不更新，与插件容器之间出现间隙
+            // 解决：将输入框的 y 坐标设置为插件容器的底部，确保紧密贴合
+            CGRect inputFrame = self.inputController.view.frame;
+            inputFrame.origin.y = self.bottomContainerView.mm_maxY;  // 输入框 y 坐标 = 插件容器底部
+            self.inputController.view.frame = inputFrame;
         });
         
+        // 发送通知，告知其他组件底部边距已改变
         NSDictionary *userInfo = @{TUIKitNotification_onMessageVCBottomMarginChanged_Margin: @(height)};
         [[NSNotificationCenter defaultCenter] postNotificationName:TUIKitNotification_onMessageVCBottomMarginChanged object:nil userInfo:userInfo];
     }

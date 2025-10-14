@@ -445,8 +445,16 @@
     }
     titleSize.width = MIN(titleSize.width, 48);
     CGFloat totalHeight = (imageSize.height + titleSize.height + 8);
-    actionButton.imageEdgeInsets = UIEdgeInsetsMake(-(totalHeight - imageSize.height), 0.0, 0.0, -titleSize.width);
-    actionButton.titleEdgeInsets = UIEdgeInsetsMake(0, -imageSize.width, -(totalHeight - titleSize.height), 0);
+        BOOL isRTL = ([UIView userInterfaceLayoutDirectionForSemanticContentAttribute:self.semanticContentAttribute] == UIUserInterfaceLayoutDirectionRightToLeft);
+
+        if (isRTL) {
+            actionButton.imageEdgeInsets = UIEdgeInsetsMake(-(totalHeight - imageSize.height), -titleSize.width, 0.0, 0.0);
+            actionButton.titleEdgeInsets = UIEdgeInsetsMake(0, 0.0, -(totalHeight - titleSize.height), -imageSize.width);
+
+        } else {
+            actionButton.imageEdgeInsets = UIEdgeInsetsMake(-(totalHeight - imageSize.height), 0.0, 0.0, -titleSize.width);
+            actionButton.titleEdgeInsets = UIEdgeInsetsMake(0, -imageSize.width, -(totalHeight - titleSize.height), 0);
+        }
 
     [self.actionCallback setObject:action.callback forKey:@(tag)];
 

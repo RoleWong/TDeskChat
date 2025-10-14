@@ -1,0 +1,31 @@
+/* 
+  Localizable.strings
+  English
+  
+  Created by harvy on 2020/10/9.
+  
+*/
+"TUIChatCallDurationFormat" = "अवधि";
+"TUIChatCallCancelInCaller" = "रद्द";
+"TUIChatCallCancelInCallee" = "कॉल रद्द";
+"TUIChatCallRejectInCaller" = "कॉल अस्वीकार";
+"TUIChatCallRejectInCallee" = "अस्वीकार";
+"TUIChatCallTimeoutInCaller" = "कोई जवाब नहीं";
+"TUIChatCallTimeoutInCallee" = "कॉल रद्द";
+"TUIChatCallLinebusyInCaller" = "लाइन व्यस्त";
+"TUIChatCallLinebusyInCallee" = "कॉल रद्द";
+"TUIChatCallSend" = "कॉल शुरू करें";
+"TUIChatCallAccept" = "उत्तर दिया";
+"TUIChatCallSwitchToAudio" = "ऑडियो कॉल";
+"TUIChatCallConfirmSwitchToAudio" = "ऑडियो कॉल करें";
+"TUIChatCallUnrecognized" = "अन्य कॉल";
+"TUIChatGroupCallSendFormat" = "%@ ने ग्रुप कॉल की";
+"TUIChatGroupCallEnd" = "ग्रुप कॉल समाप्त";
+"TUIChatGroupCallNoAnswer" = "कोई जवाब नहीं";
+"TUIChatGroupCallRejectFormat" = "%@ ने अस्वीकार किया";
+"TUIChatGroupCallAcceptFormat" = "%@ ने उत्तर दिया";
+"TUIChatGroupCallSwitchToAudioFormat" = "%@ ऑडियो कॉल";
+"TUIChatGroupCallConfirmSwitchToAudioFormat" = "%@ ऑडियो कॉल";
+"TUIChatVideoCall" = "वीडियो कॉल";
+"TUIChatAudioCall" = "ऑडियो कॉल";
+"TUIChatUnknownCall" = "अज्ञात कॉल";
